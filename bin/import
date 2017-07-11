@@ -1,0 +1,71 @@
+#!/usr/bin/env php
+<?php
+    // TODO
+
+    /**
+     * import.php
+     *
+     * Computer Science 50
+     * Problem Set 8
+     *
+     * Перенос значений из файла в базу.
+     */
+
+
+// configuration
+    require("../includes/config.php"); 
+    
+    //putenv("LANG=ru_RU.UTF8");
+    //setlocale(LC_ALL, 'ru_RU.UTF8');
+    
+        // путь к файлу
+        $path="/home/ubuntu/workspace/final/bin/transport1.txt";
+        
+        // Проверяем открывается файл или нет
+        $handle1 = @fopen("$path", "r");
+        if ($handle1 === false)
+        {
+            printf("Не могу открыть файл.\n");
+            exit;
+        }
+        
+        else printf("OK файл открыт.\n");
+        
+        $row = 1;
+
+        // Повторяем пока не окончиться файл    
+        while (($data = fgetcsv($handle1, 500, "\t")) !== FALSE)
+        //for ($i = 1; $i <= 481; $i++)
+        {
+            //$rows = query("INSERT INTO `stops`(`n_marchr`) VALUES (\"$i\")");
+            
+            $num = count($data);
+            // передаём значения в таблицу    
+            //printf("N=%i name-%s lat-%i long-%i type-%s N-marchr - %i \n",$n,$data[0],$data[1],$data[2],$data[3],$data[4]);
+            
+            //$rows = query("INSERT INTO `stops`(`stops_name`, `latitude`, `longitude`, `type_stops`,`n_marchr`) VALUES (\"$data[0]\",\"$data[1]\",\"$data[2]\",\"$data[3]\",\"$data[4]\")");
+            //$rows = query("INSERT INTO `stops`(`latitude`, `longitude`, `type_stops`) VALUES (\"$data[2]\",\"$data[3]\",\"$data[4]\")");
+    //          $rows = query("INSERT INTO basa1 (id, symbol, shares) VALUES($id5, \"$symb5\", $shar5) ON DUPLICATE KEY UPDATE shares = shares + VALUES(shares)");
+            //$rows = query("INSERT INTO stops (stops_name) VALUES(\"$data[1]\") ON DUPLICATE KEY UPDATE stops_name = VALUES(stops_name)");
+            
+            //$rows = query("UPDATE stops SET `latitude`=\"$data[2]\", `longitude`=\"$data[3]\", `type_stops`=\"$data[4]\" WHERE id = (\"$data[0]\") ");
+            $dat1=str_replace(' ', '', $data[7]);
+            //$data[7]=$dat[1];
+            $dat2=str_replace(' ', '', $data[8]);
+            //$data[8]=$dat[2];
+            $rows = query("INSERT INTO `transport`(`type`, `n_marshr`, `nach_kon`,`cena`, `int_dvij`, `rej_raboty`, `vr_raboty`,`front`, `back`) VALUES (\"$data[0]\",\"$data[1]\",\"$data[2]\",\"$data[3]\",\"$data[4]\",\"$data[5]\",\"$data[6]\",\"$dat1\",\"$dat2\")");
+            
+            
+            
+            echo " $num полей в строке $row: \n";
+            $row++;
+            
+            
+        }
+        
+        printf("OK база данных заполнена.\n");
+        
+        // закрываем файл
+        fclose($handle1);
+
+?>
