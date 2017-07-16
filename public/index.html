@@ -48,11 +48,56 @@ A mashup of Google Maps and Google News.
     <body>
 
         <!-- fill viewport -->
-        <div class="container-fluid">
+        <div class="container" style="border: 1px solid red">
+            <!-- Static navbar -->
+            <div class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="navbar-collapse">
+                            <span class="sr-only">Переключатель</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a href="#" class="navbar-drand">Транспорт Краматорска</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a href="#">Маршруты</a>
+                        </li>
+                        <li>
+                            <a href="#">Остановки</a>
+                        </li>
+                        <li>
+                            <a href="#">Menu 3</a>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" href="#" data-toggle="dropdown">Menu 4 <b class="carret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">Menu 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Menu 2</a>
+                                </li>
+                                <li>
+                                    <a href="#">Menu 3</a>
+                                </li>
+                                <li>
+                                    <a href="#">Menu 4</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">header</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
             <!-- https://developers.google.com/maps/documentation/javascript/tutorial -->
             <div id="map-canvas"></div>
-
+        </div>
+           
             <!-- http://getbootstrap.com/css/#forms -->
             <form class="form-inline" id="form" role="form">
                 <div class="form-group">
@@ -63,7 +108,7 @@ A mashup of Google Maps and Google News.
                     <a href="javascript:n_stops_chn();" class="button btn btn-default" id="button">Отображение названий остановок</a>
                 </div>
             </form>
-            </div>
+            
     </body>
 
 
