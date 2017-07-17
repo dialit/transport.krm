@@ -228,7 +228,7 @@ function addMarker(place)
 	        var tooltip = "Через остановку проходят следующие маршруты"
 		var ul = "<ul>";	
         // шаблон списка маршрутов через эту остановку
-        var template = _.template("<li><a href = '<%- id %>' target = '_blank'><%- type %> №<%- n_marshr %> (<%- nach_kon %>)</a></li>");
+        var template = _.template("<li><a href = 'routes.php?id=<%- id %>' target = '_blank'><%- type %> №<%- n_marshr %> (<%- nach_kon %>)</a></li>");
 		
 		// создание списка с использованием шаблона
 		for (var i = 0, n = data.length; i < n; i++)
