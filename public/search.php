@@ -28,6 +28,7 @@
     //$places = query("SELECT * FROM places WHERE MATCH (place_name, admin_name1,postal_code) AGAINST (? IN BOOLEAN MODE)", $prov1);
     // проверка возможности изменения
 	$places = query("SELECT * FROM stops WHERE MATCH (stops_name) AGAINST (? IN BOOLEAN MODE)", $prov1);
+    //$places = query("SELECT `type`,`n_marshr`,`nach_kon` FROM transport WHERE MATCH (`type`,`n_marshr`,`nach_kon`) AGAINST (? IN BOOLEAN MODE)", $prov1);
     
     // output places as JSON (pretty-printed for debugging convenience)
     header("Content-type: application/json");
