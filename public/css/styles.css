@@ -8,7 +8,7 @@
  */
 
 /* allow map to fill viewport */
-html, body
+html, body, #map-canvas, .container-fluid
 {
     /* height of these elements */
     height: 100%;
@@ -20,11 +20,6 @@ html, body
     overflow: hidden;
 
     /* no padding within these elements */
-    padding: 0;
-}
-
-#map-canvas, .container {
-    height: 100%;
     padding: 0;
 }
 
