@@ -13,16 +13,26 @@
     $geo = urlencode($_GET["geo"]);
     //$geo = $_GET["geo"];
     
+    // numerically indexed array of articles
+    $articles = [];
+    
+    // headers for proxy servers
+    //$headers = [
+    //    "Accept" => "*/*",
+    //    "Connection" => "Keep-Alive",
+    //    "User-Agent" => sprintf("curl/%s", curl_version()["version"])
+    //];
+
+    // download RSS from Google News
+    //$context = stream_context_create([
+    //    "https" => [
+    //        "header" => implode(array_map(function($value, $key) { return sprintf("%s: %s\r\n", $key, $value); }, $headers, array_keys($headers))),
+    //        "method" => "GET"
+    //    ]
+    //]);
     
     //$rows = query("SELECT `id`, `n_marshr` FROM `transport` WHERE FIND_IN_SET($geo,`front`)>0 OR FIND_IN_SET($geo,`back`)>0");
-    
-
-    $rows = query("SELECT `id`,`type`,`n_marshr`,`nach_kon`,`cena`,`int_dvij`,`rej_raboty`,`vr_raboty` FROM `transport` WHERE FIND_IN_SET($geo,`front`)>0 OR FIND_IN_SET($geo,`back`)>0");
-    
-    //if ($_GET["n_qwery"] == "2")
-    //{
-    //$rows = query("SELECT * FROM `transport` WHERE n_marshr = $geo");
-    //}
+    $rows = query("SELECT * FROM `transport` WHERE FIND_IN_SET($geo,`front`)>0 OR FIND_IN_SET($geo,`back`)>0");
     
     //$positions = [];
     //foreach ($rows as $row)
@@ -35,7 +45,12 @@
     //exit;
     //$contents=$positions;
     $contents=$rows;
-       
+    // если указатель языка новостей "en"
+    //if ($_GET["lang"] == "en") $contents = @file_get_contents("http://news.google.com/news?cf=all&hl=en&ned=us&geo={$geo}&output=rss", false, $context);
+    
+    // если указатель языка новостей "ru"
+    //if ($_GET["lang"] == "ru") $contents = @file_get_contents("http://news.google.com/news?cf=all&hl=ru&ned=ru&geo={$geo}&output=rss", false, $context);
+    
     if ($contents === false)
     {
         http_response_code(503);
