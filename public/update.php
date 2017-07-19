@@ -60,7 +60,8 @@
             $sum1 = str_replace('\"','',$sum );
             // запрос на получение названий и координат остановок через которые проходит маршрут
             $rows = query("SELECT * FROM `stops` WHERE `id` IN($sum1)");
-            }
+        }
+        
 // если запрос координат линии маршрута    
     if ($_GET["n_qwery"] == 3)
         {
@@ -72,8 +73,29 @@
             //var_dump(sum);
             $rows = $sum;
         }
+// 
+  // если запрос круга    
+    if ($_GET["n_qwery"] == 4)
+        {
+            $sum = $_GET["NN_marshr"];
+        //var_dump($sum);
+            $sum1 = explode(";",$sum);
+        //var_dump($sum1);
+            $lat_c = $sum1[0];
+            $lng_c = $sum1[1];
+            //$rows = query("SELECT *, ( 6371 * acos( cos( radians($lat_c) ) * cos( radians(`latitude`) ) * cos( radians(`longitude`) - radians($lng_c) ) + sin( radians($lat_c) ) * sin( radians(`latitude`) ) ) ) AS distance FROM stops HAVING distance < 0.5 ORDER BY distance LIMIT 0 , 20");
+            $rows = query("SELECT `stops_name`, ( 6371 * acos( cos( radians($lat_c) ) * cos( radians(`latitude`) ) * cos( radians(`longitude`) - radians($lng_c) ) + sin( radians($lat_c) ) * sin( radians(`latitude`) ) ) ) AS distance FROM stops HAVING distance < 0.5 ORDER BY distance LIMIT 0 , 20");
+        //var_dump($rows);
+            //exit;
+        }
+        
     
     // output places as JSON (pretty-printed for debugging convenience)
     header("Content-type: application/json");
     print(json_encode($rows, JSON_PRETTY_PRINT));
+
+
+
+
+
 ?>

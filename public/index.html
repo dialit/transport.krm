@@ -15,37 +15,45 @@ A mashup of Google Maps and Google News.
     <head>
 
         <!-- http://getbootstrap.com/ -->
-        <link href="/css/bootstrap.min.css" rel="stylesheet"/>
-        <link href="/css/bootstrap-theme.min.css" rel="stylesheet"/>
+        <link href="css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="css/bootstrap-theme.min.css" rel="stylesheet"/>
 
         <!-- app's own CSS -->
-        <link href="/css/styles.css" rel="stylesheet"/>
+        <link href="css/styles.css" rel="stylesheet"/>
 
         <!-- https://developers.google.com/maps/documentation/javascript/ -->
-        <script src="https://maps.googleapis.com/maps/api/js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDddUMqAgSPHOym9KhggEoONdiHPQwUxpE"></script>
 
         <!-- http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerwithlabel/1.1.9/ -->
-        <script src="/js/markerwithlabel_packed.js"></script>
+        <script src="js/markerwithlabel_packed.js"></script>
 
         <!-- http://jquery.com/ -->
-        <script src="/js/jquery-1.11.1.min.js"></script>
+        <script src="js/jquery-1.11.1.min.js"></script>
 
         <!-- http://getbootstrap.com/ -->
-        <script src="/js/bootstrap.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
 
         <!-- http://underscorejs.org/ -->
-        <script src="/js/underscore-min.js"></script>
+        <script src="js/underscore-min.js"></script>
 
         <!-- https://github.com/twitter/typeahead.js/ -->
-        <script src="/js/typeahead.jquery.js"></script>
+        <script src="js/typeahead.jquery.js"></script>
 
         <!-- app's own JavaScript -->
-        <script src="/js/scripts.js"></script>
+        <script src="js/scripts.js"></script>
 
         <title>КРАМАТРАНС</title>
 
+<script type="text/javascript"> 
+
+
+
+</script> 
+
+
     </head>
     <body>
+
 
         <!-- fill viewport -->
         <div class="container-fluid">
@@ -57,12 +65,13 @@ A mashup of Google Maps and Google News.
             <form class="form-inline" id="form" role="form">
                 <div class="form-group">
                     <label class="sr-only" for="q">City, State, Postal Code</label>
-                    <input class="form-control" id="q" placeholder="Название остановки, номер маршрута" type="text"/>
+                    <input class="form-control" id="q" placeholder="Название остановки" type="text"/>
                 <br>
                 <br>
-                    <a href="javascript:n_stops_chn(1);" class="button btn btn-default" id="button">Отображение маршрутов</a>
-                    <a href="javascript:n_stops_chn(2);" class="button btn btn-default" id="button">Убрать отображение маршрутов</a>
-                    <a href="javascript:update(n_qwery, NN_marshr);" class="button btn btn-default" id="button">Обновление маркеров остановок</a>
+                    <a href="javascript:n_stops_chn();" class="button btn btn-default" id="button">Отображение всех маршрутов</a>
+    
+                </div> 
+                
                 </div>
             </form>
             </div>

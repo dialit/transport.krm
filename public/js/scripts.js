@@ -23,8 +23,8 @@ var n_stops = 0;
 // флаг поиска 
 var marker_find = 0;
 // координаты инициализации карты
-var latitude = 48.738795;
-var longitude = 37.584883;
+//var latitude = 48.738795;
+//var longitude = 37.584883;
 // 
 var title_label = "Краматорск, Донецкая область";
 // флаг типа запроса если 
@@ -42,7 +42,7 @@ $(function()
     
         // styles for map
         // https://developers.google.com/maps/documentation/javascript/styling
-        var styles = [
+        /**var styles = [
     
             // hide Google's labels
             {
@@ -92,6 +92,95 @@ $(function()
             }
         ];
     
+    **/
+var styles = [
+  {
+    "stylers": [
+      {
+        "visibility": "simplified"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.business",
+    "stylers": [
+      {
+        "visibility": "simplified"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "labels.text",
+    "stylers": [
+      {
+        "visibility": "simplified"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "labels.icon",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "road.local",
+    "stylers": [
+      {
+        "visibility": "simplified"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.line",
+    "stylers": [
+      {
+        "visibility": "on"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.station",
+    "stylers": [
+      {
+        "visibility": "on"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.station.airport",
+    "stylers": [
+      {
+        "visibility": "on"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.station.bus",
+    "stylers": [
+      {
+        "visibility": "on"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.station.rail",
+    "stylers": [
+      {
+        "visibility": "on"
+      }
+    ]
+  }
+];
+        
+        
+        
+        
+        
         // options for map
         // https://developers.google.com/maps/documentation/javascript/reference#MapOptions
         var originalMapCenter = new google.maps.LatLng( 48.738795, 37.584883);
@@ -136,10 +225,8 @@ function ConvertCoordinates(data) {
 // генератор псевдослучайного цвета линии маршрута
 function line_color()
     {
-        var colors = ['#8dd3c7', '#ffffb3', '#bebada', '#fb8072', '#80b1d3', '#fdb462', '#b3de69', '#fccde5', '#d9d9d9', '#bc80bd', '#ccebc5', '#ffed6f',
-                        '#fff7ec', '#fee8c8', '#fdd49e', '#fdbb84', '#fc8d59', '#ef6548', '#d7301f', '#b30000', '#7f0000','#67001f','#b2182b','#d6604d',
-                        '#f4a582','#fddbc7','#f7f7f7','#d1e5f0','#92c5de','#4393c3','#2166ac','#053061'];
-        color = colors[Math.floor(Math.random() * 32)];
+        var colors = ['#FF0000', '#000066', '#990099', '#CC00FF', '#00FF00', '#0000CC', '#FF33FF', '#00CCFF', '#FFCCCC', '#FFFF00'];
+        color = colors[Math.floor(Math.random() * 10)];
         return color;
     }
 
@@ -189,7 +276,7 @@ function draw_marshr(n_qwery,NN_marshr)
                     });
                 routesPath.setMap(map);
                 // установить карту на такие координаты
-                map.setCenter(new google.maps.LatLng(48.732644,37.583284), 13);
+               map.setCenter(new google.maps.LatLng(48.732644,37.583284), 13);
                 // после отрисовки увеличить карту
                 map.setZoom(13);
                 line.push(routesPath);    
@@ -384,6 +471,96 @@ function configure()
         //update(n_qwery, NN_marshr);
         //removeMarkers();  //
         //});
+        
+        
+       
+        google.maps.event.addListener(map, 'click', function(event) {
+            //alert(event.latLng);
+            // set info window's content
+            //info.setContent(contentString);
+          var latlngsum = event.latLng;
+          var lat_cor = event.latLng.lat(); 
+        var lng_cor = event.latLng.lng();
+          var cor45 = lat_cor+";"+lng_cor;
+          var cor46;
+          // флаг запроса площади окружности
+          n_qwery = 4;
+          NN_marshr = cor45;
+          //update(n_qwery, NN_marshr)
+          
+          // get map's bounds
+    var bounds = map.getBounds();
+    var ne = bounds.getNorthEast();
+    var sw = bounds.getSouthWest();
+
+    //removeMarkers();
+    
+    // get places within bounds (asynchronously)
+    var parameters = {
+        ne: ne.lat() + "," + ne.lng(),
+        q: $("#q").val(),
+        sw: sw.lat() + "," + sw.lng(),
+        n_qwery:n_qwery,
+        NN_marshr: NN_marshr
+    };
+    $.getJSON("update.php", parameters)
+    .done(function(data, textStatus, jqXHR) {
+        
+        // создание списка остановок в радиусе 500 метров
+        if (data.length === 0)
+    	    {
+    		var tooltip = "Нет остановок в радиусе 500 метров.";
+    		//showInfo(marker, "Нет информации.");
+    	    }
+        else        	    
+            {    	    
+                	    
+                	    var tooltip = "В радиусе 500 метров находятся такие остановки"
+                		var ul = "<ul>";	
+                        // шаблон списка остановок
+                        var template = _.template("<li><a> <%- stops_name %> </a></li>");
+                		
+                		// создание списка с использованием шаблона
+                		for (var i = 0, n = data.length; i < n; i++)
+                		{
+                		    ul += template({
+                			stops_name: data[i].stops_name,
+                		    }); 
+                		}
+                
+                		ul += "</ul>";	
+                		
+                		tooltip += ul;
+                		
+            } 		
+                		//showInfo(marker, tooltip);
+                	    
+                	       var info_cord = new google.maps.InfoWindow({
+                content: tooltip,
+                position: event.latLng
+              });
+                
+                
+                info_cord.open(map);
+                setTimeout(function () { info_cord.close(); }, 5000);  
+            
+        n_qwery = 1;
+          NN_marshr = 0;
+     })
+//     .fail(function(jqXHR, textStatus, errorThrown) {
+//
+//         // log error to browser's console
+//         console.log(errorThrown.toString());
+//     });
+    	                
+    	                
+    	                
+    	                
+    	                
+
+        });
+        
+       
     
     // в зависимости от масштаба карты отображать маркеры остановок или нет
     map.addListener('zoom_changed', function() {
@@ -402,7 +579,7 @@ function configure()
                     }
             }
         });
-    
+   
     
     // configure typeahead
     // https://github.com/twitter/typeahead.js/blob/master/doc/jquery_typeahead.md
@@ -564,6 +741,8 @@ function update(n_qwery, NN_marshr)
     };
     $.getJSON("update.php", parameters)
     .done(function(data, textStatus, jqXHR) {
+        
+        
         // remove old markers from map
         removeMarkers();
         
@@ -588,9 +767,9 @@ function update(n_qwery, NN_marshr)
                     }
             }
      })
-     .fail(function(jqXHR, textStatus, errorThrown) {
-
-         // log error to browser's console
-         console.log(errorThrown.toString());
-     });
+//     .fail(function(jqXHR, textStatus, errorThrown) {
+//
+//         // log error to browser's console
+//         console.log(errorThrown.toString());
+//     });
 };
