@@ -16,23 +16,29 @@ var markers = [];
 var line = [];
 // массив преобразованных координат линий маршрута
 var arr = [];
+// массив окружностей
+var circles = [];
 // ID номера маршрута для построения
 var NN_marshr = 0;
 // флаг отображения названий маркеров остановок
 var n_stops = 0;
 // флаг поиска 
 var marker_find = 0;
+var routesPath;
 // координаты инициализации карты
 //var latitude = 48.738795;
 //var longitude = 37.584883;
 // 
 var title_label = "Краматорск, Донецкая область";
-// флаг типа запроса если 
+// флаг типа запроса к UPDATE если 
 //  1 запрос координат всех остановок
 //  2 запрос координат остановок маршрута
 //  3 запрос координат для построения линии маршрута
 var n_qwery = 1;
-
+// флаг типа запроса к ARTICLES если 
+// - 1 запрос списка маршрутов через остановку
+// - 2 запрос информации о маршруте
+var n_qwery1 = 1;
 // info window
 var info = new google.maps.InfoWindow();
 
@@ -280,15 +286,78 @@ function draw_marshr(n_qwery,NN_marshr)
                 // после отрисовки увеличить карту
                 map.setZoom(13);
                 line.push(routesPath);    
-            });
+            
+            n_qwery1 = 2;
+    	// запрос на получение списка маршрутов от "articles.php"
+    	$.getJSON("articles.php", {
+    	    geo: NN_marshr,
+    	    n_qwery1: n_qwery1 
+    	})
+    	.done(function(data, textStatus, jqXHR) 
+    	{
+    	    
+    	    // если информации нет
+    	    if (data.length === 0)
+    	    {
+    		showInfo(marker, "Нет информации.");
+    	    }
+    	    // иначе создание списка информации о проложеном маршруте
+    	    else
+    	    {
+    	        var tooltip = "    8-)   "
+    		var ul = "<ul>";	
+            // шаблон списка информации о маршруте
+            var template = _.template("<li><a href = '<%- id %>' target = '_blank'><%- type %> №<%- n_marshr %> (<%- nach_kon %>)</a></li>");
+    		
+    		// создание списка с использованием шаблона
+    		for (var i = 0, n = data.length; i < n; i++)
+    		{
+    		    ul += template({
+    			n_marshr: data[i].n_marshr,
+    			id: data[i].id,
+    			type: data[i].type,
+    			nach_kon: data[i].nach_kon
+    		    }); 
+    		}
     
+    		ul += "</ul>";	
+    		
+    		tooltip += ul;
+    		
+    		//showInfo(marker, tooltip);
+    	    attachInfoWindow(routesPath, tooltip ); //'<strong>Info about this area</strong>');
+    	        
+    	    }
+    //	});
+        });
+            
+            
+        });
+            
         // флаг запроса координат остановок маршрута
         n_qwery = 2;       
              
     	// запрос на получение id остановок маршрута от "update.php"
     	update(n_qwery, NN_marshr);
-	
     }
+
+function attachInfoWindow(routesPath, html)
+{
+	routesPath.infoWindow = new google.maps.InfoWindow({
+		content: html,
+	});
+	google.maps.event.addListener(routesPath, 'mouseover', function(e) {
+		var latLng = e.latLng;
+		this.setOptions({fillOpacity:1});
+		routesPath.infoWindow.setPosition(latLng);
+		routesPath.infoWindow.open(map);
+	});
+	google.maps.event.addListener(routesPath, 'mouseout', function() {
+		this.setOptions({fillOpacity:0.1});
+		setTimeout(function () { routesPath.infoWindow.close(); }, 3500);
+	});
+}
+
 
 // функция кнопки для проверки переключения различных параметров, можно убрать
 function n_stops_chn()
@@ -354,32 +423,32 @@ function addMarker(place)
         // если маркер искомой остановки, то у него отличный от других маркеров значёк и анимация 
         if (marker_find == 1)
         {
-        var image = {
-        url: '"img/index_1.png"',
-        // This marker is 20 pixels wide by 32 pixels high.
-        //size: new google.maps.Size(20, 32),
-        // The origin for this image is (0, 0).
-        //origin: new google.maps.Point(0, 0),
-        // The anchor for this image is the base of the flagpole at (0, 32).
-        //anchor: new google.maps.Point(0, 0)
-      };
-        
-        
-        
-        var marker = new MarkerWithLabel({
-    	icon: "/img/marker.png",	
-    	position: new google.maps.LatLng(latitude, longitude),
-    	animation: google.maps.Animation.BOUNCE,
-    	map: map,
-    	//labelContent: place.stops_name,
-    	labelContent: label_stops,
-    	labelAnchor: new google.maps.Point(0, 0),
-    	labelClass: "label",
-        title: place.stops_name + ",  ID-" + place.id
-        //title: place.id + ", " + place.latitude + ", " + place.longitude
-        });
-        // сброс указателя маркера искомого остановки
-           marker_find==0; 
+            var image = {
+            url: '"img/index_1.png"',
+            // This marker is 20 pixels wide by 32 pixels high.
+            //size: new google.maps.Size(20, 32),
+            // The origin for this image is (0, 0).
+            //origin: new google.maps.Point(0, 0),
+            // The anchor for this image is the base of the flagpole at (0, 32).
+            //anchor: new google.maps.Point(0, 0)
+            };
+            
+            
+            
+            var marker = new MarkerWithLabel({
+        	icon: "/img/marker.png",	
+        	position: new google.maps.LatLng(latitude, longitude),
+        	animation: google.maps.Animation.BOUNCE,
+        	map: map,
+        	//labelContent: place.stops_name,
+        	labelContent: label_stops,
+        	labelAnchor: new google.maps.Point(0, 0),
+        	labelClass: "label",
+            title: place.stops_name + ",  ID-" + place.id
+            //title: place.id + ", " + place.latitude + ", " + place.longitude
+            });
+            // сброс указателя маркера искомого остановки
+               marker_find==0; 
         }
         else
         //остальные маркеры остановок
@@ -388,6 +457,7 @@ function addMarker(place)
     	icon: "/img/index_1.png",	
     	position: new google.maps.LatLng(place.latitude, place.longitude),
     	map: map,
+    	animation: false,
     	labelContent: label_stops,
     	//labelContent: place.stops_name,
     	labelAnchor: new google.maps.Point(0, 0),
@@ -400,12 +470,12 @@ function addMarker(place)
         // создание списка маршрутов проходящих через остановку
         google.maps.event.addListener(marker, "click", function() {
     	showInfo(marker);
-    	n_qwery = 1;
+    	n_qwery1 = 1;
     	// запрос на получение списка маршрутов от "articles.php"
     	$.getJSON("articles.php", {
     	    geo: place.id,
     	    //geo: place.place_name,
-    	    //n_qwery:n_qwery 
+    	    n_qwery1: n_qwery1 
     	})
     	.done(function(data, textStatus, jqXHR) 
     	{
@@ -421,8 +491,9 @@ function addMarker(place)
     	        var tooltip = "Через остановку проходят следующие маршруты"
     		var ul = "<ul>";	
             // шаблон списка маршрутов через эту остановку
-            var template = _.template("<li><a href = '<%- id %>' target = '_blank'><%- type %> №<%- n_marshr %> (<%- nach_kon %>)</a></li>");
-    		
+            //var template = _.template("<li><a href = '<%- id %>' target = '_blank'><%- type %> №<%- n_marshr %> (<%- nach_kon %>)</a></li>");
+    		var template = _.template("<li><a href = 'routes.php?id=<%- id %>' target = '_blank'><%- type %> №<%- n_marshr %> (<%- nach_kon %>)</a></li>");
+			
     		// создание списка с использованием шаблона
     		for (var i = 0, n = data.length; i < n; i++)
     		{
@@ -478,16 +549,19 @@ function configure()
             //alert(event.latLng);
             // set info window's content
             //info.setContent(contentString);
+          var info_cord;
+          var circle;
+          if (info_cord != null) info_cord.close();
+          if (circle != null) circle.setMap(null);
           var latlngsum = event.latLng;
           var lat_cor = event.latLng.lat(); 
-        var lng_cor = event.latLng.lng();
+          var lng_cor = event.latLng.lng();
           var cor45 = lat_cor+";"+lng_cor;
-          var cor46;
           // флаг запроса площади окружности
           n_qwery = 4;
           NN_marshr = cor45;
           //update(n_qwery, NN_marshr)
-          
+     
           // get map's bounds
     var bounds = map.getBounds();
     var ne = bounds.getNorthEast();
@@ -514,12 +588,10 @@ function configure()
     	    }
         else        	    
             {    	    
-                	    
                 	    var tooltip = "В радиусе 500 метров находятся такие остановки"
                 		var ul = "<ul>";	
                         // шаблон списка остановок
                         var template = _.template("<li><a> <%- stops_name %> </a></li>");
-                		
                 		// создание списка с использованием шаблона
                 		for (var i = 0, n = data.length; i < n; i++)
                 		{
@@ -527,38 +599,40 @@ function configure()
                 			stops_name: data[i].stops_name,
                 		    }); 
                 		}
-                
                 		ul += "</ul>";	
-                		
                 		tooltip += ul;
-                		
             } 		
-                		//showInfo(marker, tooltip);
-                	    
-                	       var info_cord = new google.maps.InfoWindow({
+            var info_cord = new google.maps.InfoWindow({
                 content: tooltip,
                 position: event.latLng
-              });
-                
-                
-                info_cord.open(map);
-                setTimeout(function () { info_cord.close(); }, 5000);  
-            
-        n_qwery = 1;
-          NN_marshr = 0;
-     })
-//     .fail(function(jqXHR, textStatus, errorThrown) {
-//
-//         // log error to browser's console
-//         console.log(errorThrown.toString());
-//     });
-    	                
-    	                
-    	                
-    	                
-    	                
+            });
+            // задаём параметры окружности
+            var circleOptions = {
+                center: event.latLng,
+                fillColor: "#00AAFF",
+                fillOpacity: 0.5,
+                strokeColor: "#FFAA00",
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                clickable: false,
+                radius: 0.5*1000
+            }
+            //рисуем окружность
+            circle = new google.maps.Circle(circleOptions);
+            //circle.setMap(map);
+            circles.push(circle);
+            circle.setMap(map);
+            info_cord.open(map);
+            setTimeout(function () { info_cord.close(); circle.setMap(null); circles.length = 0; circles = []; }, 5000);  
+            n_qwery = 1;
+            NN_marshr = 0;
+    })
+     .fail(function(jqXHR, textStatus, errorThrown) {
 
-        });
+         // log error to browser's console
+         console.log(errorThrown.toString());
+    });
+});
         
        
     

@@ -16,13 +16,14 @@
     
     //$rows = query("SELECT `id`, `n_marshr` FROM `transport` WHERE FIND_IN_SET($geo,`front`)>0 OR FIND_IN_SET($geo,`back`)>0");
     
-
+    if ($_GET["n_qwery1"] == "1")
+    {
     $rows = query("SELECT `id`,`type`,`n_marshr`,`nach_kon`,`cena`,`int_dvij`,`rej_raboty`,`vr_raboty` FROM `transport` WHERE FIND_IN_SET($geo,`front`)>0 OR FIND_IN_SET($geo,`back`)>0");
-    
-    //if ($_GET["n_qwery"] == "2")
-    //{
-    //$rows = query("SELECT * FROM `transport` WHERE n_marshr = $geo");
-    //}
+    }
+    if ($_GET["n_qwery1"] == "2")
+    {
+    $rows = query("SELECT `id`,`type`,`n_marshr`,`nach_kon`,`cena`,`int_dvij`,`rej_raboty`,`vr_raboty` FROM `transport` WHERE id = $geo");
+    }
     
     //$positions = [];
     //foreach ($rows as $row)
