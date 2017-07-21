@@ -8,7 +8,7 @@
  */
 
 /* allow map to fill viewport */
-html, body
+html, body, #map-canvas, .container-fluid
 {
     /* height of these elements */
     height: 100%;
@@ -23,19 +23,8 @@ html, body
     padding: 0;
 }
 
-.container {
-    height: 90%;
-}
-
-#map-canvas {
-    position: inherit;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-}
-
 /* align form to right of pan control */
-/*#form*/
+#form
 {
     /* distance from left edge of viewport */
     left: 100px;
@@ -52,10 +41,9 @@ html, body
 {
     /* override typeahead.js's transparent background */
     background-color: #ffffff !important;
-    vertical-align: top;
-        
+
     /* text box's width */
-/*    width: 300px;*/
+    width: 300px;
 }
 
 /* stylize places' labels */
@@ -104,46 +92,10 @@ html, body
 .tt-suggestion p {
     margin: 0;
 }
-ul {
+/*ul {
     list-style: none;
 }
 li {
     display: inline-block;
-}
-
-ul.list-inline > li {
-    width: 18%;
-}
-
-.cbp-spmenu {
-    background: transparent;
-    border: 1px gray solid;
-    border-radius: 5px;
-}
-
-.cbp-spmenu a {
-    color: #777;
-    text-transform: uppercase;
-    font-size: 20px;
-    padding: 5px;
-}
-
-.cbp-spmenu a:hover {
-	background: #258ecd;
-}
-
-.cbp-spmenu h3 {
-    font-size: 18px;
-    padding: 18px;
-    background: #F8F8F8;
-    color: #777;
-    font-weight: 400;
-}
-
-.cpb-menu-vertical {
-    width: 300px;
-}
-
-.cbp-spmenu-vertical a {
-    border-bottom: 1px solid #777;
-}
+    padding-right: 15px;
+}*/
