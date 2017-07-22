@@ -52,7 +52,7 @@ html, body
 {
     /* override typeahead.js's transparent background */
     background-color: #ffffff !important;
-    vertical-align: top;
+    vertical-align: baseline !important;
         
     /* text box's width */
 /*    width: 300px;*/
@@ -115,8 +115,12 @@ ul.list-inline > li {
     width: 18%;
 }
 
+.navbar-nav > li > a {
+    cursor: pointer;
+}
+
 .cbp-spmenu {
-    background: transparent;
+    background: #fff;
     border: 1px gray solid;
     border-radius: 5px;
 }

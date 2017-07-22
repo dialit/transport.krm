@@ -5,16 +5,19 @@
 
 <!DOCTYPE html>
 <meta charset="utf-8">
-<html>
+<html lang="ru" class="no-js">
     <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
         
         <!-- Slide Push Menu component -->
-        <link href="css/component.css" rel="stylesheet"/>
         <link href="css/default.css" rel="stylesheet"/>
+        <link href="css/component.css" rel="stylesheet"/>
 
         <!-- http://getbootstrap.com/ -->
         <link href="css/bootstrap.min.css" rel="stylesheet"/>
-<!--        <link href="css/bootstrap-theme.min.css" rel="stylesheet"/>-->
+        <link href="css/bootstrap-theme.min.css" rel="stylesheet"/>
         
         <!-- app's own CSS -->
         <link href="css/styles.css" rel="stylesheet"/>
@@ -48,8 +51,8 @@
                 
                 <div class="collapse navbar-collapse" id="navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a id="showLeft" style="cursor: pointer">Маршруты</a></li>
-                        <li><a href="#">Link</a></li>
+                        <li><a id="showLeft">Маршруты</a></li>
+                        <li><a id="">Link</a></li>
                     </ul>
                     <form class="navbar-form navbar-left" id="form" role="form">
                         <div class="form-group">
@@ -58,7 +61,7 @@
                         </div>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Link</a></li>
+                        <li><a href="#">Обратная связь</a></li>
                     </ul>
                 </div>
             </div>
@@ -76,7 +79,7 @@
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Автобусы</a>
                         </h4>
                     </div>
-                    <div id="collapseOne" class="panel-collapse collapse in">
+                    <div id="collapse1" class="panel-collapse collapse in">
                         <!-- Содержимое Автобусов -->
                         <div class="panel-body">
                             <ul class="list-inline">
