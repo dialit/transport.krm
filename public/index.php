@@ -5,6 +5,7 @@
 
 <!DOCTYPE html>
 <meta charset="utf-8">
+<<<<<<< HEAD
 <html lang="ru" class="no-js">
     <head>
         <meta charset="UTF-8" />
@@ -18,6 +19,18 @@
         <!-- http://getbootstrap.com/ -->
         <link href="css/bootstrap.min.css" rel="stylesheet"/>
         <link href="css/bootstrap-theme.min.css" rel="stylesheet"/>
+=======
+<html>
+    <head>
+        
+        <!-- Slide Push Menu component -->
+        <link href="css/component.css" rel="stylesheet"/>
+        <link href="css/default.css" rel="stylesheet"/>
+
+        <!-- http://getbootstrap.com/ -->
+        <link href="css/bootstrap.min.css" rel="stylesheet"/>
+<!--        <link href="css/bootstrap-theme.min.css" rel="stylesheet"/>-->
+>>>>>>> d79fefa98c475603fdd91111a11263b937647721
         
         <!-- app's own CSS -->
         <link href="css/styles.css" rel="stylesheet"/>
@@ -51,8 +64,13 @@
                 
                 <div class="collapse navbar-collapse" id="navbar-collapse">
                     <ul class="nav navbar-nav">
+<<<<<<< HEAD
                         <li><a id="showLeft">Маршруты</a></li>
                         <li><a id="">Link</a></li>
+=======
+                        <li class="active"><a id="showLeft" style="cursor: pointer">Маршруты</a></li>
+                        <li><a href="#">Link</a></li>
+>>>>>>> d79fefa98c475603fdd91111a11263b937647721
                     </ul>
                     <form class="navbar-form navbar-left" id="form" role="form">
                         <div class="form-group">
@@ -61,7 +79,11 @@
                         </div>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
+<<<<<<< HEAD
                         <li><a href="#">Обратная связь</a></li>
+=======
+                        <li><a href="#">Link</a></li>
+>>>>>>> d79fefa98c475603fdd91111a11263b937647721
                     </ul>
                 </div>
             </div>
@@ -79,7 +101,11 @@
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Автобусы</a>
                         </h4>
                     </div>
+<<<<<<< HEAD
                     <div id="collapse1" class="panel-collapse collapse in">
+=======
+                    <div id="collapseOne" class="panel-collapse collapse in">
+>>>>>>> d79fefa98c475603fdd91111a11263b937647721
                         <!-- Содержимое Автобусов -->
                         <div class="panel-body">
                             <ul class="list-inline">
