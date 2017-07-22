@@ -1,11 +1,16 @@
 <?php
     // configuration
-    require("../includes/config.php"); 
+    require("../includes/config.php");
+
+    $rows = query("SELECT n_marshr, type FROM `transport`");
+
+    foreach ($rows as $row) {
+        $n_marshr = $row["n_marshr"];
+        $type = $row["type"];
+    }
 ?>
 
 <!DOCTYPE html>
-<meta charset="utf-8">
-<<<<<<< HEAD
 <html lang="ru" class="no-js">
     <head>
         <meta charset="UTF-8" />
@@ -19,32 +24,13 @@
         <!-- http://getbootstrap.com/ -->
         <link href="css/bootstrap.min.css" rel="stylesheet"/>
         <link href="css/bootstrap-theme.min.css" rel="stylesheet"/>
-=======
-<html>
-    <head>
-        
-        <!-- Slide Push Menu component -->
-        <link href="css/component.css" rel="stylesheet"/>
-        <link href="css/default.css" rel="stylesheet"/>
-
-        <!-- http://getbootstrap.com/ -->
-        <link href="css/bootstrap.min.css" rel="stylesheet"/>
-<!--        <link href="css/bootstrap-theme.min.css" rel="stylesheet"/>-->
->>>>>>> d79fefa98c475603fdd91111a11263b937647721
         
         <!-- app's own CSS -->
         <link href="css/styles.css" rel="stylesheet"/>
 
         <title>Транспорт Краматорска</title>
-
-<script type="text/javascript"> 
-
-
-
-</script> 
-
-
     </head>
+    
     <body class="cbp-spmenu-push">
     <header>
        
@@ -64,13 +50,8 @@
                 
                 <div class="collapse navbar-collapse" id="navbar-collapse">
                     <ul class="nav navbar-nav">
-<<<<<<< HEAD
                         <li><a id="showLeft">Маршруты</a></li>
-                        <li><a id="">Link</a></li>
-=======
-                        <li class="active"><a id="showLeft" style="cursor: pointer">Маршруты</a></li>
-                        <li><a href="#">Link</a></li>
->>>>>>> d79fefa98c475603fdd91111a11263b937647721
+                        <li><a id="showRight">Link</a></li>
                     </ul>
                     <form class="navbar-form navbar-left" id="form" role="form">
                         <div class="form-group">
@@ -79,11 +60,7 @@
                         </div>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
-<<<<<<< HEAD
                         <li><a href="#">Обратная связь</a></li>
-=======
-                        <li><a href="#">Link</a></li>
->>>>>>> d79fefa98c475603fdd91111a11263b937647721
                     </ul>
                 </div>
             </div>
@@ -98,20 +75,18 @@
                     <!-- Заголовок -->
                     <div class="panel-heading">
                         <h4 class="panel-title text-center">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Автобусы</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-1">Автобусы</a>
                         </h4>
                     </div>
-<<<<<<< HEAD
-                    <div id="collapse1" class="panel-collapse collapse in">
-=======
-                    <div id="collapseOne" class="panel-collapse collapse in">
->>>>>>> d79fefa98c475603fdd91111a11263b937647721
+                    <div id="collapse-1" class="panel-collapse collapse in">
                         <!-- Содержимое Автобусов -->
                         <div class="panel-body">
                             <ul class="list-inline">
                                <?php
-                                    $autos = 40;
-                                    for ($i=1; $i<=$autos; $i++) echo "<li><a href=\"#$i\">$i</a></li>";
+                                    foreach ($rows as $row) {
+                                        $n = $row["n_marshr"];
+                                        echo "<li><a href=\"#$n\">$n</a></li>";
+                                    }
                                 ?>
                             </ul>
                         </div>
@@ -123,10 +98,10 @@
                     <!-- Заголовок -->
                     <div class="panel-heading">
                         <h4 class="panel-title text-center">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Троллейбусы</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-2">Троллейбусы</a>
                         </h4>
                     </div>
-                    <div id="collapse2" class="panel-collapse collapse in">
+                    <div id="collapse-2" class="panel-collapse collapse in">
                         <!-- Содержимое Троллейбусов -->
                         <div class="panel-body">
                             <ul class="list-inline">
@@ -141,6 +116,11 @@
                     </div>
                 </div>
             </div>
+    </nav>
+    
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
+        <p>Правое меню</p>
+        <?php var_dump($n_marshr); ?>
     </nav>
 
 
@@ -171,15 +151,15 @@
         <script src="js/typeahead.jquery.js"></script>
         
         <script src="/js/modernizr.custom.js"></script>
-
-        <!-- app's own JavaScript -->
-        <script src="js/scripts.js"></script>
         
         <!-- Classie - class helper functions by @desandro https://github.com/desandro/classie -->
 		<script src="js/classie.js"></script>
 				
 		<!-- Slide Push Menu JavaScript -->
 		<script src="js/spmenu.js"></script>
+
+        <!-- app's own JavaScript -->
+        <script src="js/scripts.js"></script>
    
     </body>
 </html>
