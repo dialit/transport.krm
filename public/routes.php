@@ -70,10 +70,13 @@
 				
 				<tr><th>Обратный путь следования:</th><td><?= $bs_separated ?></td></tr>
 				
-				<tr><th>Маршрут обслуживает: </th><td><a href="/transporters/67/" title="Подробнее о перевозчике..."><?= $transport["firma"] ?></a></td></tr>
+				<tr><th>Маршрут обслуживает: </th><td><?= $transport["firma"] ?></td></tr>
 				</tbody></table>
+				
+			
+
 		
 </div>
+	<iframe src="<?= $transport["rasp"] ?>" width="100%" height="70%"></iframe>
 </body>
 </html>
-<?= $transport["rospisanie"] ?>
