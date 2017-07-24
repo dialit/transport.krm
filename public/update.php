@@ -2,25 +2,25 @@
 
     require(__DIR__ . "/../includes/config.php");
     // ensure proper usage
-    if (!isset($_GET["sw"], $_GET["ne"]))
-        {
-            http_response_code(400);
-            exit;
-        }
+    //if (!isset($_GET["sw"], $_GET["ne"]))
+        //{
+       //     http_response_code(400);
+       //     exit;
+      //  }
 
     // ensure each parameter is in lat,lng format
-    if (!preg_match("/^-?\d+(?:\.\d+)?,-?\d+(?:\.\d+)?$/", $_GET["sw"]) ||
-        !preg_match("/^-?\d+(?:\.\d+)?,-?\d+(?:\.\d+)?$/", $_GET["ne"]))
-        {
-        http_response_code(400);
-        exit;
-        }
+   // if (!preg_match("/^-?\d+(?:\.\d+)?,-?\d+(?:\.\d+)?$/", $_GET["sw"]) ||
+   //     !preg_match("/^-?\d+(?:\.\d+)?,-?\d+(?:\.\d+)?$/", $_GET["ne"]))
+   //     {
+   //     http_response_code(400);
+   //     exit;
+   //     }
 
     // explode southwest corner into two variables
-    list($sw_lat, $sw_lng) = explode(",", $_GET["sw"]);
+    //list($sw_lat, $sw_lng) = explode(",", $_GET["sw"]);
 
     // explode northeast corner into two variables
-    list($ne_lat, $ne_lng) = explode(",", $_GET["ne"]);
+    //list($ne_lat, $ne_lng) = explode(",", $_GET["ne"]);
 
     
     // $_GET["NN_marshr"] ID маршрута, который надо отобразить
@@ -29,20 +29,22 @@
     // поиск остановок, которые входят в область экрана
     if ($_GET["n_qwery"] == 1)
     {
-        if ($sw_lng <= $ne_lng)
-            {
-                // doesn't cross the antimeridian
-                {
-                    $rows = query("SELECT * FROM stops WHERE ? <= latitude AND latitude <= ? AND (? <= longitude AND longitude <= ?) GROUP BY id", $sw_lat, $ne_lat, $sw_lng, $ne_lng);
-                }
-            }
-        else
-            {
-                // crosses the antimeridian
-                {
-                    $rows = query("SELECT * FROM stops WHERE ? <= latitude AND latitude <= ? AND (? <= longitude OR longitude <= ?) GROUP_BY id", $sw_lat, $ne_lat, $sw_lng, $ne_lng);
-                }
-            }
+        $rows = query("SELECT * FROM stops");
+        
+        // if ($sw_lng <= $ne_lng)
+        //     {
+        //         // doesn't cross the antimeridian
+        //         {
+        //             $rows = query("SELECT * FROM stops WHERE ? <= latitude AND latitude <= ? AND (? <= longitude AND longitude <= ?) GROUP BY id", $sw_lat, $ne_lat, $sw_lng, $ne_lng);
+        //         }
+        //     }
+        // else
+        //     {
+        //         // crosses the antimeridian
+        //         {
+        //             $rows = query("SELECT * FROM stops WHERE ? <= latitude AND latitude <= ? AND (? <= longitude OR longitude <= ?) GROUP_BY id", $sw_lat, $ne_lat, $sw_lng, $ne_lng);
+        //         }
+        //     }
     }
 // если запрос остановок маршрута
     if ($_GET["n_qwery"] == 2)
