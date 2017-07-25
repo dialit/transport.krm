@@ -1,13 +1,6 @@
 <?php
     // configuration
     require("../includes/config.php");
-
-    $rows = query("SELECT n_marshr, type FROM `transport`");
-
-    foreach ($rows as $row) {
-        $n_marshr = $row["n_marshr"];
-        $type = $row["type"];
-    }
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +44,7 @@
                 <div class="collapse navbar-collapse" id="navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li><a id="showLeft">Маршруты</a></li>
-                        <li><a id="showRight">Link</a></li>
+<!--                        <li><a id="showRight">Link</a></li>-->
                     </ul>
                     <form class="navbar-form navbar-left" id="form" role="form">
                         <div class="form-group">
@@ -68,24 +61,53 @@
     </header>
     
     <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
-        <h3>Выберите вид транспорта</h3>
+        <h3>Выберите вид транспорта</h3><a id="showLeft" title="Свернуть"><i class="glyphicon glyphicon-chevron-left" aria-hidden="true"></i></a>
             <div class="panel-group" id="accordion">
+                
+                <!-- Маршрутки -->
+                <div class="panel panel-default">
+                    <!-- Заголовок -->
+                    <div class="panel-heading">
+                        <h4 class="panel-title text-center">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-1">Маршрутные такси</a>
+                        </h4>
+                    </div>
+                    <div id="collapse-1" class="panel-collapse collapse in">
+                        <!-- Содержимое Маршруток -->
+                        <div class="panel-body">
+                            <ul class="list-inline">
+                               <?php
+                                    $taxies = query("SELECT id, n_marshr FROM `transport` WHERE type = 'Маршрутное такси'");
+                                    foreach ($taxies as $taxi) {
+                                        $id = $taxi["id"];
+                                        $ntaxi = $taxi["n_marshr"];    
+                                        echo "<li><a href=\"javascript:draw_marshr(3,$id)\" title=\"$ntaxi\">$ntaxi</a></li>";
+                                    }
+                                ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Автобусы -->
                 <div class="panel panel-default">
                     <!-- Заголовок -->
                     <div class="panel-heading">
                         <h4 class="panel-title text-center">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-1">Автобусы</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-2">Автобусы</a>
                         </h4>
                     </div>
-                    <div id="collapse-1" class="panel-collapse collapse in">
+                    <div id="collapse-2" class="panel-collapse collapse in">
                         <!-- Содержимое Автобусов -->
                         <div class="panel-body">
                             <ul class="list-inline">
                                <?php
-                                    foreach ($rows as $row) {
-                                        $n = $row["n_marshr"];
-                                        echo "<li><a href=\"#$n\">$n</a></li>";
+                                    $buses = query("SELECT id, n_marshr FROM `transport` WHERE type = 'Автобус'");
+                                    foreach ($buses as $bus) {
+                                        $id = $bus["id"];
+                                        $nbus = $bus["n_marshr"];    
+                                        echo "<li><a href=\"javascript:draw_marshr(3,$id)\" title=\"$nbus\">$nbus</a></li>";
+                                        
                                     }
                                 ?>
                             </ul>
@@ -98,19 +120,21 @@
                     <!-- Заголовок -->
                     <div class="panel-heading">
                         <h4 class="panel-title text-center">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-2">Троллейбусы</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-3">Троллейбусы</a>
                         </h4>
                     </div>
-                    <div id="collapse-2" class="panel-collapse collapse in">
+                    <div id="collapse-3" class="panel-collapse collapse in">
                         <!-- Содержимое Троллейбусов -->
                         <div class="panel-body">
                             <ul class="list-inline">
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">6</a></li>
+                               <?php
+                                    $tbuses = query("SELECT id, n_marshr FROM `transport` WHERE type = 'Троллейбус'");
+                                    foreach ($tbuses as $tbus) {
+                                        $id = $tbus["id"];
+                                        $ntbus = $tbus["n_marshr"];    
+                                        echo "<li><a href=\"javascript:draw_marshr(3,$id)\" title=\"$ntbus\">$ntbus</a></li>";
+                                    }
+                                ?>
                             </ul>
                         </div>
                     </div>
@@ -119,8 +143,8 @@
     </nav>
     
     <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
-        <p>Правое меню</p>
-        <?php var_dump($n_marshr); ?>
+        <h3>Информация о маршруте</h3>
+        <?php var_dump($right); ?>
     </nav>
 
 
@@ -136,7 +160,7 @@
         <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDddUMqAgSPHOym9KhggEoONdiHPQwUxpE"></script>
 
         <!-- http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerwithlabel/1.1.9/ -->
-        <script src="js/markerwithlabel_packed.js"></script>
+<!--        <script src="js/markerwithlabel_packed.js"></script>-->
 
         <!-- http://jquery.com/ -->
         <script src="js/jquery-1.11.1.min.js"></script>

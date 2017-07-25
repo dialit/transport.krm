@@ -104,12 +104,6 @@ html, body
 .tt-suggestion p {
     margin: 0;
 }
-ul {
-    list-style: none;
-}
-li {
-    display: inline-block;
-}
 
 ul.list-inline > li {
     width: 18%;
@@ -119,6 +113,11 @@ ul.list-inline > li {
     cursor: pointer;
 }
 
+.panel-body {
+    padding-right: 0px;
+}
+
+/* Slide Menu Styles */
 .cbp-spmenu {
     background: #fff;
     border: 1px gray solid;
@@ -128,16 +127,20 @@ ul.list-inline > li {
 .cbp-spmenu a {
     color: #777;
     text-transform: uppercase;
-    font-size: 20px;
-    padding: 5px;
+    font-size: 14px;
+    padding: 4px;
+    text-align: center;
+    margin: 1px;
+    font-weight: bold;
 }
 
 .cbp-spmenu a:hover {
-	background: #258ecd;
+	background: #ccc;
+    border-radius: 50%;
 }
 
 .cbp-spmenu h3 {
-    font-size: 18px;
+    font-size: 16px;
     padding: 18px;
     background: #F8F8F8;
     color: #777;
