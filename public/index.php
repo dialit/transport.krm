@@ -22,6 +22,63 @@
         <link href="css/styles.css" rel="stylesheet"/>
 
         <title>Транспорт Краматорска</title>
+        <!-- <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .controls {
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 250;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 250px;
+      }
+
+      #pac-input:focus {
+        border-color: #4d90fe;
+      }
+
+      .pac-container {
+        font-family: Roboto;
+      }
+
+      #type-selector {
+        color: #fff;
+        background-color: #4d90fe;
+        padding: 5px 11px 0px 11px;
+      }
+
+      #type-selector label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
+      #target {
+        width: 345px;
+      }
+    </style> -->
     </head>
     
     <body class="cbp-spmenu-push">
@@ -48,7 +105,8 @@
                     </ul>
                     <form class="navbar-form navbar-left" id="form" role="form">
                         <div class="form-group">
-                            <input type="text" id="q" class="form-control" placeholder="Название остановки">
+                            <input id="pac-input" class="form-controls" type="text" placeholder="Поиск адреса">
+                            <input type="text" id="q" class="form-control" placeholder="Поиск остановки">
                             <a href="javascript:n_stops_chn();" class="button btn btn-default" id="button" type="button">Отображение маршрутов</a>
                         </div>
                     </form>
@@ -157,10 +215,10 @@
         </div>
 
         <!-- https://developers.google.com/maps/documentation/javascript/ -->
-        <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDddUMqAgSPHOym9KhggEoONdiHPQwUxpE"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDddUMqAgSPHOym9KhggEoONdiHPQwUxpE&libraries=places"></script>
 
         <!-- http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerwithlabel/1.1.9/ -->
-<!--        <script src="js/markerwithlabel_packed.js"></script>-->
+        <script src="js/markerwithlabel_packed.js"></script>
 
         <!-- http://jquery.com/ -->
         <script src="js/jquery-1.11.1.min.js"></script>

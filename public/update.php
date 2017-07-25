@@ -80,15 +80,29 @@
     if ($_GET["n_qwery"] == 4)
         {
             $sum = $_GET["NN_marshr"];
-        //var_dump($sum);
             $sum1 = explode(";",$sum);
-        //var_dump($sum1);
             $lat_c = $sum1[0];
             $lng_c = $sum1[1];
-            //$rows = query("SELECT *, ( 6371 * acos( cos( radians($lat_c) ) * cos( radians(`latitude`) ) * cos( radians(`longitude`) - radians($lng_c) ) + sin( radians($lat_c) ) * sin( radians(`latitude`) ) ) ) AS distance FROM stops HAVING distance < 0.5 ORDER BY distance LIMIT 0 , 20");
-            $rows = query("SELECT `stops_name`, ( 6371 * acos( cos( radians($lat_c) ) * cos( radians(`latitude`) ) * cos( radians(`longitude`) - radians($lng_c) ) + sin( radians($lat_c) ) * sin( radians(`latitude`) ) ) ) AS distance FROM stops HAVING distance < 0.5 ORDER BY distance LIMIT 0 , 20");
+            //$rows = query("SELECT *, ( 6371 * acos( cos( radians($lat_c) ) * cos( radians(`latitude`) ) * cos( radians(`longitude`) - radians($lng_c) ) + sin( radians($lat_c) ) * sin( radians(`latitude`) ) ) ) AS distance FROM stops HAVING distance < 0.5 ORDER BY distance");
+            $rows = query("SELECT `id`, ( 6371 * acos( cos( radians($lat_c) ) * cos( radians(`latitude`) ) * cos( radians(`longitude`) - radians($lng_c) ) + sin( radians($lat_c) ) * sin( radians(`latitude`) ) ) ) AS distance FROM stops HAVING distance < 0.5 ORDER BY distance");
+            foreach ($rows as $row)
+            {
+                
+                $geo = $row["id"];
+            }
+            unset($row);
+            
+            if (isset($geo))
+            {
+            $geo = $rows[0]["id"];
+            //var_dump($geo);
+            $rows = query("SELECT `id`,`type`,`n_marshr`,`nach_kon` FROM `transport` WHERE FIND_IN_SET($geo,`front`)>0 OR FIND_IN_SET($geo,`back`)>0");
+            }
+            else $rows = "";
         //var_dump($rows);
-            //exit;
+        //print(json_encode($rows));    
+            
+        //exit;
         }
         
     
