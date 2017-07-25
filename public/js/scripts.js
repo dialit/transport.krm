@@ -245,7 +245,7 @@ function draw_marshr(n_qwery,NN_marshr)
     	        var tooltip = "    8-)   "
     		var ul = "<ul>";	
             // шаблон списка информации о маршруте
-            var template = _.template("<li><a href = '<%- id %>' target = '_blank'><%- type %> №<%- n_marshr %> (<%- nach_kon %>)</a></li>");
+            var template = _.template("<li><a href = 'routes.php?id=<%- id %>' target = '_blank'><%- type %> №<%- n_marshr %> (<%- nach_kon %>)</a></li>");
     		
     		// создание списка с использованием шаблона
     		for (var i = 0, n = data.length; i < n; i++)
