@@ -105,7 +105,7 @@
                     </ul>
                     <form class="navbar-form navbar-left" id="form" role="form">
                         <div class="form-group">
-                            <input id="pac-input" class="form-control" type="text" placeholder="Поиск адреса">
+                            <input type="text" id="pac-input" class="form-control" placeholder="Поиск адреса">
                             <input type="text" id="q" class="form-control" placeholder="Поиск остановки">
                             <a href="javascript:n_stops_chn();" class="button btn btn-default btn-xs" id="button" type="button">Сброс маршрутов</a>
                             <a href="javascript:infoGeoFind();" class="button btn btn-default btn-xs" id="button" type="button">Местоположение</a>  
@@ -120,7 +120,7 @@
     </header>
     
     <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
-        <h3>Выберите вид транспорта</h3><a id="showLeft" title="Свернуть"><i class="glyphicon glyphicon-chevron-left" aria-hidden="true"></i></a>
+        <h3>Выберите вид транспорта</h3><a id="showLeft1" title="Свернуть"><i class="glyphicon glyphicon-chevron-left" aria-hidden="true"></i></a>
             <div class="panel-group" id="accordion">
                 
                 <!-- Маршрутки -->
