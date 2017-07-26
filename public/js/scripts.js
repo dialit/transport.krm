@@ -1,9 +1,5 @@
 /**
  * scripts.js
- *
- * Computer Science 50
- * Problem Set 8
- *
  * Global JavaScript.
  */
 
@@ -41,6 +37,7 @@ var title_label = "Краматорск, Донецкая область";
 //  1 запрос координат всех остановок
 //  2 запрос координат остановок маршрута
 //  3 запрос координат для построения линии маршрута
+//  5 скрыть линию маршрута
 var n_qwery = 1;
 // флаг типа запроса к ARTICLES если 
 // - 1 запрос списка маршрутов через остановку
@@ -142,12 +139,6 @@ $(function() {
     // instantiate map
     map = new google.maps.Map(canvas, options);
 
-    // var input = document.getElementById('searchTextField');
-    // var autocomplete = new google.maps.places.Autocomplete(input);
-
-
-    //google.maps.event.addDomListener(window, 'load', initialize);
-
     // configure UI once Google Map is idle (i.e., loaded)
     google.maps.event.addListenerOnce(map, "idle", configure);
 
@@ -181,89 +172,110 @@ function line_color() {
 
 // Функция отрисовки маршрута
 function draw_marshr(n_qwery, NN_marshr) {
-    //if (NN_marshr == 0) update(n_qwery, NN_marshr);;
     // ID маршрута для построения
     //------------------------------------------------------------------------------------------------------------------------
     //var NN_marshr = 19; // ID маршрута для построения   *******************************************************************
     // ----------------------------------------------------------------------------------------------------------------------
-    // флаг запроса координат линии маршрута
-    if (array_marshr[NN_marshr] == 1) array_marshr[NN_marshr] = 2;
-    if (array_marshr[NN_marshr] == 3) removeLine(NN_marshr);
-    // if (NN_marshr != 0)
-    // {    
-    // for (i = 0; i < array_marshr.length; i++) {
-    //if (line[NN_marshr] == NN_marshr) removeLine(NN_marshr);
-    // }
-    // }
-    n_qwery = 3;
-
-    // подготовка данных для передачи запроса в "update.php"
-    var parameters = {
-        n_qwery: n_qwery,
-        NN_marshr: NN_marshr
-    };
-    $.getJSON("update.php", parameters)
-        .done(function(data, textStatus, jqXHR) {
-            // построение линии маршрута
-            var routesPath = new google.maps.Polyline({
-                path: ConvertCoordinates(data),
-                // цвет линии
-                strokeColor: line_color(), //"#FFF000",
-                // прозрачность линии
-                strokeOpacity: 0.5,
-                // толщина линии
-                strokeWeight: 5
-            });
-            routesPath.setMap(map);
-            array_marshr[NN_marshr] = 3;
+    
+    // если флаг, что линия есть, и видима
+    if (array_marshr[NN_marshr] == 2) n_qwery = 5;
+    // если флаг, что линия есть, но не показана
+    if (array_marshr[NN_marshr] == 1)
+        {
+            line[NN_marshr].setMap(map);
+            // флаг, что линия есть и видима
+            array_marshr[NN_marshr] = 2;
             // установить карту на такие координаты
             map.setCenter(new google.maps.LatLng(48.732644, 37.583284), 13);
             // после отрисовки увеличить карту
             map.setZoom(13);
-            line.push(routesPath);
-
-            n_qwery1 = 2;
-            // запрос на получение информации о маршруте от "articles.php"
-            $.getJSON("articles.php", {
-                    geo: NN_marshr,
-                    n_qwery1: n_qwery1
-                })
+        }
+    
+    // добавление линии
+    if (n_qwery == 3 && array_marshr[NN_marshr] == 0)
+    {
+            // подготовка данных для передачи запроса в "update.php"
+            var parameters = {
+                n_qwery: n_qwery,
+                NN_marshr: NN_marshr
+            };
+            $.getJSON("update.php", parameters)
                 .done(function(data, textStatus, jqXHR) {
+                    // построение линии маршрута
+                    var routesPath = new google.maps.Polyline({
+                        path: ConvertCoordinates(data),
+                        // цвет линии
+                        strokeColor: line_color(), //"#FFF000",
+                        // прозрачность линии
+                        strokeOpacity: 0.5,
+                        // толщина линии
+                        strokeWeight: 5
+                    });
+                    //line.push(routesPath);
+                    
+                    line[NN_marshr] = routesPath;
+                    
+                    line[NN_marshr].setMap(null);
+                    //line[NN_marshr].setVisible(false);
+                    
+                    // флаг, что линия есть, но не показана
+                    array_marshr[NN_marshr] = 1;
 
-                    // если информации нет
-                    if (data.length === 0) {
-                        showInfo(marker, "Нет информации.");
-                    }
-                    // иначе создание списка информации о маршруте
-                    else {
-                        var tooltip = "    8-)   "
-                        var ul = "<ul>";
-                        // шаблон списка информации о маршруте
-                        var template = _.template("<li><a href = 'routes.php?id=<%- id %>' target = '_blank'><%- type %> №<%- n_marshr %> (<%- nach_kon %>)</a></li>");
-                        //var template = _.template("<li><a href = '<%- id %>' target = '_blank'><%- type %> №<%- n_marshr %> (<%- nach_kon %>)</a></li>");
+                    // установить карту на такие координаты
+                    map.setCenter(new google.maps.LatLng(48.732644, 37.583284), 13);
+                    // после отрисовки увеличить карту
+                    map.setZoom(13);
+                   
+                    n_qwery1 = 2;
+                    // запрос на получение информации о маршруте от "articles.php"
+                    $.getJSON("articles.php", {
+                            geo: NN_marshr,
+                            n_qwery1: n_qwery1
+                        })
+                        .done(function(data, textStatus, jqXHR) {
 
-                        // создание списка с использованием шаблона
-                        for (var i = 0, n = data.length; i < n; i++) {
-                            ul += template({
-                                n_marshr: data[i].n_marshr,
-                                id: data[i].id,
-                                type: data[i].type,
-                                nach_kon: data[i].nach_kon
-                            });
-                        }
+                            // если информации нет
+                            if (data.length === 0) {
+                                showInfo(marker, "Нет информации.");
+                            }
+                            // иначе создание списка информации о маршруте
+                            else {
+                                var tooltip = "    8-)   "
+                                var ul = "<ul>";
+                                // шаблон списка информации о маршруте
+                                var template = _.template("<li><a href = 'routes.php?id=<%- id %>' target = '_blank'><%- type %> №<%- n_marshr %> (<%- nach_kon %>)</a></li>");
 
-                        ul += "</ul>";
+                                // создание списка с использованием шаблона
+                                for (var i = 0, n = data.length; i < n; i++) {
+                                    ul += template({
+                                        n_marshr: data[i].n_marshr,
+                                        id: data[i].id,
+                                        type: data[i].type,
+                                        nach_kon: data[i].nach_kon
+                                    });
+                                }
 
-                        tooltip += ul;
+                                ul += "</ul>";
 
-                        attachInfoWindow(routesPath, tooltip); //'<strong>Info about this area</strong>');
+                                tooltip += ul;
 
-                    }
+                                attachInfoWindow(line[NN_marshr], tooltip); 
+
+                            }
+                        });
+
+
                 });
-
-
-        });
-
+    }
+    else{
+        // спрятать линию
+        if (n_qwery == 5) 
+        {
+            array_marshr[NN_marshr] = 1;
+            line[NN_marshr].setMap(null);
+            n_qwery = 1;
+        }
+    }        
     // флаг запроса координат остановок маршрута
     //n_qwery = 2;       
 
@@ -292,43 +304,33 @@ function attachInfoWindow(routesPath, text_info) {
 
 // функция кнопки для проверки переключения различных параметров, можно убрать
 function n_stops_chn() {
-    if (NN_marshr == 0) {
-        n_qwery = 3;
-        //for (i = 0; i < 41; i++) {
-        NN_marshr = 10; //!!!!!!!!!!!!!!!!!!!!!!!!
-        n_stops = 0;
-        draw_marshr(n_qwery, NN_marshr)
-    } else {
-        n_qwery = 1;
-        NN_marshr = 0;
-        n_stops = 0;
-        removeLine("ALL");
-    }
+        for (i = 1; i < 42; i++) {
+            n_qwery = 5;
+            NN_marshr = i; 
+            n_stops = 0;
+            draw_marshr(n_qwery, NN_marshr)
+        } 
 }
 
-// Функция удаления линий маршрута
-function removeLine(NN_marshr) {
-    if (NN_marshr == "ALL") {
-        for (i = 1; i < line.length; i++) {
-            line[i].setMap(null); //or line[i].setVisible(false);
-        }
-        line.length = 0;
-        line = [];
-        // флаг запроса координат всех остановок
-        //NN_marshr = 0;
-        n_qwery = 1;
-        //update(n_qwery, NN_marshr);
-    } else {
-        for (i = 1; i < line.length; i++) {
-            if (i == NN_marshr) line[i].setMap(null); //or line[i].setVisible(false);
-        }
-
-
-        //line[NN_marshr].setMap(null);
-        array_marshr[NN_marshr] = 2;
-        n_qwery = 1;
-    }
-}
+// // Функция удаления линий маршрута
+// function removeLine(NN_marshr) {
+//     if (NN_marshr == "ALL") {
+//         for (i = 1; i < line.length; i++) {
+//             line[i].setMap(null);
+//             array_marshr[i] = 2;
+//             }
+//         NN_marshr = 0;
+//         n_qwery = 1;   
+//     } else {
+//         if (array_marshr[NN_marshr] == 3) {
+//             line[NN_marshr].setMap(null);
+//             //line[NN_marshr].setVisible(false);
+//             array_marshr[NN_marshr] = 2;
+//             NN_marshr = 0;
+//             n_qwery = 1;
+//             }
+//     }
+// }
 
 
 // функция созданив маркеров остановок
@@ -829,13 +831,8 @@ function update(n_qwery, NN_marshr) {
         };
         $.getJSON("update.php", parameters)
             .done(function(data, textStatus, jqXHR) {
-
-
                 // remove old markers from map
                 removeMarkers();
-
-
-
                 // add new markers to map
                 for (var i = 0; i < data.length; i++) {
                     addMarker(data[i]);
@@ -846,13 +843,13 @@ function update(n_qwery, NN_marshr) {
         //n_qwery = 3;
         for (i = 1; i < 42; i++) {
             NN_marshr = i; //!!!!!!!!!!!!!!!!!!!!!!!!
-            array_marshr[NN_marshr] = 1;
+            array_marshr[NN_marshr] = 0;
             n_qwery = 3;
             n_stops = 0;
             draw_marshr(n_qwery, NN_marshr)
         }
-        NN_marshr == "ALL";
-        removeLine(NN_marshr);
+        //NN_marshr == "ALL";
+        //removeLine(NN_marshr);
     }
 
 }
