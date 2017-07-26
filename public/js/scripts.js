@@ -139,14 +139,75 @@ $(function() {
     // instantiate map
     map = new google.maps.Map(canvas, options);
 
+    //mMap.setMyLocationEnabled(true);
+    //UiSettings.setMyLocationButtonEnabled(true);
+
     // configure UI once Google Map is idle (i.e., loaded)
     google.maps.event.addListenerOnce(map, "idle", configure);
 
-
-
-
+    //infoGeoFind();
     update(n_qwery, NN_marshr);
 });
+
+//=================================================================================================================
+// определение местоположения
+function infoGeoFind() {
+    if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            var infoGeo = new google.maps.InfoWindow({map: map});
+            infoGeo.setPosition(pos);
+            infoGeo.setContent('Вы находитесь здесь.');
+            map.setCenter(pos);
+            map.setZoom(16);
+          }, function() {
+            handleLocationError(true, infoGeo, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoGeo, map.getCenter());
+        }
+      
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+      }
+}
+
+//====================================================================================================================
+            // обратное геокодирование
+         //  geocoder.geocode({'location': latlngsum}, function(results, status) {
+        //   if (status === 'OK') {
+        //      if (results[1]) {
+        //       //map.setZoom(11);
+        //       //var marker = new google.maps.Marker({
+        //          //position: latlng,
+        //          //map: map
+        //       //});
+        //       var info_geocode = new google.maps.InfoWindow({
+        //               content: results[1].formatted_address,
+        //               position: new google.maps.LatLng(lat_cor+0.0008, lng_cor),
+        //           });
+        //       //infowindow.setContent(results[1].formatted_address);
+        //       info_geocode.open(map);
+        //       setTimeout(function () { info_geocode.close(); }, 5000);
+
+        //      } else {
+        //       window.alert('No results found');
+        //      }
+        //   } else {
+        //      window.alert('Geocoder failed due to: ' + status);
+        //   }
+        //  });
+
+
 
 // функция преобразования координат для построения линии маршрута
 function ConvertCoordinates(data) {
@@ -450,11 +511,8 @@ function addMarker(place) {
             markers[i].setMap(null);
         }
     }
-
-
     // сброс указателя маркера искомого остановки
     marker_find = 0;
-
 }
 
 
@@ -503,30 +561,7 @@ function configure() {
         var cor45 = lat_cor + ";" + lng_cor;
 
 
-        //  geocoder.geocode({'location': latlngsum}, function(results, status) {
-        //   if (status === 'OK') {
-        //      if (results[1]) {
-        //       //map.setZoom(11);
-        //       //var marker = new google.maps.Marker({
-        //          //position: latlng,
-        //          //map: map
-        //       //});
-        //       var info_geocode = new google.maps.InfoWindow({
-        //               content: results[1].formatted_address,
-        //               position: new google.maps.LatLng(lat_cor+0.0008, lng_cor),
-        //           });
-        //       //infowindow.setContent(results[1].formatted_address);
-        //       info_geocode.open(map);
-        //       setTimeout(function () { info_geocode.close(); }, 5000);
-
-        //      } else {
-        //       window.alert('No results found');
-        //      }
-        //   } else {
-        //      window.alert('Geocoder failed due to: ' + status);
-        //   }
-        //  });
-
+       
         // флаг запроса площади окружности
         n_qwery = 4;
         NN_marshr = cor45;
@@ -598,7 +633,6 @@ function configure() {
                 NN_marshr = 0;
             })
     });
-
 
 
     // в зависимости от масштаба карты отображать маркеры остановок или нет
