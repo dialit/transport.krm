@@ -1,0 +1,95 @@
+ul.list-inline > li {
+    width: 18%;
+}
+
+.navbar-nav > li > a {
+    cursor: pointer;
+}
+
+.panel-body {
+    padding-right: 0px;
+}
+
+/* Slide Menu Styles */
+/*
+.cbp-spmenu {
+    background: #fff;
+    border: 1px gray solid;
+    border-radius: 5px;
+}
+
+.cbp-spmenu a {
+    color: #777;
+    text-transform: uppercase;
+    font-size: 14px;
+    padding: 4px;
+    text-align: center;
+    margin: 1px;
+    font-weight: bold;
+}
+
+.cbp-spmenu a:hover {
+	background: #ccc;
+    border-radius: 50%;
+}
+
+.cbp-spmenu h3 {
+    font-size: 16px;
+    padding: 18px;
+    background: #F8F8F8;
+    color: #777;
+    font-weight: 400;
+}
+
+.cpb-menu-vertical {
+    width: 300px;
+}
+
+.cbp-spmenu-vertical a {
+    border-bottom: 1px solid #777;
+}*/
+
+.drawer--left .drawer-nav {
+    left: -240px;
+}
+
+.drawer-nav {
+    width: 240px;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+.drawer-nav h3 {
+    text-align: center;
+    color: #777;
+    font-size: 16px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.drawer nav li {
+    text-align: right;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.drawer-nav a {
+    color: #777;
+    border-bottom: 1px solid #777;
+    text-transform: uppercase;
+    padding: 4px;
+}
+
+.drawer-nav a:hover {
+    background: #ccc;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.drawer-hamburger {
+    width: 16px;
+}
+
+.drawer-hamburger-icon {
+        margin-top: 8px
+}
