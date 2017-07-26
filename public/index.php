@@ -107,7 +107,7 @@
                         <div class="form-group">
                             <input id="pac-input" class="form-controls" type="text" placeholder="Поиск адреса">
                             <input type="text" id="q" class="form-control" placeholder="Поиск остановки">
-                            <a href="javascript:n_stops_chn();" class="button btn btn-default" id="button" type="button">Отображение маршрутов</a>
+                            <a href="javascript:n_stops_chn();" class="button btn btn-default" id="button" type="button">Сброс маршрутов</a>
                         </div>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
