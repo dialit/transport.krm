@@ -666,7 +666,7 @@ function configure() {
 
         var autocomplete = new google.maps.places.Autocomplete(input);
         autocomplete.bindTo('bounds', map);
-        autocomplete.setTypes('address');
+        autocomplete.setTypes(['address']);
 
         var infowindow = new google.maps.InfoWindow();
         var marker = new google.maps.Marker({
