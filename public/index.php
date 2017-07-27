@@ -82,8 +82,25 @@
     </head>
     
     <body class="cbp-spmenu-push">
-    <header>
-       
+    
+        <div id="myModalBox" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">Заголовок модального окна</h4>
+                    </div>
+                    <div class="modal-body">
+                        Содержимое модального окна...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    <header>       
         <nav class="navbar navbar-default">
            
             <div class="container">
@@ -112,7 +129,7 @@
                         </div>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Обратная связь</a></li>
+                        <li><a href="#myModalBox" data-toggle="modal">Обратная связь</a></li>
                     </ul>
                 </div>
             </div>
