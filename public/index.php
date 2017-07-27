@@ -120,7 +120,12 @@
     </header>
     
     <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
-        <h3>Выберите вид транспорта</h3><a id="showLeft1" title="Свернуть"><i class="glyphicon glyphicon-chevron-left" aria-hidden="true"></i></a>
+       <div class="">
+            <a class="off" id="showLeft1" title="Свернуть">
+            <i class="glyphicon glyphicon-chevron-left" aria-hidden="true"></i>
+            </a>
+            <h3>Выберите вид транспорта</h3>
+       </div>
             <div class="panel-group" id="accordion">
                 
                 <!-- Маршрутки -->
@@ -140,7 +145,7 @@
                                     foreach ($taxies as $taxi) {
                                         $id = $taxi["id"];
                                         $ntaxi = $taxi["n_marshr"];    
-                                        echo "<li><a href=\"javascript:draw_marshr(3,$id)\" title=\"$ntaxi\">$ntaxi</a></li>";
+                                        echo "<li><a class=\"btn btn-default\" href=\"javascript:draw_marshr(3,$id)\" title=\"$ntaxi\">$ntaxi</a></li>";
                                     }
                                 ?>
                             </ul>
@@ -156,7 +161,7 @@
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse-2">Автобусы</a>
                         </h4>
                     </div>
-                    <div id="collapse-2" class="panel-collapse collapse in">
+                    <div id="collapse-2" class="panel-collapse collapse">
                         <!-- Содержимое Автобусов -->
                         <div class="panel-body">
                             <ul class="list-inline">
@@ -165,7 +170,7 @@
                                     foreach ($buses as $bus) {
                                         $id = $bus["id"];
                                         $nbus = $bus["n_marshr"];    
-                                        echo "<li><a href=\"javascript:draw_marshr(3,$id)\" title=\"$nbus\">$nbus</a></li>";
+                                        echo "<li><a class=\"btn btn-default\" href=\"javascript:draw_marshr(3,$id)\" title=\"$nbus\">$nbus</a></li>";
                                         
                                     }
                                 ?>
@@ -182,7 +187,7 @@
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse-3">Троллейбусы</a>
                         </h4>
                     </div>
-                    <div id="collapse-3" class="panel-collapse collapse in">
+                    <div id="collapse-3" class="panel-collapse collapse">
                         <!-- Содержимое Троллейбусов -->
                         <div class="panel-body">
                             <ul class="list-inline">
@@ -191,7 +196,7 @@
                                     foreach ($tbuses as $tbus) {
                                         $id = $tbus["id"];
                                         $ntbus = $tbus["n_marshr"];    
-                                        echo "<li><a href=\"javascript:draw_marshr(3,$id)\" title=\"$ntbus\">$ntbus</a></li>";
+                                        echo "<li><a class=\"btn btn-default\" href=\"javascript:draw_marshr(3,$id)\" title=\"$ntbus\">$ntbus</a></li>";
                                     }
                                 ?>
                             </ul>
@@ -243,6 +248,13 @@
 
         <!-- app's own JavaScript -->
         <script src="js/scripts.js"></script>
+        
+        <script type="text/javascript">
+            var button = document.getElementsByClassName("a.btn");
+            button.onclick = function(){
+                this.className = this.className == "" ? "visited" : "";
+            }
+        </script>
    
     </body>
 </html>

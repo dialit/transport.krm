@@ -106,7 +106,9 @@ html, body
 }
 
 ul.list-inline > li {
-    width: 18%;
+    width: 20%;
+    height: 34px;
+    padding: 1px;
 }
 
 .navbar-nav > li > a {
@@ -114,43 +116,54 @@ ul.list-inline > li {
 }
 
 .panel-body {
-    padding-right: 0px;
+    padding-right: 0;
 }
 
 /* Slide Menu Styles */
+
 .cbp-spmenu {
-    background: #fff;
-    border: 1px gray solid;
-    border-radius: 5px;
+    background: #ccc;
+}
+
+.cbp-spmenu h3 {
+    color: inherit;
+    font-size: 16px;
+    background: #fbfbfb;
+    padding: 10px;
 }
 
 .cbp-spmenu a {
     color: #777;
-    text-transform: uppercase;
-    font-size: 14px;
-    padding: 5px;
-    text-align: center;
-    margin: 1px;
-    font-weight: bold;
+    text-decoration: none;
 }
 
 .cbp-spmenu a:hover {
-	background: #ccc;
-  border-radius: 25%;
+    background: #ccc;
+    border-radius: 5px;
 }
 
-.cbp-spmenu h3 {
-    font-size: 16px;
-    padding: 18px;
-    background: #F8F8F8;
-    color: #777;
-    font-weight: 400;
+.cbp-spmenu a.btn:hover {
+    background: #ccc;
 }
 
-.cpb-menu-vertical {
-    width: 300px;
+.cbp-spmenu a.btn:visited {
+    background: #000;
+}
+
+
+.cbp-spmenu-left {
+    top: 72px;
+    border: 1px #e7e7e7 solid;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-top-right-radius: 5px;
+    border-top-right-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    -moz-border-bottom-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    text-align: center;
 }
 
 .cbp-spmenu-vertical a {
-    border-bottom: 1px solid #777;
+    padding: 4px 0 4px 0;
+    border-bottom: none;
 }
