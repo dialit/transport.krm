@@ -20,6 +20,7 @@ var arr = [];
 var circles = [];
 var info_cords = [];
 var tooltip;
+var col = 0;
 // ID номера маршрута для построения
 var NN_marshr = 0;
 // флаг отображения названий маркеров остановок
@@ -207,8 +208,6 @@ function infoGeoFind() {
         //   }
         //  });
 
-
-
 // функция преобразования координат для построения линии маршрута
 function ConvertCoordinates(data) {
     var arr = [];
@@ -223,13 +222,15 @@ function ConvertCoordinates(data) {
     //console.log(arr);
     return arr;
 }
+
 // генератор псевдослучайного цвета линии маршрута
 function line_color() {
-    var colors = ['#FF0000', '#000066', '#990099', '#CC00FF', '#00FF00', '#0000CC', '#FF33FF', '#00CCFF', '#FFCCCC', '#FFFF00'];
-    color = colors[Math.floor(Math.random() * 10)];
+    var colors = ['#000000', '#0000ee', '#ee3b3b', '#458b00', '990099', '#b23aee', '#1874cd', '#ee2c2c', '#ee3a8c', '#7a67ee'];
+    col = col+1;
+    if (col==11) col=1;
+    color = colors[col];
     return color;
 }
-
 
 // Функция отрисовки маршрута
 function draw_marshr(n_qwery, NN_marshr) {
@@ -515,7 +516,7 @@ function addMarker(place) {
             markers[i].setMap(null);
         }
     }
-    // сброс указателя маркера искомого остановки
+    // сброс указателя маркера искомой остановки
     marker_find = 0;
 }
 
@@ -542,7 +543,7 @@ function configure() {
     //});
 
 
-
+// при клике по карте рисуется окружность и запрос к базе о маршрутах в радиусе 500 метров
     google.maps.event.addListener(map, 'click', function(event) {
         //alert(event.latLng);
         var info_cord;
@@ -568,6 +569,7 @@ function configure() {
        
         // флаг запроса площади окружности
         n_qwery = 4;
+        // вместо ID маршрута передаём координаты центра окружности
         NN_marshr = cor45;
         //update(n_qwery, NN_marshr)
 
@@ -655,52 +657,54 @@ function configure() {
 
     //=======================================================================================================================    
     // Поиск адреса
-
-    //var input = document.getElementById('pac-input');
         var input = /** @type {!HTMLInputElement} */(
-            document.getElementById('pac-input'));
+        document.getElementById('pac-input'));
 
-        var types = document.getElementById('type-selector');
+        var defaultBounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(48.654686,37.392998),
+        new google.maps.LatLng(48.816359,37.694092));
+
+            var types = document.getElementById('type-selector');
         //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
         //map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
+        var options = {
+                    bounds: defaultBounds,
+                    types: ['address'],
+                    componentRestrictions: {country: 'ukr'}
+        };
 
-        var autocomplete = new google.maps.places.Autocomplete(input);
-        autocomplete.bindTo('bounds', map);
-        autocomplete.setTypes(['address']);
+        autocomplete = new google.maps.places.Autocomplete(input, options);
 
         var infowindow = new google.maps.InfoWindow();
-        var marker = new google.maps.Marker({
+        var markerPlace = new google.maps.Marker({
           map: map,
           anchorPoint: new google.maps.Point(0, -29)
         });
 
         autocomplete.addListener('place_changed', function() {
           infowindow.close();
-          marker.setVisible(false);
+          markerPlace.setVisible(false);
           var place = autocomplete.getPlace();
           if (!place.geometry) {
-            // User entered the name of a Place that was not suggested and
-            // pressed the Enter key, or the Place Details request failed.
-            window.alert("No details available for input: '" + place.name + "'");
+            window.alert("Нет информации по запросу: '" + place.name + "'");
             return;
           }
 
-          // If the place has a geometry, then present it on a map.
           if (place.geometry.viewport) {
             map.fitBounds(place.geometry.viewport);
           } else {
             map.setCenter(place.geometry.location);
-            map.setZoom(17);  // Why 17? Because it looks good.
+            map.setZoom(16); 
           }
-          marker.setIcon(/** @type {google.maps.Icon} */({
+          markerPlace.setIcon(/** @type {google.maps.Icon} */({
             url: place.icon,
             size: new google.maps.Size(71, 71),
             origin: new google.maps.Point(0, 0),
             anchor: new google.maps.Point(17, 34),
             scaledSize: new google.maps.Size(35, 35)
           }));
-          marker.setPosition(place.geometry.location);
-          marker.setVisible(true);
+          markerPlace.setPosition(place.geometry.location);
+          markerPlace.setVisible(true);
 
           var address = '';
           if (place.address_components) {
@@ -712,73 +716,10 @@ function configure() {
           }
 
           infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-          infowindow.open(map, marker);
+          infowindow.open(map, markerPlace);
         });
+
 }
-
-
-
-
-//     // Create the search box and link it to the UI element.
-//     var input = document.getElementById('pac-input');
-//     var searchBox = new google.maps.places.SearchBox(input);
-//     //map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
-
-//     // Bias the SearchBox results towards current map's viewport.
-//     map.addListener('bounds_changed', function() {
-//         searchBox.setBounds(map.getBounds());
-//     });
-
-//     var markersText = [];
-//     // Listen for the event fired when the user selects a prediction and retrieve
-//     // more details for that place.
-//     searchBox.addListener('places_changed', function() {
-//         var places = searchBox.getPlaces();
-
-//         if (places.length == 0) {
-//             return;
-//         }
-
-//         // Clear out the old markers.
-//         markersText.forEach(function(marker) {
-//             marker.setMap(null);
-//         });
-//         markersText = [];
-
-//         // For each place, get the icon, name and location.
-//         var bounds = new google.maps.LatLngBounds();
-//         places.forEach(function(place) {
-//             if (!place.geometry) {
-//                 console.log("Returned place contains no geometry");
-//                 return;
-//             }
-//             var icon = {
-//                 url: place.icon,
-//                 size: new google.maps.Size(71, 71),
-//                 origin: new google.maps.Point(0, 0),
-//                 anchor: new google.maps.Point(17, 34),
-//                 scaledSize: new google.maps.Size(25, 25)
-//             };
-
-//             // Create a marker for each place.
-//             markersText.push(new google.maps.Marker({
-//                 map: map,
-//                 icon: icon,
-//                 title: place.name,
-//                 position: place.geometry.location
-//             }));
-
-//             if (place.geometry.viewport) {
-//                 // Only geocodes have viewport.
-//                 bounds.union(place.geometry.viewport);
-//             } else {
-//                 bounds.extend(place.geometry.location);
-//             }
-//         });
-//         map.fitBounds(bounds);
-//     });
-// }
-
 //==========================================================================================================================    
 
 // configure typeahead
