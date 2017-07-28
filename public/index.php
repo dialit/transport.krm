@@ -22,63 +22,7 @@
         <link href="css/styles.css" rel="stylesheet"/>
 
         <title>Транспорт Краматорска</title>
-        <!-- <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      .controls {
-        margin-top: 10px;
-        border: 1px solid transparent;
-        border-radius: 2px 0 0 2px;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        height: 32px;
-        outline: none;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-      }
-
-      #pac-input {
-        background-color: #fff;
-        font-family: Roboto;
-        font-size: 15px;
-        font-weight: 250;
-        margin-left: 12px;
-        padding: 0 11px 0 13px;
-        text-overflow: ellipsis;
-        width: 250px;
-      }
-
-      #pac-input:focus {
-        border-color: #4d90fe;
-      }
-
-      .pac-container {
-        font-family: Roboto;
-      }
-
-      #type-selector {
-        color: #fff;
-        background-color: #4d90fe;
-        padding: 5px 11px 0px 11px;
-      }
-
-      #type-selector label {
-        font-family: Roboto;
-        font-size: 13px;
-        font-weight: 300;
-      }
-      #target {
-        width: 345px;
-      }
-    </style> -->
+        
     </head>
     
     <body class="cbp-spmenu-push">
@@ -103,7 +47,7 @@
     <header>       
         <nav class="navbar navbar-default">
            
-            <div class="container">
+            <div class="container-fluid">
                
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
@@ -124,8 +68,8 @@
                         <div class="form-group">
                             <input type="text" id="pac-input" class="form-control" placeholder="Поиск адреса">
                             <input type="text" id="q" class="form-control" placeholder="Поиск остановки">
-                            <a href="javascript:n_stops_chn();" class="button btn btn-default btn-xs" id="button" type="button">Сброс маршрутов</a>
-                            <a href="javascript:infoGeoFind();" class="button btn btn-default btn-xs" id="button" type="button">Местоположение</a>  
+                                <a href="javascript:n_stops_chn();" class="button btn btn-default btn-xs" id="buttonReset" type="button" onclick="resetMarshr()">Сброс маршрутов</a>
+                                <a href="javascript:infoGeoFind();" class="button btn btn-default btn-xs" id="button" type="button">Местоположение</a>  
                         </div>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
@@ -156,16 +100,18 @@
                     <div id="collapse-1" class="panel-collapse collapse in">
                         <!-- Содержимое Маршруток -->
                         <div class="panel-body">
-                            <ul class="list-inline">
-                               <?php
-                                    $taxies = query("SELECT id, n_marshr FROM `transport` WHERE type = 'Маршрутное такси'");
-                                    foreach ($taxies as $taxi) {
-                                        $id = $taxi["id"];
-                                        $ntaxi = $taxi["n_marshr"];    
-                                        echo "<li><a class=\"btn btn-default\" href=\"javascript:draw_marshr(3,$id)\" title=\"$ntaxi\">$ntaxi</a></li>";
-                                    }
-                                ?>
-                            </ul>
+                            <div id="ButtonsNmarshr">    
+                                <ul class="list-inline">
+                                <?php
+                                        $taxies = query("SELECT id, n_marshr FROM `transport` WHERE type = 'Маршрутное такси'");
+                                        foreach ($taxies as $taxi) {
+                                            $id = $taxi["id"];
+                                            $ntaxi = $taxi["n_marshr"];    
+                                            echo "<li><a class=\"btn btn-default\" href=\"javascript:draw_marshr(3,$id)\" title=\"$ntaxi\">$ntaxi</a></li>";
+                                        }
+                                    ?>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -181,17 +127,19 @@
                     <div id="collapse-2" class="panel-collapse collapse">
                         <!-- Содержимое Автобусов -->
                         <div class="panel-body">
-                            <ul class="list-inline">
-                               <?php
-                                    $buses = query("SELECT id, n_marshr FROM `transport` WHERE type = 'Автобус'");
-                                    foreach ($buses as $bus) {
-                                        $id = $bus["id"];
-                                        $nbus = $bus["n_marshr"];    
-                                        echo "<li><a class=\"btn btn-default\" href=\"javascript:draw_marshr(3,$id)\" title=\"$nbus\">$nbus</a></li>";
-                                        
-                                    }
-                                ?>
-                            </ul>
+                            <div id="ButtonsNmarshr">
+                                <ul class="list-inline">
+                                <?php
+                                        $buses = query("SELECT id, n_marshr FROM `transport` WHERE type = 'Автобус'");
+                                        foreach ($buses as $bus) {
+                                            $id = $bus["id"];
+                                            $nbus = $bus["n_marshr"];    
+                                            echo "<li><a class=\"btn btn-default\" href=\"javascript:draw_marshr(3,$id)\" title=\"$nbus\">$nbus</a></li>";
+                                            
+                                        }
+                                    ?>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -207,16 +155,18 @@
                     <div id="collapse-3" class="panel-collapse collapse">
                         <!-- Содержимое Троллейбусов -->
                         <div class="panel-body">
-                            <ul class="list-inline">
-                               <?php
-                                    $tbuses = query("SELECT id, n_marshr FROM `transport` WHERE type = 'Троллейбус'");
-                                    foreach ($tbuses as $tbus) {
-                                        $id = $tbus["id"];
-                                        $ntbus = $tbus["n_marshr"];    
-                                        echo "<li><a class=\"btn btn-default\" href=\"javascript:draw_marshr(3,$id)\" title=\"$ntbus\">$ntbus</a></li>";
-                                    }
-                                ?>
-                            </ul>
+                            <div id="ButtonsNmarshr">
+                                <ul class="list-inline">
+                                <?php
+                                        $tbuses = query("SELECT id, n_marshr FROM `transport` WHERE type = 'Троллейбус'");
+                                        foreach ($tbuses as $tbus) {
+                                            $id = $tbus["id"];
+                                            $ntbus = $tbus["n_marshr"];    
+                                            echo "<li><a class=\"btn btn-default\" href=\"javascript:draw_marshr(3,$id)\" title=\"$ntbus\">$ntbus</a></li>";
+                                        }
+                                    ?>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -229,12 +179,12 @@
     </nav>
 
 
-        <!-- fill viewport -->
-        <div class="container">
+            <!-- fill viewport -->
+        <div class="container-map">
             
              <!-- https://developers.google.com/maps/documentation/javascript/tutorial -->
-            <div id="map-canvas"></div>               
-
+            <div id="map-canvas" class="height: 90%"></div>               
+            
         </div>
 
         <!-- https://developers.google.com/maps/documentation/javascript/ -->
@@ -267,11 +217,13 @@
         <script src="js/scripts.js"></script>
         
         <script type="text/javascript">
-            var button = document.getElementsByClassName("a.btn");
-            button.onclick = function(){
-                this.className = this.className == "" ? "visited" : "";
-            }
-        </script>
-   
+            $(document).ready(function(){
+            
+            $("#ButtonsNmarshr .btn").click(function(){
+                <!-- Метод "toogle" -->
+                $(this).button('toggle');
+            });
+            });
+           </script>  
     </body>
 </html>
