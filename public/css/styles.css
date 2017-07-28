@@ -1,13 +1,3 @@
-/**
- * styles.css
- *
- * Computer Science 50
- * Problem Set 8
- *
- * Global CSS.
- */
-
-/* allow map to fill viewport */
 html, body
 {
     /* height of these elements */
@@ -23,8 +13,10 @@ html, body
     padding: 0;
 }
 
-.container {
-    height: 90%;
+.container-map {
+    height: 93% !important;
+    margin: 0px !important;
+    width: 100% !important;
 }
 
 #map-canvas {
