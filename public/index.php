@@ -27,28 +27,61 @@
     
     <body class="cbp-spmenu-push">
     
+        <!-- Modal -->
         <div id="myModalBox" class="modal fade">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" aria-label="Закрыть">&times;</button>
                         <h4 class="modal-title">Информация о маршруте</h4>
                     </div>
                     <div class="modal-body">
-                        
+                        <div id="routeInfoContent"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+<!--                        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>-->
                     </div>
                 </div>
             </div>
         </div>
         
-    <header>       
+       <!-- Feedback  Modal-->
+       <div id="feedback" class="modal fade feedback" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="ModalLabel">
+           <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="gridSystemModalLabel">Форма обратной связи</h4>
+                  </div>
+                   <div class="modal-body">
+                       <div class="row">
+                           <div class="col-md-12">
+                               <div class="hide" id="respons"></div>
+                               <form method="POST" action="mail.php" id="mailForm">
+                                   <div class="form-group">
+                                       <label for="labelEmail">Email</label>
+                                       <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
+                                   </div>
+                                   <div class="form-group">
+                                       <label for="labelPhone">Телефон</label>
+                                       <input type="text" class="form-control" name="mobile" id="mobile" placeholder="+38XXXXXXXXXX" required>
+                                   </div>
+                                   <div class="form-group">
+                                       <label for="labelText">Текст</label>
+                                       <textarea name="text" id="text" cols="30" rows="10" class="form-control"></textarea>
+                                   </div>
+                                   <button type="submit" class="btn btn-primary">Отправить</button>
+                               </form>
+                           </div>
+                       </div>
+                   </div><!-- End of Modal body -->
+               </div><!-- End of Modal content -->
+           </div><!-- End of Modal dialog -->
+       </div><!-- End of Modal -->
+        
+        <header>       
         <nav class="navbar navbar-default">
-           
-            <div class="container-fluid">
-               
+             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
                         <span class="sr-only">Переключение навигации</span>
@@ -61,19 +94,20 @@
                 
                 <div class="collapse navbar-collapse" id="navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li><a id="showLeft">Маршруты</a></li>
+                        <li><button class="btn btn-default" id="showLeft">Маршруты</button></li>
 <!--                        <li><a id="showRight">Link</a></li>-->
                     </ul>
                     <form class="navbar-form navbar-left" id="form" role="form">
                         <div class="form-group">
                             <input type="text" id="pac-input" class="form-control" placeholder="Поиск адреса">
                             <input type="text" id="q" class="form-control" placeholder="Поиск остановки">
-                                <a href="javascript:n_stops_chn();" class="button btn btn-default btn-xs" id="buttonReset" type="button" >Сброс маршрутов</a>
-                                <a href="javascript:infoGeoFind();" class="button btn btn-default btn-xs" id="button" type="button">Местоположение</a>  
+                                <a href="javascript:n_stops_chn();" class="button btn btn-default btn-xs" id="buttonReset" type="button" onclick="resetMarshr()">Сброс маршрутов</a>
+                                <a href="javascript:infoGeoFind();" class="button btn btn-default btn-xs" id="button" type="button">Местоположение</a>
+<!--                                <span>Сегодня: <? echo date('d.m.Y H:i'); ?></span>  -->
                         </div>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#myModalBox" data-toggle="modal">Обратная связь</a></li>
+                        <li><button class="btn btn-default" data-toggle="modal" data-target=".feedback">Обратная связь</button></li>
                     </ul>
                 </div>
             </div>
@@ -107,7 +141,7 @@
                                         foreach ($taxies as $taxi) {
                                             $id = $taxi["id"];
                                             $ntaxi = $taxi["n_marshr"];    
-                                            echo "<li><a class=\"btn btn-default\" href=\"javascript:draw_marshr(3,$id)\" title=\"$ntaxi\">$ntaxi</a></li>";
+                                            echo "<li><a role=\"button\" data-toggle=\"tooltip\" title=\"$ntaxi\" class=\"btn btn-default\" href=\"javascript:draw_marshr(3,$id)\" >$ntaxi</a></li>";
                                         }
                                     ?>
                                 </ul>
@@ -135,7 +169,6 @@
                                             $id = $bus["id"];
                                             $nbus = $bus["n_marshr"];    
                                             echo "<li><a class=\"btn btn-default\" href=\"javascript:draw_marshr(3,$id)\" title=\"$nbus\">$nbus</a></li>";
-                                            
                                         }
                                     ?>
                                 </ul>
@@ -170,21 +203,40 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Трамваи -->
+                <div class="panel panel-default">
+                    <!-- Заголовок -->
+                    <div class="panel-heading">
+                        <h4 class="panel-title text-center">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-4">Трамваи</a>
+                        </h4>
+                    </div>
+                    <div id="collapse-4" class="panel-collapse collapse">
+                        <!-- Содержимое Трамваев -->
+                        <div class="panel-body">
+                            <div id="ButtonsNmarshr">
+                                <ul class="list-inline">
+                                <?php
+                                        $trams = query("SELECT id, n_marshr FROM `transport` WHERE type = 'Трамвай'");
+                                        foreach ($trams as $tram) {
+                                            $id = $tram["id"];
+                                            $ntram = $tram["n_marshr"];    
+                                            echo "<li><a class=\"btn btn-default\" href=\"javascript:draw_marshr(3,$id)\" title=\"$ntram\">$ntram</a></li>";
+                                        }
+                                    ?>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
     </nav>
-    
-    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
-        <h3>Информация о маршруте</h3>
-        <?php var_dump($right); ?>
-    </nav>
-
-
             <!-- fill viewport -->
         <div class="container-map">
             
              <!-- https://developers.google.com/maps/documentation/javascript/tutorial -->
             <div id="map-canvas" class="height: 90%"></div>               
-            
         </div>
 
         <!-- https://developers.google.com/maps/documentation/javascript/ -->
@@ -198,6 +250,9 @@
 
         <!-- http://getbootstrap.com/ -->
         <script src="js/bootstrap.min.js"></script>
+        
+        <!-- Подключения скрипта control-modal.js к странице -->
+<!--        <script src="js/control-modal.js"></script>-->
 
         <!-- http://underscorejs.org/ -->
         <script src="js/underscore-min.js"></script>
@@ -212,16 +267,11 @@
 				
 		<!-- Slide Push Menu JavaScript -->
 		<script src="js/spmenu.js"></script>
+		
+        <!-- Feedback JavaScript -->
+		<script src="js/feedback.js"></script>
 
         <!-- app's own JavaScript -->
         <script src="js/scripts.js"></script>
-        
-        <!-- <script type="text/javascript">
-            $(document).ready(function(){
-            $("#ButtonsNmarshr .btn").click(function(){
-                $(this).button('toggle');
-            });
-            });
-           </script>   -->
     </body>
 </html>
