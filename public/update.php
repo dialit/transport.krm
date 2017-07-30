@@ -104,7 +104,11 @@
             
         //exit;
         }
-        
+    // запрос координат остановки из модального окна
+    if ($_GET["n_qwery"] == 5)
+    {
+        $rows = query("SELECT * FROM stops WHERE `id` = ?",$_GET["NN_marshr"]);
+    }        
     
     // output places as JSON (pretty-printed for debugging convenience)
     header("Content-type: application/json");

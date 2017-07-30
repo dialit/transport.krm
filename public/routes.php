@@ -6,7 +6,8 @@
     // запрашивать базу данных transport для пользователя
 
     $rows = query("SELECT * FROM `transport` WHERE `id` = ?",$_GET["id"]);
-    $k=$_GET["id"];
+    $k = str_replace('\'','',$_GET["id"] );
+    //var_dump($k);
     $transport = $rows[0];
     foreach ($rows as $row){
         $front = $row["front"];//список id остановок по маршруту
@@ -46,7 +47,7 @@
            <div class="col-md-12">
                <h3><?= $transport["type"] ?>&nbsp;№<?= $transport["n_marshr"] ?></h3>
                <p><strong>Описание</strong>&nbsp;|&nbsp;
-                <a href="index.php" title="Вернуться на карту">Схема маршрута</a>&nbsp;|&nbsp;
+                <a href='javascript:draw_marshr(3,<?=$k?>)' title="Вернуться на карту">Схема маршрута</a>&nbsp;|&nbsp;
                 <a href="kniga.php?id=<?=$k?>&c=" title="Отзывы о сервисе на маршруте...">Книга жалоб и предложений</a>&nbsp;|&nbsp;
                 <a href="news" title="Посмотреть все новости, связанные с данным маршрутом...">Новости по теме</a></p>
            </div>
@@ -84,10 +85,10 @@
                                        $idstops = query("SELECT `id` FROM `stops` WHERE `stops_name` = ?", $value);
                                        $stops = $idstops[0]["id"];
                                        //выводим html ссылки под названием остановки
-                                       print "<a href='$stops' title='Показать остановку'>";
+                                       echo "<a href='javascript:update(5, $stops)' title='Показать остановку'>";
                                        //прописуем название остановки
                                        echo "$value";
-                                       print "</a>, ";
+                                       echo "</a>, ";
                                     }
                                     unset($value);
                                 ?>
@@ -98,10 +99,10 @@
                                        $idstops = query("SELECT `id` FROM `stops` WHERE `stops_name` = ?", $value);
                                        $stops = $idstops[0]["id"];
                                        //выводим html ссылки под названием остановки
-                                       print "<a href='$stops' title='Показать остановку'>";
+                                       echo "<a href='javascript:update(5, $stops)' title='Показать остановку'>";
                                        //прописуем название остановки
                                        echo "$value";
-                                       print "</a>, ";
+                                        echo "</a>, ";
                                    }
                                    unset($value);
                                 ?>
