@@ -4,17 +4,35 @@
     require("../includes/config.php"); 
 
     // запрашивать базу данных transport для пользователя
-
-    $rows = query("SELECT * FROM `transport` WHERE `id` = ?",$_GET["id"]);
     $k = str_replace('\'','',$_GET["id"] );
+    $rows = query("SELECT `id`,`type`,`n_marshr`,`nach_kon`,`cena`,`int_dvij`,`rej_raboty`,`vr_raboty`,`front`,`back`,`firma`,`rasp` FROM `transport` WHERE `id` = ?",$k);
+    
     //var_dump($k);
     $transport = $rows[0];
-    foreach ($rows as $row){
-        $front = $row["front"];//список id остановок по маршруту
-        $back = $row["back"];//список id остановок по маршруту в обратном направлении
+    $front = $rows[0]["front"];//список id остановок по маршруту
+    //var_dump($front);
+    $back = $rows[0]["back"];//список id остановок по маршруту в обратном направлении
+    //var_dump($back);
+    
+    //создаём массив из front  
+    $tok = strtok($front, ",");
+    $mas_front = [];
+    while ($tok !== false) 
+    {
+        $mas_front[]=$tok;
+        $tok = strtok(",");
     }
-    unset($rows);//очистить переменную
-    unset($row);
+    //создаём массив из back  
+    $tok = strtok($back, ",");
+    $mas_back = [];
+    while ($tok !== false) 
+    {
+        $mas_back[]=$tok;
+        $tok = strtok(",");
+    }
+    //var_dump($mas_front);
+    //var_dump($mas_back);
+    
 ?> 
 
 <div class="container-fluid">
@@ -57,11 +75,15 @@
                         <td>
                                 <?php 
                                     //перебираем массив с id остановок и запрашиваем по ним названия остановок из базы
-                                    foreach ($front as $value){
-	    				                $namestops = query("SELECT `stops_name` FROM `stops` WHERE `id` = ?", $value);
-	    				                $names = $namestops[0]["id"];
+                                    //var_dump($front);
+                                    foreach ($mas_front as $value){
+	    				                //var_dump($value);
+                                        $namestops = query("SELECT `id`,`stops_name` FROM `stops` WHERE `id` = ?", $value);
+	    				                //var_dump($namestops);
+                                        $id = $namestops[0]["id"];
+                                        $names = $namestops[0]["stops_name"];
 	                                    //выводим названия остановок и html ссылки под названием остановки c id остановок
-	                                    echo "<a href='javascript:update(5, $value)' title='Показать остановку'>$names,</a>";
+	                                    echo "<a href='javascript:update(5, $id)' title='Показать остановку'>$names,</a>";
                                     }
                                     unset($value);
                                 ?>
@@ -69,11 +91,12 @@
                        <td>
                                 <?php 
                                     //перебираем массив с id остановок и запрашиваем по ним названия остановок из базы
-                                    foreach ($back as $value){
-	    				                $namestops = query("SELECT `stops_name` FROM `stops` WHERE `id` = ?", $value);
-	    				                $names = $namestops[0]["id"];
-	                                    //выводим названия остановок и html ссылки под названием остановки c id остановок
-	                                    echo "<a href='javascript:update(5, $value)' title='Показать остановку'>$names,</a>";
+                                    foreach ($mas_back as $value){
+	    				                $namestops = query("SELECT `id`,`stops_name` FROM `stops` WHERE `id` = ?", $value);
+	    				                $id = $namestops[0]["id"];
+	                                    $names = $namestops[0]["stops_name"];
+                                        //выводим названия остановок и html ссылки под названием остановки c id остановок
+	                                    echo "<a href='javascript:update(5, $id)' title='Показать остановку'>$names,</a>";
                                     }
                                     unset($value);
                                 ?>
