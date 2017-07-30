@@ -101,8 +101,8 @@
                         <div class="form-group">
                             <input type="text" id="pac-input" class="form-control" placeholder="Поиск адреса">
                             <input type="text" id="q" class="form-control" placeholder="Поиск остановки">
-                                <a href="javascript:n_stops_chn();" class="button btn btn-default btn-xs" id="buttonReset" type="button">Сброс></a>
-                                <a href="javascript:infoGeoFind();" class="button btn btn-default btn-xs" id="button" type="button">GPS</a>
+                                <a href="javascript:n_stops_chn();" class="button btn btn-default btn-xs" id="buttonReset" type="button" onclick="resetMarshr()">Сброс маршрутов</a>
+                                <a href="javascript:infoGeoFind();" class="button btn btn-default btn-xs" id="button" type="button">Местоположение</a>
 <!--                                <span>Сегодня: <? echo date('d.m.Y H:i'); ?></span>  -->
                         </div>
                     </form>
@@ -137,11 +137,12 @@
                             <div id="ButtonsNmarshr">    
                                 <ul class="list-inline">
                                 <?php
-                                        $taxies = query("SELECT id, n_marshr FROM `transport` WHERE type = 'Маршрутное такси'");
+                                        $taxies = query("SELECT * FROM `transport` WHERE type = 'Маршрутное такси'");
                                         foreach ($taxies as $taxi) {
                                             $id = $taxi["id"];
-                                            $ntaxi = $taxi["n_marshr"];    
-                                            echo "<li><a role=\"button\" data-toggle=\"tooltip\" title=\"$ntaxi\" class=\"btn btn-default\" href=\"javascript:draw_marshr(3,$id)\" >$ntaxi</a></li>";
+                                            $ntaxi = $taxi["n_marshr"];
+                                            $t = $taxi["nach_kon"];
+                                            echo "<li><a role=\"button\" data-toggle=\"tooltip\" title=\"$t\" class=\"btn btn-default\" href=\"javascript:draw_marshr(3,$id)\" >$ntaxi</a></li>";
                                         }
                                     ?>
                                 </ul>
@@ -164,11 +165,12 @@
                             <div id="ButtonsNmarshr">
                                 <ul class="list-inline">
                                 <?php
-                                        $buses = query("SELECT id, n_marshr FROM `transport` WHERE type = 'Автобус'");
+                                        $buses = query("SELECT * FROM `transport` WHERE type = 'Автобус'");
                                         foreach ($buses as $bus) {
                                             $id = $bus["id"];
-                                            $nbus = $bus["n_marshr"];    
-                                            echo "<li><a class=\"btn btn-default\" href=\"javascript:draw_marshr(3,$id)\" title=\"$nbus\">$nbus</a></li>";
+                                            $nbus = $bus["n_marshr"];
+                                            $t = $taxi["nach_kon"];
+                                            echo "<li><a role=\"button\" data-toggle=\"tooltip\" title=\"$t\" class=\"btn btn-default\" href=\"javascript:draw_marshr(3,$id)\" title=\"$nbus\">$nbus</a></li>";
                                         }
                                     ?>
                                 </ul>
@@ -191,11 +193,12 @@
                             <div id="ButtonsNmarshr">
                                 <ul class="list-inline">
                                 <?php
-                                        $tbuses = query("SELECT id, n_marshr FROM `transport` WHERE type = 'Троллейбус'");
+                                        $tbuses = query("SELECT * FROM `transport` WHERE type = 'Троллейбус'");
                                         foreach ($tbuses as $tbus) {
                                             $id = $tbus["id"];
-                                            $ntbus = $tbus["n_marshr"];    
-                                            echo "<li><a class=\"btn btn-default\" href=\"javascript:draw_marshr(3,$id)\" title=\"$ntbus\">$ntbus</a></li>";
+                                            $ntbus = $tbus["n_marshr"];
+                                            $t = $taxi["nach_kon"];    
+                                            echo "<li><a role=\"button\" data-toggle=\"tooltip\" title=\"$t\" class=\"btn btn-default\" href=\"javascript:draw_marshr(3,$id)\" title=\"$ntbus\">$ntbus</a></li>";
                                         }
                                     ?>
                                 </ul>
@@ -218,11 +221,12 @@
                             <div id="ButtonsNmarshr">
                                 <ul class="list-inline">
                                 <?php
-                                        $trams = query("SELECT id, n_marshr FROM `transport` WHERE type = 'Трамвай'");
+                                        $trams = query("SELECT * FROM `transport` WHERE type = 'Трамвай'");
                                         foreach ($trams as $tram) {
                                             $id = $tram["id"];
-                                            $ntram = $tram["n_marshr"];    
-                                            echo "<li><a class=\"btn btn-default\" href=\"javascript:draw_marshr(3,$id)\" title=\"$ntram\">$ntram</a></li>";
+                                            $ntram = $tram["n_marshr"];
+                                            $t = $taxi["nach_kon"];    
+                                            echo "<li><a role=\"button\" data-toggle=\"tooltip\" title=\"$t\" class=\"btn btn-default\" href=\"javascript:draw_marshr(3,$id)\" title=\"$ntram\">$ntram</a></li>";
                                         }
                                     ?>
                                 </ul>
@@ -238,6 +242,8 @@
              <!-- https://developers.google.com/maps/documentation/javascript/tutorial -->
             <div id="map-canvas" class="height: 90%"></div>               
         </div>
+        
+        <footer></footer>
 
         <!-- https://developers.google.com/maps/documentation/javascript/ -->
         <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDddUMqAgSPHOym9KhggEoONdiHPQwUxpE&libraries=places"></script>
