@@ -28,14 +28,14 @@
     <body class="cbp-spmenu-push">
     
         <div id="myModalBox" class="modal fade">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title">Заголовок модального окна</h4>
+                        <h4 class="modal-title">Информация о маршруте</h4>
                     </div>
                     <div class="modal-body">
-                        Содержимое модального окна...
+                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
@@ -68,7 +68,7 @@
                         <div class="form-group">
                             <input type="text" id="pac-input" class="form-control" placeholder="Поиск адреса">
                             <input type="text" id="q" class="form-control" placeholder="Поиск остановки">
-                                <a href="javascript:n_stops_chn();" class="button btn btn-default btn-xs" id="buttonReset" type="button" onclick="resetMarshr()">Сброс маршрутов</a>
+                                <a href="javascript:n_stops_chn();" class="button btn btn-default btn-xs" id="buttonReset" type="button" >Сброс маршрутов</a>
                                 <a href="javascript:infoGeoFind();" class="button btn btn-default btn-xs" id="button" type="button">Местоположение</a>  
                         </div>
                     </form>
@@ -216,14 +216,12 @@
         <!-- app's own JavaScript -->
         <script src="js/scripts.js"></script>
         
-        <script type="text/javascript">
+        <!-- <script type="text/javascript">
             $(document).ready(function(){
-            
             $("#ButtonsNmarshr .btn").click(function(){
-                <!-- Метод "toogle" -->
                 $(this).button('toggle');
             });
             });
-           </script>  
+           </script>   -->
     </body>
 </html>
