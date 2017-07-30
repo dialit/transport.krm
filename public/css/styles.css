@@ -108,7 +108,7 @@ ul.list-inline > li {
 }
 
 .panel-body {
-    padding-right: 0;
+    padding-right: 5px;
 }
 
 /* Slide Menu Styles */
