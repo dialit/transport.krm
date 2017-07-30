@@ -362,7 +362,7 @@ function n_stops_chn() {
     removeLine();
     removeMarkersFind();
     // установить карту на такие координаты
-    map.setCenter(originalMapCenter);
+    map.setCenter(new google.maps.LatLng(48.732644, 37.583284), 13);
     // после увеличить карту
     map.setZoom(13);
 }
@@ -423,7 +423,7 @@ function addMarker(place) {
             //anchor: new google.maps.Point(0, 0)
         };
 
-        var markerFind = new google.maps.Marker({
+        var marker = new google.maps.Marker({
             icon: "/img/marker.png",
             position: new google.maps.LatLng(place.latitude, place.longitude),
             animation: google.maps.Animation.BOUNCE,
@@ -436,8 +436,8 @@ function addMarker(place) {
                 //title: place.id + ", " + place.latitude + ", " + place.longitude
         });
 
-        markersFind.push(markerFind);
-        markerFind.setMap(map);
+        markersFind.push(marker);
+        marker.setMap(map);
         map.setCenter(new google.maps.LatLng(place.latitude, place.longitude), 17);
         map.setZoom(17);
         $('#myModalBox').hide();
@@ -463,7 +463,7 @@ function addMarker(place) {
 
     // создание списка маршрутов проходящих через остановку
     google.maps.event.addListener(marker, "click", function() {
-        showInfo(marker);
+        //showInfo(marker);
         n_qwery1 = 1;
         // запрос на получение списка маршрутов от "articles.php"
         $.getJSON("articles.php", {
@@ -760,7 +760,7 @@ $("#q").on("typeahead:selected", function(eventObject, suggestion, name) {
 
 // hide info window when text box has focus
 $("#q").focus(function(eventData) {
-    info.close();
+    hideInfo();
 });
 
 // re-enable ctrl- and right-clicking (and thus Inspect Element) on Google Map
@@ -775,6 +775,12 @@ document.addEventListener("contextmenu", function(event) {
 $("#q").focus();
 
 
+/**
+ * Hides info window.
+ */
+function hideInfo() {
+    info.close();
+}
 
 // Удаление всех маркеров
 

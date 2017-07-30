@@ -101,8 +101,8 @@
                         <div class="form-group">
                             <input type="text" id="pac-input" class="form-control" placeholder="Поиск адреса">
                             <input type="text" id="q" class="form-control" placeholder="Поиск остановки">
-                                <a href="javascript:n_stops_chn();" class="button btn btn-default btn-xs" id="buttonReset" type="button" onclick="resetMarshr()">Сброс маршрутов</a>
-                                <a href="javascript:infoGeoFind();" class="button btn btn-default btn-xs" id="button" type="button">Местоположение</a>
+                                <a href="javascript:n_stops_chn();" class="button btn btn-default btn-xs" id="buttonReset" type="button">Сброс></a>
+                                <a href="javascript:infoGeoFind();" class="button btn btn-default btn-xs" id="button" type="button">GPS</a>
 <!--                                <span>Сегодня: <? echo date('d.m.Y H:i'); ?></span>  -->
                         </div>
                     </form>
