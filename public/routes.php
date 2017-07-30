@@ -13,33 +13,8 @@
         $front = $row["front"];//список id остановок по маршруту
         $back = $row["back"];//список id остановок по маршруту в обратном направлении
     }
-    $mfront = explode(",",$front);
-    $mback = explode(",",$back);
     unset($rows);//очистить переменную
     unset($row);
-    
-    //формируем перечень названий остановок по маршруту
-    $i=0;
-    foreach ($mfront as $value){
-        $rowsfront = query("SELECT stops_name FROM stops WHERE `id` IN($value)");
-        $sumfront[$i] = $rowsfront[0]["stops_name"];//массив с названиями остановок
-        $i++;
-    }
-    //var_dump($sumfront);
-    unset($value);
-    
-    //$fs_separated = implode(", ",$sumfront);//строка с названиями остановок
-    //формируем перечень названий остановок по маршруту
-    $i=0;
-    foreach ($mback as $value){
-        //var_dump($value);
-        $rowsback = query("SELECT stops_name FROM stops WHERE `id` IN($value)");
-        //var_dump($rowsfront);
-        $sumback[$i] = $rowsback[0]["stops_name"];//массив с названиями остановок
-        $i++;
-    }
-    unset($value);
-    //$bs_separated = implode(", ",$sumback);//строка с названиями остановок
 ?> 
 
 <div class="container-fluid">
@@ -81,30 +56,26 @@
                     <tr>
                         <td>
                                 <?php 
-                                    foreach ($sumfront as $value){
-                                       $idstops = query("SELECT `id` FROM `stops` WHERE `stops_name` = ?", $value);
-                                       $stops = $idstops[0]["id"];
-                                       //выводим html ссылки под названием остановки
-                                       echo "<a href='javascript:update(5, $stops)' title='Показать остановку'>";
-                                       //прописуем название остановки
-                                       echo "$value";
-                                       echo "</a>, ";
+                                    //перебираем массив с id остановок и запрашиваем по ним названия остановок из базы
+                                    foreach ($front as $value){
+	    				                $namestops = query("SELECT `stops_name` FROM `stops` WHERE `id` = ?", $value);
+	    				                $names = $namestops[0]["id"];
+	                                    //выводим названия остановок и html ссылки под названием остановки c id остановок
+	                                    echo "<a href='javascript:update(5, $value)' title='Показать остановку'>$names,</a>";
                                     }
                                     unset($value);
                                 ?>
                        </td>
                        <td>
                                 <?php 
-                                   foreach ($sumback as $value){
-                                       $idstops = query("SELECT `id` FROM `stops` WHERE `stops_name` = ?", $value);
-                                       $stops = $idstops[0]["id"];
-                                       //выводим html ссылки под названием остановки
-                                       echo "<a href='javascript:update(5, $stops)' title='Показать остановку'>";
-                                       //прописуем название остановки
-                                       echo "$value";
-                                        echo "</a>, ";
-                                   }
-                                   unset($value);
+                                    //перебираем массив с id остановок и запрашиваем по ним названия остановок из базы
+                                    foreach ($back as $value){
+	    				                $namestops = query("SELECT `stops_name` FROM `stops` WHERE `id` = ?", $value);
+	    				                $names = $namestops[0]["id"];
+	                                    //выводим названия остановок и html ссылки под названием остановки c id остановок
+	                                    echo "<a href='javascript:update(5, $value)' title='Показать остановку'>$names,</a>";
+                                    }
+                                    unset($value);
                                 ?>
                        </td>
                     </tr>
