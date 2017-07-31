@@ -13,12 +13,12 @@ var menuLeft = document.getElementById('cbp-spmenu-s1'),
 showLeft.onclick = function() {
     classie.toggle(this, 'active');
     classie.toggle(menuLeft, 'cbp-spmenu-open');
-    disableOther('showLeft');
+//    disableOther('showLeft');
 };
 showLeft1.onclick = function() {
     classie.toggle(this, 'active');
     classie.toggle(menuLeft, 'cbp-spmenu-open');
-    disableOther('showLeft');
+//    disableOther('showLeft1');
 };
 // showRight.onclick = function() {
 //     classie.toggle( this, 'active' );

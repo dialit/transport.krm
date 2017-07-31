@@ -54,26 +54,22 @@
                       <h4 class="modal-title" id="gridSystemModalLabel">Форма обратной связи</h4>
                   </div>
                    <div class="modal-body">
-                       <div class="row">
-                           <div class="col-md-12">
-                               <div class="hide" id="respons"></div>
-                               <form method="POST" action="mail.php" id="mailForm">
-                                   <div class="form-group">
-                                       <label for="labelEmail">Email</label>
-                                       <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
-                                   </div>
-                                   <div class="form-group">
-                                       <label for="labelPhone">Телефон</label>
-                                       <input type="text" class="form-control" name="mobile" id="mobile" placeholder="+38XXXXXXXXXX" required>
-                                   </div>
-                                   <div class="form-group">
-                                       <label for="labelText">Текст</label>
-                                       <textarea name="text" id="text" cols="30" rows="10" class="form-control"></textarea>
-                                   </div>
-                                   <button type="submit" class="btn btn-primary">Отправить</button>
-                               </form>
+                       <div class="hide" id="respons"></div>
+                       <form method="POST" action="mail.php" id="mailForm">
+                           <div class="form-group">
+                               <label for="labelEmail">Email</label>
+                               <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
                            </div>
-                       </div>
+                           <div class="form-group">
+                               <label for="labelPhone">Телефон</label>
+                               <input type="text" class="form-control" name="mobile" id="mobile" placeholder="+38XXXXXXXXXX" required>
+                           </div>
+                           <div class="form-group">
+                               <label for="labelText">Текст</label>
+                               <textarea name="text" id="text" cols="30" rows="10" class="form-control"></textarea>
+                           </div>
+                           <button type="submit" class="btn btn-primary">Отправить</button>
+                       </form>
                    </div><!-- End of Modal body -->
                </div><!-- End of Modal content -->
            </div><!-- End of Modal dialog -->
@@ -93,7 +89,7 @@
                 </div>
                 
                 <div class="collapse navbar-collapse" id="navbar-collapse">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav nav-pills">
                         <li><button class="btn btn-default" id="showLeft">Маршруты</button></li>
 <!--                        <li><a id="showRight">Link</a></li>-->
                     </ul>
