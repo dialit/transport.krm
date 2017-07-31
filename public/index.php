@@ -103,26 +103,9 @@
                             <input type="text" id="q" class="form-control" placeholder="Поиск остановки">
                                 <a href="javascript:n_stops_chn();" class="button btn btn-default btn-xs" id="buttonReset" type="button" onclick="resetMarshr()">Сброс</a>
                                 <a href="javascript:infoGeoFind();" class="button btn btn-default btn-xs" id="button" type="button">GPS</a>
-                                
-                                
-                                <script language="JavaScript">
-                                    dayarray=new Array("воскресенье","понедельник","вторник","среда","четверг","пятница","суббота")
-                                    montharray=new Array ("января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря")
-                                    var ndata=new Date();
-                                    var day=dayarray[ndata.getDay()];
-                                    var month=montharray[ndata.getMonth()];
-                                    var date=ndata.getDate();
-                                    var year=ndata.getYear()-100;
-                                    datastr=("Сегодня "+ date +" "+ month +" 20"+ year +" года, "+day+"." )
-                                </script>
-                                <span>Сегодня: <script language="JavaScript">document.write(datastr);</script></span>
-                                <span>Время: <div id="timedisplay"></div></span>
-                                
-<!--                                <span>Сегодня: <? echo date('d.m.Y H:i'); ?></span>  -->
-                        
-                        
                         </div>
                     </form>
+                    <span class="time"><? echo date('d.m.Y H:i'); ?></span>
                     <ul class="nav navbar-nav navbar-right">
                         <li><button class="btn btn-default" data-toggle="modal" data-target=".feedback">Обратная связь</button></li>
                     </ul>
@@ -154,7 +137,7 @@
                             <div id="ButtonsNmarshr">    
                                 <ul class="list-inline">
                                 <?php
-                                        $taxies = query("SELECT `id`,`n_marshr`,`nach_kon` FROM `transport` WHERE type = 'Маршрутное такси'");
+                                        $taxies = query("SELECT id, n_marshr, nach_kon FROM `transport` WHERE type = 'Маршрутное такси'");
                                         foreach ($taxies as $taxi) {
                                             $id = $taxi["id"];
                                             $ntaxi = $taxi["n_marshr"];
@@ -182,7 +165,7 @@
                             <div id="ButtonsNmarshr">
                                 <ul class="list-inline">
                                 <?php
-                                        $buses = query("SELECT `id`,`n_marshr`,`nach_kon` FROM `transport` WHERE type = 'Автобус'");
+                                        $buses = query("SELECT id, n_marshr, nach_kon FROM `transport` WHERE type = 'Автобус'");
                                         foreach ($buses as $bus) {
                                             $id = $bus["id"];
                                             $nbus = $bus["n_marshr"];
@@ -210,7 +193,7 @@
                             <div id="ButtonsNmarshr">
                                 <ul class="list-inline">
                                 <?php
-                                        $tbuses = query("SELECT `id`,`n_marshr`,`nach_kon` FROM `transport` WHERE type = 'Троллейбус'");
+                                        $tbuses = query("SELECT id, n_marshr, nach_kon FROM `transport` WHERE type = 'Троллейбус'");
                                         foreach ($tbuses as $tbus) {
                                             $id = $tbus["id"];
                                             $ntbus = $tbus["n_marshr"];
@@ -238,7 +221,7 @@
                             <div id="ButtonsNmarshr">
                                 <ul class="list-inline">
                                 <?php
-                                        $trams = query("SELECT `id`,`n_marshr`,`nach_kon` FROM `transport` WHERE type = 'Трамвай'");
+                                        $trams = query("SELECT id, n_marshr, nach_kon FROM `transport` WHERE type = 'Трамвай'");
                                         foreach ($trams as $tram) {
                                             $id = $tram["id"];
                                             $ntram = $tram["n_marshr"];
@@ -297,6 +280,7 @@
         <!-- app's own JavaScript -->
         <script src="js/scripts.js"></script>
 
+<!--
         <script language="JavaScript">
             function getDate()
             {
@@ -317,6 +301,7 @@
             }
             setInterval(getDate, 0);
         </script>
+-->
         
     </body>
 </html>

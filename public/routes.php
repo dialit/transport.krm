@@ -39,8 +39,8 @@
     <h3><?= $transport["type"] ?>&nbsp;№<?= $transport["n_marshr"] ?></h3>
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#panel1">Описание</a></li>
-<!--        <li><a data-toggle="tab" href="index.php">Схема маршрута</a></li>-->
-        <li><a data-toggle="tab" href="#panel3">Книга жалоб и предложений</a></li>
+        <li><a data-toggle="tab" href="#panel2">Расписание</a></li>
+        <li><a data-toggle="tab" href="#panel3">Отзывы и предложения</a></li>
         <li><a data-toggle="tab" href="#panel4">Новости</a></li>
     </ul>
 
@@ -114,14 +114,15 @@
                     </tbody>
                 </table>
             </div>
-           
-            <h3>Расписание</h3>
-            <iframe src="<?= $transport["rasp"] ?>" frameborder="0" width="100%" height="80%"></iframe>
         </div><!-- End content Tab1 -->
+        
+        <div id="panel2" class="tab-pane fade">           
+            <iframe src="<?= $transport["rasp"] ?>" frameborder="0" width="100%" height="600px"></iframe>
+        </div><!-- End content Tab2 -->
         
         <div id="panel3" class="tab-pane fade">
            <div class="hide" id="respons"></div>
-            <form method="POST" action="#" enctype="multipart/form-data" name="addcom" id="addcom" onSubmit="return false">
+            <form method="POST" action="comment.php" enctype="multipart/form-data" name="form" onSubmit="return false">
                 <div class="form-group">
                     <input type="hidden" class="form-control" name="<?= $transport["n_marshr"] ?>" value="<?= $transport["n_marshr"] ?>">
                     <label for="labelName">Имя:</label>
@@ -133,12 +134,12 @@
                 </div>
                 <div class="form-group">
                     <label for="labelText">Текст отзыва:</label>
-                    <textarea name="comment" id="comment" cols="30" rows="10" class="form-control"></textarea>
+                    <textarea name="comment" id="message" cols="30" rows="10" class="form-control"></textarea>
                 </div>
                   <button type="submit" class="btn btn-primary">Отправить</button>
             </form>
                 <?php
-                    $fp = fopen("comments.txt", "r"); // Открываем файл в режиме чтения
+                    $fp = fopen("comment.txt", "r"); // Открываем файл в режиме чтения
                     if ($fp) {
                         while (!feof($fp)) {
                             $mytext = fgets($fp, 999);
@@ -150,6 +151,6 @@
         
         <div id="panel4" class="tab-pane fade">
 
-        </div><!-- End content Tab3 -->
+        </div><!-- End content Tab4 -->
     </div>
 </div>
