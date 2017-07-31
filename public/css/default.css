@@ -135,7 +135,7 @@ a:hover {
 }
 
 .navbar-collapse button.active {
-	background: #0d77b6;
+/*	background: #0d77b6;*/
 }
 
 .navbar-collapse button.disabled {

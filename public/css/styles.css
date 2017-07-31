@@ -162,4 +162,5 @@ ul.list-inline > li {
 .cbp-spmenu-vertical a {
     padding: 4px 0 4px 0;
     border-bottom: none;
+    cursor: pointer;
 }
