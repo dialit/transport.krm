@@ -119,7 +119,7 @@ a:hover {
 }
 
 .navbar-collapse button {
-	border: none;
+/*	border: none;*/
 /*	background: #47a3da;*/
 /*	color: #fff;*/
 /*	padding: 1.5em;*/
@@ -131,7 +131,7 @@ a:hover {
 }
 
 .navbar-collapse button:hover {
-	background: #258ecd;
+/*	background: #258ecd;*/
 }
 
 .navbar-collapse button.active {
