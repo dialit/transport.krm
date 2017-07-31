@@ -525,9 +525,13 @@ $('body').on('hidden.bs.modal', '.modal', function() {
 
 // два состояния у кнопок маршрутов
 $(document).ready(function() {
-    $("#ButtonsNmarshr .btn").click(function() {
+   $("#ButtonsNmarshr .btn").click(function() {
         $(this).button('toggle');
-    });
+ });
+  
+  $('a#buttonReset').click(function(){
+  $("#ButtonsNmarshr .btn").removeClass('active');
+ });
 });
 
 
