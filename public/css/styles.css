@@ -13,6 +13,15 @@ html, body
     padding: 0;
 }
 
+a:active, a:focus { outline: none; }
+
+button:active, button:focus {
+  outline: none !important;
+}
+button::-moz-focus-inner {
+  border: 0 !important;
+}
+
 .container-map {
     height: 93% !important;
     margin: 0px !important;
@@ -109,6 +118,7 @@ ul.list-inline > li {
 
 .navbar-nav > li > a {
     cursor: pointer;
+    outline: none;
 }
 
 .panel-body {
@@ -131,6 +141,7 @@ ul.list-inline > li {
 .cbp-spmenu a {
     color: #777;
     text-decoration: none;
+    outline: none;
 }
 
 .cbp-spmenu a:hover {
@@ -163,11 +174,13 @@ ul.list-inline > li {
     padding: 4px 0 4px 0;
     border-bottom: none;
     cursor: pointer;
+    outline: none;
 }
 
 div.modal-dialog.modal-lg{
  width: 1100px !important;
 }
+
 span.time {
     position: relative;
     font-size: 12px;

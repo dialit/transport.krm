@@ -16,7 +16,7 @@
 
         <!-- http://getbootstrap.com/ -->
         <link href="css/bootstrap.min.css" rel="stylesheet"/>
-        <link href="css/bootstrap-theme.min.css" rel="stylesheet"/>
+<!--        <link href="css/bootstrap-theme.min.css" rel="stylesheet"/>-->
         
         <!-- app's own CSS -->
         <link href="css/styles.css" rel="stylesheet"/>
@@ -112,7 +112,7 @@
     
     <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
        <div class="">
-            <a class="off" id="showLeft1" title="Свернуть">
+            <a class="marquee" id="showLeft1" title="Свернуть">
             <i class="glyphicon glyphicon-chevron-left" aria-hidden="true"></i>
             </a>
             <h3>Выберите вид транспорта</h3>
