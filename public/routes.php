@@ -36,17 +36,17 @@
 ?> 
 
 <div class="container-fluid">
-       <div class="row">
-           <div class="col-md-12">
-               <h3><?= $transport["type"] ?>&nbsp;№<?= $transport["n_marshr"] ?></h3>
-               <p><strong>Описание</strong>&nbsp;|&nbsp;
-                <a href='javascript:draw_marshr(3,<?=$k?>)' title="Вернуться на карту">Схема маршрута</a>&nbsp;|&nbsp;
-                <a href="kniga.php?id=<?=$k?>&c=" title="Отзывы о сервисе на маршруте...">Книга жалоб и предложений</a>&nbsp;|&nbsp;
-                <a href="news" title="Посмотреть все новости, связанные с данным маршрутом...">Новости по теме</a></p>
-           </div>
-       </div>
-       <div class="row">
-           <div class="col-md-12">
+    <h3><?= $transport["type"] ?>&nbsp;№<?= $transport["n_marshr"] ?></h3>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#panel1">Описание</a></li>
+<!--        <li><a data-toggle="tab" href="index.php">Схема маршрута</a></li>-->
+        <li><a data-toggle="tab" href="#panel3">Книга жалоб и предложений</a></li>
+        <li><a data-toggle="tab" href="#panel4">Новости</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="panel1" class="tab-pane fade in active">
+            <div class="table-responsive">
            <table class="table table-striped table-bordered table-hover">
               <thead>
                   <th>Стоимость проезда:</th>
@@ -83,7 +83,7 @@
                                         $id = $namestops[0]["id"];
                                         $names = $namestops[0]["stops_name"];
 	                                    //выводим названия остановок и html ссылки под названием остановки c id остановок
-	                                    echo "<a href='javascript:update(5, $id)' title='Показать остановку'>$names,</a>";
+	                                    echo "<a href='javascript:update(5, $id)' title='Показать остановку'>$names</a>, ";
                                     }
                                     unset($value);
                                 ?>
@@ -96,7 +96,7 @@
 	    				                $id = $namestops[0]["id"];
 	                                    $names = $namestops[0]["stops_name"];
                                         //выводим названия остановок и html ссылки под названием остановки c id остановок
-	                                    echo "<a href='javascript:update(5, $id)' title='Показать остановку'>$names,</a>";
+	                                    echo "<a href='javascript:update(5, $id)' title='Показать остановку'>$names</a>, ";
                                     }
                                     unset($value);
                                 ?>
@@ -104,9 +104,52 @@
                     </tr>
                 </tbody>
             </table>
-            <p>Маршрут обслуживает:<?= $transport["firma"] ?></p>            
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <td>Маршрут обслуживает: <?= $transport["firma"] ?></td>
+                            <td><i class="glyphicon glyphicon-map-marker" aria-hidden="true"></i>
+                            <a href='javascript:draw_marshr(3,<?=$k?>)'>Показать маршрут на карте</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+           
             <h3>Расписание</h3>
-            <iframe src="<?= $transport["rasp"] ?>" frameborder="0" width="100%" height="100%"></iframe>
-        </div>
+            <iframe src="<?= $transport["rasp"] ?>" frameborder="0" width="100%" height="80%"></iframe>
+        </div><!-- End content Tab1 -->
+        
+        <div id="panel3" class="tab-pane fade">
+           <div class="hide" id="respons"></div>
+            <form method="POST" action="#" enctype="multipart/form-data" name="addcom" id="addcom" onSubmit="return false">
+                <div class="form-group">
+                    <input type="hidden" class="form-control" name="<?= $transport["n_marshr"] ?>" value="<?= $transport["n_marshr"] ?>">
+                    <label for="labelName">Имя:</label>
+                    <input type="text" class="form-control" name="author" id="author" required>
+                </div>
+                <div class="form-group">
+                    <label for="labelTema">Тема отзыва:</label>
+                    <input type="text" class="form-control" name="tems" id="tema">
+                </div>
+                <div class="form-group">
+                    <label for="labelText">Текст отзыва:</label>
+                    <textarea name="comment" id="comment" cols="30" rows="10" class="form-control"></textarea>
+                </div>
+                  <button type="submit" class="btn btn-primary">Отправить</button>
+            </form>
+                <?php
+                    $fp = fopen("comments.txt", "r"); // Открываем файл в режиме чтения
+                    if ($fp) {
+                        while (!feof($fp)) {
+                            $mytext = fgets($fp, 999);
+                            echo $mytext."<br />";
+                        }
+                    }
+                ?>
+        </div><!-- End content Tab3 -->
+        
+        <div id="panel4" class="tab-pane fade">
+
+        </div><!-- End content Tab3 -->
     </div>
 </div>
