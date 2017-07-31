@@ -164,3 +164,7 @@ ul.list-inline > li {
     border-bottom: none;
     cursor: pointer;
 }
+
+div.modal-dialog.modal-lg{
+ width: 1100px !important;
+}
