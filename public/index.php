@@ -29,9 +29,9 @@
     
     <body class="cbp-spmenu-push">
     
-        <!-- Modal -->
+        <!-- Info Modal -->
         <div id="myModalBox" class="modal fade">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" aria-label="Закрыть">&times;</button>
@@ -45,15 +45,15 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div><!-- End Info Modal -->
         
-       <!-- Feedback  Modal-->
+       <!-- Feedback Modal-->
        <div id="feedback" class="modal fade feedback" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="ModalLabel">
-           <div class="modal-dialog" role="document">
+           <div class="modal-dialog" role="dialog">
                <div class="modal-content">
                   <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="gridSystemModalLabel">Форма обратной связи</h4>
+                      <h4 class="modal-title" id="gridSystemModalLabel">Связаться с разработчиками сайта</h4>
                   </div>
                    <div class="modal-body">
                        <div class="hide" id="respons"></div>
@@ -70,13 +70,63 @@
                                <label for="labelText">Текст</label>
                                <textarea name="text" id="text" cols="30" rows="10" class="form-control"></textarea>
                            </div>
-                           <div class="g-recaptcha" data-sitekey="6LciQCsUAAAAAMXAYzfYUEBS9oiH0StRVln2IE1e"></div>
+                           <div class="g-recaptcha" data-sitekey="6LciQCsUAAAAAMXAYzfYUEBS9oiH0StRVln2IE1e"></div><br />
                            <button type="submit" class="btn btn-primary">Отправить</button>
                        </form>
-                   </div><!-- End of Modal body -->
-               </div><!-- End of Modal content -->
-           </div><!-- End of Modal dialog -->
-       </div><!-- End of Modal -->
+                   </div>
+               </div>
+           </div>
+       </div><!-- End of Feedback Modal -->
+       
+       <!-- About Modal-->
+       <div id="about" class="modal fade feedback" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="ModalLabel">
+           <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть"><span aria-hidden="true">&times;</span></button>
+                       <h4 class="modal-title" id="gridSystemModalLabel">О проекте</h4>
+                   </div>
+                   <div class="modal-body">
+                       <div class="panel panel-default">
+                           <div class="panel-body">
+                               <table class="table table-striped table-bordered table-hover">
+                                   <tbody>
+                                       <tr>
+                                           <td class="text-justify">Сайт предназначен для жителей и гостей города Краматорска Донецкой области. При помощи данного сайта пользователь получает возможность легко и быстро ориентироваться в выборе транспорта для поездок по городу, находить нужный маршрут движения и ближайшие остановки.</td>
+                                       </tr>
+                                       <tr>
+                                           <td><a href="https://brainbasket.org/ru/homepage/" target="_blank"><img class="img-thumbnail pull-right" src="https://brainbasket.org/wp-content/uploads/logo-2.png" alt=""></a><p class="text-justify">Разработано в рамках программы фонда <a href="https://brainbasket.org/ru/homepage/" target="_blank">BrainBasket</a> как финальное задание при прохождении образовательного курса <a href="https://brainbasket.org/ru/technology-nation-3/">Technology Nation</a>.</p>.
+                                           </td>
+                                       </tr>
+                                    </tbody>
+                               </table>
+                                                     
+                               <table class="table table-striped table-bordered table-hover">
+                                   <caption>Разработчики:</caption>
+                                   <tbody>
+                                       <tr>
+                                           <th><a href="mailto:dialit73@gmail.com">Литвиненко Сергей</a></th>
+                                           <td>team-lead / front-end / back-end</td>
+                                       </tr>
+                                       <tr>
+                                           <th>Сальников Алексей</th>
+                                           <td>front-end / back-end</td>
+                                       </tr>
+                                       <tr>
+                                           <th><a href="mailto:komarinskiy@gmail.com">Комаринский Дмитрий</a></th>
+                                           <td>front-end</td>
+                                       </tr>
+                                   </tbody>
+                               </table>
+                                <div>Надеемся, что этот сайт будет вам полезен!
+                                    <button class="btn btn-default pull-right" data-toggle="modal" data-target=".feedback">Написать разработчикам</button>
+                                </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div><!-- End of About Modal -->
         
         <header>       
         <nav class="navbar navbar-default">
@@ -106,7 +156,11 @@
                     </form>
                     <span class="time"><? echo date('d.m.Y H:i'); ?></span>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><button class="btn btn-default" data-toggle="modal" data-target=".feedback">Обратная связь</button></li>
+                        <li>
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#about">
+                            <i class="glyphicon glyphicon-info-sign" aria-hidden="true"></i> О проекте</button>
+                        </li>
+<!--                        <li><button class="btn btn-default" data-toggle="modal" data-target=".feedback">Обратная связь</button></li>-->
                     </ul>
                 </div>
             </div>

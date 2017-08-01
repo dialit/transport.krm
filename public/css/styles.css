@@ -192,3 +192,12 @@ span.time {
     -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
+
+.glyphicon-info-sign {
+    padding-right: 3px;
+}
+
+.glyphicon-info-sign:hover {
+    color: blue;
+}
+    

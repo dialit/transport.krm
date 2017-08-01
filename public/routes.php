@@ -122,7 +122,7 @@
         
         <div id="panel3" class="tab-pane fade">
            <div class="hide" id="respons"></div>
-            <form method="POST" action="comment.php" enctype="multipart/form-data" name="form" onSubmit="return false">
+            <form method="POST" action="comments.php" enctype="multipart/form-data" name="form" onSubmit="return false">
                 <div class="form-group">
                     <input type="hidden" class="form-control" name="<?= $transport["n_marshr"] ?>" value="<?= $transport["n_marshr"] ?>">
                     <label for="labelName">Имя:</label>
@@ -150,7 +150,7 @@
         </div><!-- End content Tab3 -->
         
         <div id="panel4" class="tab-pane fade">
-
+        <h4>К сожалению новостей по данному маршруту пока нет.</h4>
         </div><!-- End content Tab4 -->
     </div>
 </div>
