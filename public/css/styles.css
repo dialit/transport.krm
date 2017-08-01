@@ -177,10 +177,6 @@ ul.list-inline > li {
     outline: none;
 }
 
-div.modal-dialog.modal-lg{
- width: 1100px !important;
-}
-
 span.time {
     position: relative;
     font-size: 12px;
@@ -200,10 +196,16 @@ span.time {
 .glyphicon-info-sign:hover {
     color: blue;
 }
+
 img.img-thumbnail {
     margin-left: 4px;
 }
+
 .table {
     margin-bottom: 10px;
+}
+
+.gm-style-iw {
+    overflow: visible !important;
 }
     

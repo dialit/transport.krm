@@ -40,7 +40,7 @@
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#panel1">Описание</a></li>
         <li><a data-toggle="tab" href="#panel2">Расписание</a></li>
-        <li><a data-toggle="tab" href="#panel3">Отзывы и предложения</a></li>
+        <li><a data-toggle="tab" href="#panel3">Комментарии</a></li>
         <li><a data-toggle="tab" href="#panel4">Новости</a></li>
     </ul>
 
@@ -65,6 +65,8 @@
                    </tr>
                </tbody>
            </table>
+            </div>
+<!--            <div class="table-responsive">-->
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <th>Путь следования:</th>
@@ -101,6 +103,8 @@
                     </tr>
                 </tbody>
             </table>
+<!--            </div>-->
+<!--               <div class="table-responsive">-->
                 <table class="table table-hover">
                     <tbody>
                         <tr>
@@ -110,7 +114,7 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
+<!--            </div>-->
         </div><!-- End content Tab1 -->
         
         <div id="panel2" class="tab-pane fade">           
@@ -118,19 +122,20 @@
         </div><!-- End content Tab2 -->
         
         <div id="panel3" class="tab-pane fade">
-           <div class="hide" id="respons"></div>
             <form method="POST" action="comments.php" enctype="multipart/form-data" name="form" onSubmit="return false">
                 <div class="form-group">
                     <input type="hidden" class="form-control" name="<?= $transport["n_marshr"] ?>" value="<?= $transport["n_marshr"] ?>">
                     <label for="labelName">Имя:</label>
                     <input type="text" class="form-control" name="author" id="author" required>
                 </div>
+<!--
                 <div class="form-group">
-                    <label for="labelTema">Тема отзыва:</label>
+                    <label for="labelTema">Тема комментария:</label>
                     <input type="text" class="form-control" name="tems" id="tema">
                 </div>
+-->
                 <div class="form-group">
-                    <label for="labelText">Текст отзыва:</label>
+                    <label for="labelText">Текст комментария:</label>
                     <textarea name="comment" id="message" cols="30" rows="10" class="form-control"></textarea>
                 </div>
                   <button type="submit" class="btn btn-primary">Отправить</button>
