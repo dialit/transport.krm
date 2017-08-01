@@ -23,6 +23,8 @@
 
         <title>Транспорт Краматорска</title>
         
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+        
     </head>
     
     <body class="cbp-spmenu-push">
@@ -68,6 +70,7 @@
                                <label for="labelText">Текст</label>
                                <textarea name="text" id="text" cols="30" rows="10" class="form-control"></textarea>
                            </div>
+                           <div class="g-recaptcha" data-sitekey="6LciQCsUAAAAAMXAYzfYUEBS9oiH0StRVln2IE1e"></div>
                            <button type="submit" class="btn btn-primary">Отправить</button>
                        </form>
                    </div><!-- End of Modal body -->
