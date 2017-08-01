@@ -92,29 +92,47 @@
                                <table class="table table-striped table-bordered table-hover">
                                    <tbody>
                                        <tr>
-                                           <td class="text-justify">Сайт предназначен для жителей и гостей города Краматорска Донецкой области. При помощи данного сайта пользователь получает возможность легко и быстро ориентироваться в выборе транспорта для поездок по городу, находить нужный маршрут движения и ближайшие остановки.</td>
+                                           <td class="text-justify">Сайт предназначен для жителей и гостей города Краматорск, Донецкой области. При помощи данного сайта пользователь получает возможность легко и быстро ориентироваться в выборе транспорта для поездок по городу, находить нужный маршрут движения и ближайшие остановки.</td>
                                        </tr>
                                        <tr>
-                                           <td><a href="https://brainbasket.org/ru/homepage/" target="_blank"><img class="img-thumbnail pull-right" src="https://brainbasket.org/wp-content/uploads/logo-2.png" alt=""></a><p class="text-justify">Разработано в рамках программы фонда <a href="https://brainbasket.org/ru/homepage/" target="_blank">BrainBasket</a> как финальное задание при прохождении образовательного курса <a href="https://brainbasket.org/ru/technology-nation-3/">Technology Nation</a>.</p>.
+                                           <td class="text-justify"><a href="https://brainbasket.org/ru/homepage/" target="_blank"><img class="img-thumbnail pull-right" src="https://brainbasket.org/wp-content/uploads/logo-2.png" alt=""></a>Разработано в рамках программы фонда <a href="https://brainbasket.org/ru/homepage/" target="_blank">BrainBasket</a> как финальное задание при прохождении образовательного курса <a href="https://brainbasket.org/ru/technology-nation-3/">Technology Nation</a>.
                                            </td>
                                        </tr>
                                     </tbody>
                                </table>
                                                      
-                               <table class="table table-striped table-bordered table-hover">
+                               <table class="table table-bordered table-hover">
                                    <caption>Разработчики:</caption>
                                    <tbody>
-                                       <tr>
-                                           <th><a href="mailto:dialit73@gmail.com">Литвиненко Сергей</a></th>
-                                           <td>team-lead / front-end / back-end</td>
+                                       <tr class="text-danger">
+                                           <th title"Преподаватель">Максим Пономарёв</th>
+                                           <td>Mentor</td>
+                                       </tr>
+                                       <tr class="text-warning">
+                                           <th>Сергей Литвиненко</th>
+                                           <td>Team-lead / Front-end / Back-end</td>
                                        </tr>
                                        <tr>
-                                           <th>Сальников Алексей</th>
-                                           <td>front-end / back-end</td>
+                                           <th>Алексей Сальников</th>
+                                           <td>Front-End / Back-End</td>
                                        </tr>
                                        <tr>
-                                           <th><a href="mailto:komarinskiy@gmail.com">Комаринский Дмитрий</a></th>
-                                           <td>front-end</td>
+                                           <th>Дмитрий Комаринский</th>
+                                           <td>Front-End</td>
+                                       </tr>
+                                   </tbody>
+                               </table>
+                               
+                               <table class="table table-striped table-bordered table-hover">
+                                   <tbody>
+                                      <caption>При разработке сайта использовались технологии</caption>
+                                       <tr>
+                                           <td>HTML</td>
+                                           <td>CSS</td>
+                                           <td>JavaScript</td>
+                                           <td>PHP</td>
+                                           <td>MySQL</td>
+                                           <td>Bootstrap</td>
                                        </tr>
                                    </tbody>
                                </table>

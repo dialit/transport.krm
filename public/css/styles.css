@@ -200,4 +200,10 @@ span.time {
 .glyphicon-info-sign:hover {
     color: blue;
 }
+img.img-thumbnail {
+    margin-left: 4px;
+}
+.table {
+    margin-bottom: 10px;
+}
     
