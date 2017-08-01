@@ -6,6 +6,7 @@
 // Google Map
 var map;
 var geocoder = new google.maps.Geocoder;
+var info = new google.maps.InfoWindow();
 // массив маркеров остановок
 var markers = [];
 // массив маркеров найденных остановок
@@ -16,43 +17,46 @@ var markersCords = [];
 var line = [];
 // массив преобразованных координат линий маршрута
 var arr = [];
+// массив инфо окон маркеров остановок 
+var info_stops = [];
 // массив окружностей
 var circles = [];
 var info_cords = [];
 var tooltip;
+// цвет линии
 var col = 0;
 // ID номера маршрута для построения
 var NN_marshr = 0;
 // флаг отображения названий маркеров остановок
 var n_stops = 0;
-// флаг поиска 
+// флаг поиска остановки
 var marker_find = 0;
+// массив линий маршрута
 var array_marshr = [];
+// координаты линии маршрута
 var routesPath;
 // координаты инициализации карты
 //var latitude = 48.738795;
 //var longitude = 37.584883;
 // 
 var title_label = "Краматорск, Донецкая область";
+// флаг удаления линии маршрута
+var del_line;
 // флаг типа запроса к UPDATE если 
 //  1 запрос координат всех остановок
 //  2 запрос координат остановок маршрута
 //  3 запрос координат для построения линии маршрута
-//  5 скрыть линию маршрута
+//  5 запрос координат остановки из мод окна
 var n_qwery = 1;
 // флаг типа запроса к ARTICLES если 
 // - 1 запрос списка маршрутов через остановку
 // - 2 запрос информации о маршруте
 var n_qwery1 = 1;
-// info window
-var info = new google.maps.InfoWindow();
 
-// execute when the DOM is fully loaded
+
 $(function() {
 
     // styles for map
-    // https://developers.google.com/maps/documentation/javascript/styling
-
     var styles = [{
             "stylers": [{
                 "visibility": "simplified"
@@ -115,9 +119,7 @@ $(function() {
             }]
         }
     ];
-
     // options for map
-    // https://developers.google.com/maps/documentation/javascript/reference#MapOptions
     var originalMapCenter = new google.maps.LatLng(48.738795, 37.584883);
     var options = {
         center: originalMapCenter, // Краматорск, Дон. обл.
@@ -134,18 +136,9 @@ $(function() {
         zoomControl: true
     };
 
-    // get DOM node in which map will be instantiated
     var canvas = $("#map-canvas").get(0);
-
-    // instantiate map
     map = new google.maps.Map(canvas, options);
-
-    //mMap.setMyLocationEnabled(true);
-    //UiSettings.setMyLocationButtonEnabled(true);
-
-    // configure UI once Google Map is idle (i.e., loaded)
     google.maps.event.addListenerOnce(map, "idle", configure);
-
     //infoGeoFind();
     update(n_qwery, NN_marshr);
 });
@@ -159,7 +152,6 @@ function infoGeoFind() {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
-
             var infoGeo = new google.maps.InfoWindow({ map: map });
             infoGeo.setPosition(pos);
             infoGeo.setContent('Вы находитесь здесь.');
@@ -172,7 +164,6 @@ function infoGeoFind() {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoGeo, map.getCenter());
     }
-
 
     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         infoWindow.setPosition(pos);
@@ -219,7 +210,6 @@ function ConvertCoordinates(data) {
         };
         arr.push(coordinatesObject);
     });
-    //console.log(arr);
     return arr;
 }
 
@@ -236,78 +226,46 @@ function line_color() {
 function draw_marshr(n_qwery, NN_marshr) {
     $('#myModalBox').hide();
     // ID маршрута для построения
-    //------------------------------------------------------------------------------------------------------------------------
-    //var NN_marshr = 19; // ID маршрута для построения   *******************************************************************
-    // ----------------------------------------------------------------------------------------------------------------------
-
-    // если флаг, что линия есть, и видима
-    if (array_marshr[NN_marshr] == 2) n_qwery = 5;
-    // если флаг, что линия есть, но не показана
+    if (array_marshr[NN_marshr] == 2) del_line = 1;
     if (array_marshr[NN_marshr] == 1) {
         line[NN_marshr].setMap(map);
-        // флаг, что линия есть и видима
         array_marshr[NN_marshr] = 2;
-        // установить карту на такие координаты
         map.setCenter(new google.maps.LatLng(48.732644, 37.583284), 13);
-        // после отрисовки увеличить карту
         map.setZoom(13);
     }
-
     // добавление линии
     if (n_qwery == 3 && array_marshr[NN_marshr] == 0) {
-        // подготовка данных для передачи запроса в "update.php"
         var parameters = {
             n_qwery: n_qwery,
             NN_marshr: NN_marshr
         };
         $.getJSON("update.php", parameters)
             .done(function(data, textStatus, jqXHR) {
-                // построение линии маршрута
                 var routesPath = new google.maps.Polyline({
                     path: ConvertCoordinates(data),
-                    // цвет линии
                     strokeColor: line_color(), //"#FFF000",
-                    // прозрачность линии
                     strokeOpacity: 0.5,
-                    // толщина линии
                     strokeWeight: 5
                 });
                 //line.push(routesPath);
-
                 line[NN_marshr] = routesPath;
-
                 line[NN_marshr].setMap(null);
                 //line[NN_marshr].setVisible(false);
-
-                // флаг, что линия есть, но не показана
                 array_marshr[NN_marshr] = 1;
-
-                // установить карту на такие координаты
                 map.setCenter(new google.maps.LatLng(48.732644, 37.583284), 13);
-                // после отрисовки увеличить карту
                 map.setZoom(13);
-
                 n_qwery1 = 2;
-                // запрос на получение информации о маршруте от "articles.php"
                 $.getJSON("articles.php", {
                         geo: NN_marshr,
                         n_qwery1: n_qwery1
                     })
                     .done(function(data, textStatus, jqXHR) {
-
-                        // если информации нет
                         if (data.length === 0) {
                             showInfo(marker, "Нет информации.");
-                        }
-                        // иначе создание списка информации о маршруте
-                        else {
-                            var tooltip = "      "
+                        } else {
+                            var tooltip = " "
                             var ul = "<ul>";
-                            // шаблон списка информации о маршруте
-                            //                                var template = _.template("<li><a href = 'routes.php?id=<%- id %>' target = '_blank'><%- type %> №<%- n_marshr %> (<%- nach_kon %>)</a></li>");
                             var template = _.template("<li><a route-id=<%- id %>' onclick='showModalRoute(this)'><%- type %> №<%- n_marshr %> (<%- nach_kon %>)</a></li>");
-
-                            // создание списка с использованием шаблона
                             for (var i = 0, n = data.length; i < n; i++) {
                                 ul += template({
                                     n_marshr: data[i].n_marshr,
@@ -316,24 +274,18 @@ function draw_marshr(n_qwery, NN_marshr) {
                                     nach_kon: data[i].nach_kon
                                 });
                             }
-
                             ul += "</ul>";
-
                             tooltip += ul;
-
                             attachInfoWindow(line[NN_marshr], tooltip);
-
                         }
                     });
-
-
             });
     } else {
         // спрятать линию
-        if (n_qwery == 5) {
+        if (del_line == 1) {
             array_marshr[NN_marshr] = 1;
             line[NN_marshr].setMap(null);
-            n_qwery = 1;
+            del_line = 0;
         }
     }
 }
@@ -352,7 +304,6 @@ function attachInfoWindow(routesPath, text_info) {
             routesPath.infoWindow.close();
             routesPath.setOptions({ strokeWeight: 5 });
         }, 10000);
-
     });
 }
 
@@ -361,9 +312,7 @@ function attachInfoWindow(routesPath, text_info) {
 function n_stops_chn() {
     removeLine();
     removeMarkersFind();
-    // установить карту на такие координаты
     map.setCenter(new google.maps.LatLng(48.732644, 37.583284), 13);
-    // после увеличить карту
     map.setZoom(13);
 }
 
@@ -386,43 +335,15 @@ function removeLine(NN_marshr) {
     }
 }
 
-
 // функция созданив маркеров остановок
 function addMarker(place) {
     // пустой заголовок названия остановки
     var stops_name1 = "";
-    // если флаг скрывать названия маркеров остановок
-    if (n_stops == 0) {
-        // пустое название
-        var label_stops = stops_name1;
-    };
-    // если флаг отображать названия маркеров остановок
-    if (n_stops == 1) {
-        // получение названия маркера остановки
-        var label_stops = place.stops_name;
-    };
-    // если флаг поиска остановки
-    if (marker_find == 1) {
-        // получение названия маркера остановки
-        var label_stops = place.stops_name;
-    };
+    var label_stops = stops_name1;
     // создание маркера
     // если маркер искомой остановки, то у него отличный от других маркеров значёк и анимация 
     if (marker_find == 1 || n_qwery == 5) {
-
-        // удаление всех маркеров
-        removeMarkersFind();
-
-        var image = {
-            url: '"img/index_1.png"',
-            // This marker is 20 pixels wide by 32 pixels high.
-            //size: new google.maps.Size(20, 32),
-            // The origin for this image is (0, 0).
-            //origin: new google.maps.Point(0, 0),
-            // The anchor for this image is the base of the flagpole at (0, 32).
-            //anchor: new google.maps.Point(0, 0)
-        };
-
+        // removeMarkersFind();
         var marker = new google.maps.Marker({
             icon: "/img/marker.png",
             position: new google.maps.LatLng(place.latitude, place.longitude),
@@ -432,16 +353,13 @@ function addMarker(place) {
             labelContent: label_stops,
             labelAnchor: new google.maps.Point(0, 0),
             labelClass: "label",
-            title: place.stops_name // + ",  ID-" + place.id
-                //title: place.id + ", " + place.latitude + ", " + place.longitude
+            title: place.stops_name
         });
-
         markersFind.push(marker);
         marker.setMap(map);
         map.setCenter(new google.maps.LatLng(place.latitude, place.longitude), 17);
         map.setZoom(17);
         $('#myModalBox').hide();
-        // сброс указателя маркера искомой остановки
         marker_find == 0;
         n_qwery = 1;
     } else
@@ -456,37 +374,22 @@ function addMarker(place) {
             //labelContent: place.stops_name,
             labelAnchor: new google.maps.Point(0, 0),
             labelClass: "label",
-            title: place.stops_name //+ ",  ID-" + place.id
-                //title: place.id + ", " + place.latitude + ", " + place.longitude
+            title: place.stops_name
         });
-    }
-
-    // создание списка маршрутов проходящих через остановку
+    };
     google.maps.event.addListener(marker, "click", function() {
-        //showInfo(marker);
         n_qwery1 = 1;
-        // запрос на получение списка маршрутов от "articles.php"
         $.getJSON("articles.php", {
                 geo: place.id,
-                //geo: place.place_name,
                 n_qwery1: n_qwery1
             })
             .done(function(data, textStatus, jqXHR) {
-
-                // если информации нет
                 if (data.length === 0) {
                     showInfo(marker, "Нет информации.");
-                }
-                // иначе создание списка маршрутов
-                else {
+                } else {
                     var tooltip = "Через остановку проходят следующие маршруты"
                     var ul = "<ul>";
-                    // шаблон списка маршрутов через эту остановку
-
-                    //                    var template = _.template("<li><a href = 'routes.php?id=<%- id %>' target = '_blank'><%- type %> №<%- n_marshr %> (<%- nach_kon %>)</a></li>");
                     var template = _.template("<li><a route-id=<%- id %>' onclick='showModalRoute(this)'><%- type %> №<%- n_marshr %> (<%- nach_kon %>)</a></li>");
-
-                    // создание списка с использованием шаблона
                     for (var i = 0, n = data.length; i < n; i++) {
                         ul += template({
                             n_marshr: data[i].n_marshr,
@@ -495,49 +398,36 @@ function addMarker(place) {
                             nach_kon: data[i].nach_kon
                         });
                     }
-
                     ul += "</ul>";
-
                     tooltip += ul;
-
                     showInfo(marker, tooltip);
                 }
             });
     });
-
-    // добавление созданного маркера в массив существующих маркеров
     markers.push(marker);
     if (map.getZoom() < 15) {
         for (var i = 0, n = markers.length; i < n; i++) {
             markers[i].setMap(null);
         }
     }
-    // сброс указателя маркера искомой остановки
     marker_find = 0;
 }
-
-
 //=====================================================================================================================
 // очистка модального окна после закрытия
 $('body').on('hidden.bs.modal', '.modal', function() {
     $(this).removeData('bs.modal');
 });
-
 // два состояния у кнопок маршрутов
 $(document).ready(function() {
-   $("#ButtonsNmarshr .btn").click(function() {
+    $("#ButtonsNmarshr .btn").click(function() {
         $(this).button('toggle');
- });
-  
-  $('a#buttonReset').click(function(){
-  $("#ButtonsNmarshr .btn").removeClass('active');
- });
+    });
+
+    $('a#buttonReset').click(function() {
+        $("#ButtonsNmarshr .btn").removeClass('active');
+    });
 });
-
-
 //==========================================================================================================================
-
-
 // конфигурация программы
 function configure() {
     //update(n_qwery, NN_marshr);
@@ -561,10 +451,8 @@ function configure() {
 
     // при клике по карте рисуется окружность и запрос к базе о маршрутах в радиусе 500 метров
     google.maps.event.addListener(map, 'click', function(event) {
-        //alert(event.latLng);
         var info_cord;
         var circle;
-
         for (var i = 0, n = circles.length; i < n; i++) {
             if (typeof { circles: i } !== 'undefined') circles[i].setMap(null);
             circles.length = 0;
@@ -575,37 +463,24 @@ function configure() {
             info_cords.length = 0;
             info_cords = [];
         }
-
         var latlngsum = event.latLng;
         var lat_cor = event.latLng.lat();
         var lng_cor = event.latLng.lng();
         var cor45 = lat_cor + ";" + lng_cor;
-
-
-
-        // флаг запроса площади окружности
         n_qwery = 4;
-        // вместо ID маршрута передаём координаты центра окружности
         NN_marshr = cor45;
-        //update(n_qwery, NN_marshr)
-
         var parameters = {
             n_qwery: n_qwery,
             NN_marshr: NN_marshr
         };
         $.getJSON("update.php", parameters)
             .done(function(data, textStatus, jqXHR) {
-
-                // создание списка маршрутов в радиусе 500 метров
                 if (data == "") {
                     var tooltip = "В радиусе 500 метров маршруты общественниго транспорта не проходят.";
                 } else {
                     var tooltip = "В радиусе 500 метров проходят следующие маршруты"
                     var ul = "<ul>";
-                    // шаблон списка маршрутов
-                    //                    var template = _.template("<li><a href = 'routes.php?id=<%- id %>' target = '_blank'><%- type %> №<%- n_marshr %> (<%- nach_kon %>)</a></li>");
                     var template = _.template("<li><a route-id=<%- id %>' onclick='showModalRoute(this)'><%- type %> №<%- n_marshr %> (<%- nach_kon %>)</a></li>");
-                    // создание списка с использованием шаблона
                     for (var i = 0, n = data.length; i < n; i++) {
                         ul += template({
                             id: data[i].id,
@@ -616,34 +491,27 @@ function configure() {
                     }
                     ul += "</ul>";
                     tooltip += ul;
-
                 }
-
                 var info_cord = new google.maps.InfoWindow({
                     content: tooltip,
                     position: event.latLng
                 });
-
                 // задаём параметры окружности
                 var circleOptions = {
-                        center: event.latLng,
-                        fillColor: "#00AAFF",
-                        fillOpacity: 0.5,
-                        strokeColor: "#FFAA00",
-                        strokeOpacity: 0.8,
-                        strokeWeight: 2,
-                        clickable: false,
-                        radius: 0.5 * 1000
-                    }
-                    //рисуем окружность
+                    center: event.latLng,
+                    fillColor: "#00AAFF",
+                    fillOpacity: 0.5,
+                    strokeColor: "#FFAA00",
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    clickable: false,
+                    radius: 0.5 * 1000
+                }
                 circle = new google.maps.Circle(circleOptions);
-                //circle.setMap(map);
                 circles.push(circle);
                 circle.setMap(map);
-                //marker_cord.setMap(map);
                 info_cords.push(info_cord);
                 info_cord.open(map);
-
                 setTimeout(function() {
                     circle.setMap(null);
                     circles.length = 0;
@@ -739,12 +607,10 @@ function configure() {
 }
 //==========================================================================================================================    
 
-// configure typeahead
-// https://github.com/twitter/typeahead.js/blob/master/doc/jquery_typeahead.md
 $("#q").typeahead({
     autoselect: true,
     highlight: true,
-    minLength: 1
+    minLength: 2
 }, {
     source: search,
     templates: {
@@ -752,47 +618,26 @@ $("#q").typeahead({
         suggestion: _.template("<p><%- stops_name %><%- id %></p>")
     }
 });
-
-// re-center map after place is selected from drop-down
 $("#q").on("typeahead:selected", function(eventObject, suggestion, name) {
     title_label = suggestion.stops_name + ", " + suggestion.id;
-    // устанавливаем указатель маркера искомой остановки
     marker_find = 1;
     n_qwery = 1;
     addMarker(suggestion)
 });
-
-// hide info window when text box has focus
 $("#q").focus(function(eventData) {
     hideInfo();
 });
-
-// re-enable ctrl- and right-clicking (and thus Inspect Element) on Google Map
-// https://chrome.google.com/webstore/detail/allow-right-click/hompjdfbfmmmgflfjdlnkohcplmboaeo?hl=en
 document.addEventListener("contextmenu", function(event) {
     event.returnValue = true;
     event.stopPropagation && event.stopPropagation();
     event.cancelBubble && event.cancelBubble();
 }, true);
-
-// give focus to text box
 $("#q").focus();
 
-
-/**
- * Hides info window.
- */
-function hideInfo() {
-    info.close();
-}
-
-// Удаление всех маркеров
-
+// Удаление маркеров остановок
 function removeMarkers() {
-    // удаление всех маркеров
     for (var i = 0, n = markers.length; i < n; i++) {
         markers[i].setMap(null);
-        // обнуление указателя размера массива существующих маркеров
         markers.length = 0;
         markers = [];
     }
@@ -804,68 +649,62 @@ function removeMarkersFind() {
         for (var i = 0, n = markersFind.length; i < n; i++) {
             markersFind[i].setMap(null);
         }
-        // обнуление указателя размера массива существующих найденных маркеров
         markersFind.length = 0;
         markersFind = [];
     }
 
 }
-/**
- * Searches database for typeahead's suggestions.
- */
+// поиск typeahead
 function search(query, cb) {
-    // get places matching query (asynchronously)
     var parameters = {
         geo: query
     };
     $.getJSON("search.php", parameters)
         .done(function(data, textStatus, jqXHR) {
-
-            // call typeahead's callback with search results (i.e., places)
             cb(data);
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
-
-            // log error to browser's console
             console.log(errorThrown.toString());
         });
 }
 
-/**
- * Shows info window at marker with content.
- */
+// функция скрытия инфо окон остановок
+function hideInfo() {
+    for (var i = 0, n = info_stops.length; i < n; i++) {
+        info_stops[i].close();
+        // обнуление указателя размера массива существующих маркеров
+        info_stops.length = 0;
+        info_stops = [];
+    }
+    //info.close();
+}
+
+// наполнение инфо окна остановки
 function showInfo(marker, content) {
-    // start div
+    hideInfo();
     var div = "<div id='info'>";
     if (typeof(content) === "undefined") {
-        // http://www.ajaxload.info/
         div += "<img alt='loading' src='img/ajax-loader.gif'/>";
     } else {
         div += content;
     }
-
-    // end div
     div += "</div>";
-
-    // set info window's content
+    var info = new google.maps.InfoWindow({
+        content: (div),
+        disableAutoPan: true
+    });
     info.setContent(div);
-
-    // open info window (if not already open)
+    info_stops.push(info)
     info.open(map, marker);
 }
 
-/**
- * Updates UI's markers.
- */
+// функция обновления остановок
 function update(n_qwery, NN_marshr) {
     // get map's bounds
     //var bounds = map.getBounds();
     //var ne = bounds.getNorthEast();
     //var sw = bounds.getSouthWest();
-
-    //removeMarkers();
     if (markers.length < 480 || n_qwery == 5) {
-        // get places within bounds (asynchronously)
         var parameters = {
             //ne: ne.lat() + "," + ne.lng(),
             //q: $("#q").val(),
@@ -876,26 +715,20 @@ function update(n_qwery, NN_marshr) {
         $.getJSON("update.php", parameters)
             .done(function(data, textStatus, jqXHR) {
                 if (n_qwery == 5) marker_find = 1;
-                // remove old markers from map
                 if (n_qwery != 5) removeMarkers();
-                // add new markers to map
-
                 for (var i = 0; i < data.length; i++) {
                     addMarker(data[i]);
                 }
             })
     }
     if (line.length < 41) {
-        //n_qwery = 3;
         for (i = 1; i < 42; i++) {
-            NN_marshr = i; //!!!!!!!!!!!!!!!!!!!!!!!!
+            NN_marshr = i;
             array_marshr[NN_marshr] = 0;
             n_qwery = 3;
             n_stops = 0;
             draw_marshr(n_qwery, NN_marshr)
         }
-        //NN_marshr == "ALL";
-        //removeLine(NN_marshr);
     }
 
 }
