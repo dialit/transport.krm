@@ -78,12 +78,10 @@
                                     //var_dump($front);
                                     foreach ($mas_front as $value){
 	    				                //var_dump($value);
-                                        $namestops = query("SELECT `id`,`stops_name` FROM `stops` WHERE `id` = ?", $value);
-	    				                //var_dump($namestops);
-                                        $id = $namestops[0]["id"];
+                                        $namestops = query("SELECT `stops_name` FROM `stops` WHERE `id` = ?", $value);
                                         $names = $namestops[0]["stops_name"];
 	                                    //выводим названия остановок и html ссылки под названием остановки c id остановок
-	                                    echo "<a href='javascript:update(5, $id)' title='Показать остановку'>$names</a>, ";
+	                                    echo "<a href='javascript:update(5, $value)' title='Показать остановку'>$names</a>, ";
                                     }
                                     unset($value);
                                 ?>
@@ -92,11 +90,10 @@
                                 <?php 
                                     //перебираем массив с id остановок и запрашиваем по ним названия остановок из базы
                                     foreach ($mas_back as $value){
-	    				                $namestops = query("SELECT `id`,`stops_name` FROM `stops` WHERE `id` = ?", $value);
-	    				                $id = $namestops[0]["id"];
+	    				                $namestops = query("SELECT `stops_name` FROM `stops` WHERE `id` = ?", $value);
 	                                    $names = $namestops[0]["stops_name"];
                                         //выводим названия остановок и html ссылки под названием остановки c id остановок
-	                                    echo "<a href='javascript:update(5, $id)' title='Показать остановку'>$names</a>, ";
+	                                    echo "<a href='javascript:update(5, $value)' title='Показать остановку'>$names</a>, ";
                                     }
                                     unset($value);
                                 ?>
