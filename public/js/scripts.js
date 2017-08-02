@@ -406,7 +406,7 @@ function addMarker(place) {
     if (marker_find == 1 || n_qwery == 5) {
         // removeMarkersFind();
         var markerFind = new google.maps.Marker({
-            //icon: "/img/marker.png",
+            icon: "/img/marker.png",
             position: new google.maps.LatLng(place.latitude, place.longitude),
             animation: google.maps.Animation.BOUNCE,
             map: map,
@@ -416,19 +416,12 @@ function addMarker(place) {
             labelClass: "label",
             title: place.stops_name
         });
-        markerFind.setIcon( /** @type {google.maps.Icon} */ ({
-            url: place.icon,
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(35, 35)
-        }));
         markersFind.push(markerFind);
         markerFind.setMap(map);
         map.setCenter(new google.maps.LatLng(place.latitude, place.longitude), 17);
         map.setZoom(16);
         $('#myModalBox').hide();
-        marker_find == 0;
+        //marker_find == 0;
         n_qwery = 1;
     } else
     //остальные маркеры остановок
@@ -445,6 +438,7 @@ function addMarker(place) {
             title: place.stops_name
         });
     };
+    if (marker_find == 0){
     google.maps.event.addListener(marker, "click", function() {
         n_qwery1 = 1;
         $.getJSON("articles.php", {
@@ -471,7 +465,8 @@ function addMarker(place) {
                     showInfo(marker, tooltip);
                 }
             });
-    });
+        });
+    }
     markers.push(marker);
     if (map.getZoom() < 16) {
         for (var i = 0, n = markers.length; i < n; i++) {
