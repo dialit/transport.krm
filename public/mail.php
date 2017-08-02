@@ -7,10 +7,12 @@
  
 // Устанавливаем константы 
 //Адрес почты кому отправляем
-define('BEZ_MAIL_TO','Office <dialit73@gmail.com>');
+define('MAIL_TO','Office <dialit73@gmail.com>');
 
 //Адрес почты от кого отправляем
-define('BEZ_MAIL_AUTOR','kram-ways.pp.ua <no-reply@kram-ways.pp.ua>');
+define('MAIL_AUTOR','kram-ways.pp.ua <no-reply@kram-ways.pp.ua>');
+
+$captcha_error = false;
  
 /**Отпровляем сообщение на почту
 * @param string  $to - Кому
@@ -38,6 +40,30 @@ function sendMail($to, $from, $title, $message)
 		return true;  
 }
 
+if ($_REQUEST['g-recaptcha-response']) {
+
+    require_once '../includes/recaptcha/recaptchalib.php';
+
+    $secret = "6LciQCsUAAAAAFtPzx86xPqlqiTLOnwzgSwytS3D";
+
+    $response = NULL;
+
+    // check secret key
+    $reCaptcha = new ReCaptcha($secret);
+    $response = $reCaptcha->verifyResponse(
+        $_SERVER["REMOTE_ADDR"],
+        $_REQUEST['g-recaptcha-response']
+    );
+    if (!$response->success) {
+
+        $captcha_error = 1;
+    }
+
+} else {
+
+    $captcha_error = 1;
+}
+
 //Если отправили форму, проверяем данные	
 if(isset($_POST['email']))
 {
@@ -57,6 +83,9 @@ if(isset($_POST['email']))
 	if(!preg_match($pattern, $_POST['mobile'])){
 		$resp['err'][] = 'Не верный мобильный телефон';
 	}
+    if($captcha_error){
+        $resp['err'][] = 'Ошибка капчи - отправьте форму повторно';
+    }
    
 	//Формируем заголовок письма
 	$title = 'Ура нам письмо пришло!';
@@ -76,7 +105,7 @@ if(isset($_POST['email']))
 	else
 	{
 		//Вызываем функцию отправки письма
-		if(sendMail(BEZ_MAIL_TO, BEZ_MAIL_AUTOR, $title, $msg))
+		if(sendMail(MAIL_TO, MAIL_AUTOR, $title, $msg))
 		{
 			//Отправляем сообщение пользователю
 			$resp['ok'] = 'Письмо отправленно...';

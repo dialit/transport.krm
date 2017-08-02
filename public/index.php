@@ -167,7 +167,7 @@
                 <div class="collapse navbar-collapse" id="navbar-collapse">
                     <ul class="nav navbar-nav nav-pills">
                         <li><button class="btn btn-default" id="showLeft">Маршруты</button></li>
-<!--                        <li><a id="showRight">Link</a></li>-->
+<!--                        <li><button id="showRight">Link</button></li>-->
                     </ul>
                     <form class="navbar-form navbar-left" id="form" role="form">
                         <div class="form-group">
