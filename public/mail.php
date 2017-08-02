@@ -10,7 +10,7 @@
 define('BEZ_MAIL_TO','Office <dialit73@gmail.com>');
 
 //Адрес почты от кого отправляем
-define('BEZ_MAIL_AUTOR','Transport.krm <no-reply@transport.krm>');
+define('BEZ_MAIL_AUTOR','kram-ways.pp.ua <no-reply@kram-ways.pp.ua>');
  
 /**Отпровляем сообщение на почту
 * @param string  $to - Кому
@@ -62,7 +62,8 @@ if(isset($_POST['email']))
 	$title = 'Ура нам письмо пришло!';
 		
 	//Формируем HTML верстку письма для отправки
-	$msg  = 'Мобильный телефон <strong>'. $_POST['mobile'].'</strong><br />';
+	$msg  = 'Имя <strong>'. $_POST['name'].'</strong><br />';
+	$msg .= 'Мобильный телефон <strong>'. $_POST['mobile'].'</strong><br />';
 	$msg .= nl2br($_POST['text']);
 	 
 	//Проверяем ошибки

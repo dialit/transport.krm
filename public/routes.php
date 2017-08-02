@@ -33,7 +33,8 @@
     //var_dump($mas_front);
     //var_dump($mas_back);
     
-?> 
+?>
+<head><script src='https://www.google.com/recaptcha/api.js'></script></head> 
 
 <div class="container-fluid">
     <h3><?= $transport["type"] ?>&nbsp;№<?= $transport["n_marshr"] ?></h3>
@@ -138,6 +139,7 @@
                     <label for="labelText">Текст комментария:</label>
                     <textarea name="comment" id="message" cols="30" rows="10" class="form-control"></textarea>
                 </div>
+                 <div class="g-recaptcha" data-sitekey="6LciQCsUAAAAAMXAYzfYUEBS9oiH0StRVln2IE1e"></div><br />
                   <button type="submit" class="btn btn-primary">Отправить</button>
             </form>
                 <?php

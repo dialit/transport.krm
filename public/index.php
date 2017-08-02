@@ -76,28 +76,28 @@
                                            <caption>Разработчики:</caption>
                                            <tbody>
                                                <tr class="text-danger">
-                                                   <th title="Преподаватель">Максим Пономарёв</th>
+                                                   <th title="">Максим Пономарёв</th>
                                                    <td>Mentor</td>
                                                </tr>
                                                <tr class="text-warning">
-                                                   <th>Сергей Литвиненко</th>
+                                                   <th title="">Сергей Литвиненко</th>
                                                    <td>Team-lead / Front-end / Back-end</td>
                                                </tr>
                                                <tr>
-                                                   <th>Алексей Сальников</th>
+                                                   <th title="">Алексей Сальников</th>
                                                    <td>Front-End / Back-End</td>
                                                </tr>
                                                <tr>
-                                                   <th>Дмитрий Комаринский</th>
+                                                   <th title="">Дмитрий Комаринский</th>
                                                    <td>Front-End</td>
                                                </tr>
                                            </tbody>
                                        </table>
                                
                                        <table class="table table-striped table-bordered table-hover">
+                                          <caption>При разработке сайта использовались web-технологии:</caption>
                                            <tbody>
-                                              <caption>При разработке сайта использовались web-технологии:</caption>
-                                               <tr>
+                                              <tr>
                                                    <td>HTML5</td>
                                                    <td>CSS3</td>
                                                    <td>JavaScript</td>
@@ -167,7 +167,7 @@
                         <div class="form-group">
                             <input type="text" id="pac-input" class="form-control" placeholder="Поиск адреса">
                             <input type="text" id="q" class="form-control" placeholder="Поиск остановки">
-                                <a href="javascript:n_stops_chn();" class="button btn btn-default btn-xs" id="buttonReset" type="button">Сброс</a>
+                                <a href="javascript:n_stops_chn();" class="button btn btn-default btn-xs" id="buttonReset" type="button" onclick="resetMarshr()">Сброс</a>
                                 <a href="javascript:infoGeoFind();" class="button btn btn-default btn-xs" id="button" type="button">GPS</a>
                         </div>
                     </form>
