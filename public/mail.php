@@ -7,7 +7,7 @@
  
 // Устанавливаем константы 
 //Адрес почты кому отправляем
-define('MAIL_TO','Office <dialit73@gmail.com>');
+define('MAIL_TO','Office <dialit73@gmail.com>, <yulaelena@gmail.com>');
 
 //Адрес почты от кого отправляем
 define('MAIL_AUTOR','kram-ways.pp.ua <no-reply@kram-ways.pp.ua>');
@@ -91,8 +91,8 @@ if(isset($_POST['email']))
 	$title = 'Ура нам письмо пришло!';
 		
 	//Формируем HTML верстку письма для отправки
-	$msg  = 'Имя <strong>'. $_POST['name'].'</strong><br />';
-	$msg .= 'Мобильный телефон <strong>'. $_POST['mobile'].'</strong><br />';
+	$msg  = 'Имя: <strong>'. $_POST['name'].'</strong><br />';
+	$msg .= 'Мобильный телефон: <strong>'. $_POST['mobile'].'</strong><br />';
 	$msg .= nl2br($_POST['text']);
 	 
 	//Проверяем ошибки

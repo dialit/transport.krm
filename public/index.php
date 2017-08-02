@@ -60,11 +60,11 @@
                        <form method="POST" action="mail.php" id="mailForm">
                            <div class="form-group">
                                <label for="labelName">Ваше имя</label>
-                               <input type="name" class="form-control" name="name" id="name" placeholder="Имя" required>
+                               <input type="text" class="form-control" name="name" id="name" placeholder="Имя" required>
                            </div>
                            <div class="form-group">
                                <label for="labelEmail">Email</label>
-                               <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
+                               <input type="text" class="form-control" name="email" id="email" placeholder="Email" required>
                            </div>
                            <div class="form-group">
                                <label for="labelPhone">Телефон</label>
@@ -333,8 +333,8 @@
         <!-- http://getbootstrap.com/ -->
         <script src="js/bootstrap.min.js"></script>
         
-        <!-- Подключения скрипта control-modal.js к странице -->
-<!--        <script src="js/control-modal.js"></script>-->
+        <!-- http://digitalbush.com/projects/masked-input-plugin/ -->
+        <script src="js/jquery.maskedinput.min.js"></script>
 
         <!-- http://underscorejs.org/ -->
         <script src="js/underscore-min.js"></script>
@@ -386,6 +386,12 @@
             $("#about").modal('hide');
             });
         });
+        </script>
+        
+        <script>
+        $(document).ready(function(){
+            $("#mobile").mask("+38(999)999-99-99",{placeholder:"+38(XXX)XXX-XX-XX"});
+        })
         </script>
         
     </body>
