@@ -132,12 +132,73 @@ $(function() {
         maxZoom: 18,
         //panControl: true,
         styles: styles,
-        zoom: 12,
+        zoom: 15,
         zoomControl: true
     };
 
     var canvas = $("#map-canvas").get(0);
     map = new google.maps.Map(canvas, options);
+    
+    var icons = {
+          train: {
+            icon: "img/train.png"
+          },
+          bus: {
+            icon: "img/bus.png"
+          },
+          central: {
+            icon: "img/gerb.png"
+          }
+        };
+    
+    var features = [
+          {
+            position: new google.maps.LatLng(48.726006,37.543142),
+            type: 'train'
+          }, {
+            position: new google.maps.LatLng(48.735834,37.576244),
+            type: 'bus'
+          }, {
+            position: new google.maps.LatLng(48.73875,37.584969),
+            type: 'central'
+          }
+        ];
+    
+    var label = {
+            train: {
+            labelContent: "Железнодорожный вокзал",
+            },
+            bus: {
+            labelContent: "Автовокзал",
+            },
+            central: {
+            labelContent: "Центральная площадь",
+            }
+        };
+        // labelContent: label_stops,
+        //     labelAnchor: new google.maps.Point(0, 0),
+        //     labelClass: "label",
+        //     title: place.stops_name
+
+        // Create markers.
+        features.forEach(function(feature) {
+          var markerPRIME = new google.maps.Marker({
+            position: feature.position,
+            icon: icons[feature.type].icon,
+            labelContent: label[feature.type].labelContent,
+            labelAnchor: new google.maps.Point(0, 0),
+            labelClass: "label",
+            title: label[feature.type].labelContent,
+            map: map
+          });
+        });
+
+
+
+
+
+    
+    
     google.maps.event.addListenerOnce(map, "idle", configure);
     //infoGeoFind();
     update(n_qwery, NN_marshr);
@@ -252,8 +313,8 @@ function draw_marshr(n_qwery, NN_marshr) {
                 line[NN_marshr].setMap(null);
                 //line[NN_marshr].setVisible(false);
                 array_marshr[NN_marshr] = 1;
-                map.setCenter(new google.maps.LatLng(48.732644, 37.583284), 13);
-                map.setZoom(13);
+                // map.setCenter(new google.maps.LatLng(48.732644, 37.583284), 13);
+                // map.setZoom(13);
                 n_qwery1 = 2;
                 $.getJSON("articles.php", {
                         geo: NN_marshr,
@@ -313,7 +374,7 @@ function n_stops_chn() {
     removeLine();
     removeMarkersFind();
     map.setCenter(new google.maps.LatLng(48.732644, 37.583284), 13);
-    map.setZoom(13);
+    map.setZoom(14);
 }
 
 // // Функция удаления линий маршрута
@@ -344,8 +405,8 @@ function addMarker(place) {
     // если маркер искомой остановки, то у него отличный от других маркеров значёк и анимация 
     if (marker_find == 1 || n_qwery == 5) {
         // removeMarkersFind();
-        var marker = new google.maps.Marker({
-            icon: "/img/marker.png",
+        var markerFind = new google.maps.Marker({
+            //icon: "/img/marker.png",
             position: new google.maps.LatLng(place.latitude, place.longitude),
             animation: google.maps.Animation.BOUNCE,
             map: map,
@@ -355,10 +416,17 @@ function addMarker(place) {
             labelClass: "label",
             title: place.stops_name
         });
-        markersFind.push(marker);
-        marker.setMap(map);
+        markerFind.setIcon( /** @type {google.maps.Icon} */ ({
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(35, 35)
+        }));
+        markersFind.push(markerFind);
+        markerFind.setMap(map);
         map.setCenter(new google.maps.LatLng(place.latitude, place.longitude), 17);
-        map.setZoom(17);
+        map.setZoom(16);
         $('#myModalBox').hide();
         marker_find == 0;
         n_qwery = 1;
@@ -405,7 +473,7 @@ function addMarker(place) {
             });
     });
     markers.push(marker);
-    if (map.getZoom() < 15) {
+    if (map.getZoom() < 16) {
         for (var i = 0, n = markers.length; i < n; i++) {
             markers[i].setMap(null);
         }
@@ -528,12 +596,12 @@ function configure() {
 
     // в зависимости от масштаба карты отображать маркеры остановок или нет
     map.addListener('zoom_changed', function() {
-        if (map.getZoom() >= 15); {
+        if (map.getZoom() >= 16); {
             for (var i = 0, n = markers.length; i < n; i++) {
                 markers[i].setMap(map);
             }
         }
-        if (map.getZoom() < 15) {
+        if (map.getZoom() < 16) {
             for (var i = 0, n = markers.length; i < n; i++) {
                 markers[i].setMap(null);
             }
@@ -645,6 +713,8 @@ function removeMarkers() {
 }
 // удаление маркеров найденых остановок
 function removeMarkersFind() {
+    infowindow.close();
+    markerPlace.setVisible(false);
     if (markersFind.length != 0) {
         for (var i = 0, n = markersFind.length; i < n; i++) {
             markersFind[i].setMap(null);
