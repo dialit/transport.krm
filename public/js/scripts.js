@@ -23,6 +23,8 @@ var info_stops = [];
 var circles = [];
 var info_cords = [];
 var tooltip;
+var markerPlaces = [];
+var infowindowPlaces = [];
 // цвет линии
 var col = 0;
 // ID номера маршрута для построения
@@ -138,51 +140,49 @@ $(function() {
 
     var canvas = $("#map-canvas").get(0);
     map = new google.maps.Map(canvas, options);
-    
-    var icons = {
-          train: {
-            icon: "img/train.png"
-          },
-          bus: {
-            icon: "img/bus.png"
-          },
-          central: {
-            icon: "img/gerb.png"
-          }
-        };
-    
-    var features = [
-          {
-            position: new google.maps.LatLng(48.726006,37.543142),
-            type: 'train'
-          }, {
-            position: new google.maps.LatLng(48.735834,37.576244),
-            type: 'bus'
-          }, {
-            position: new google.maps.LatLng(48.73875,37.584969),
-            type: 'central'
-          }
-        ];
-    
-    var label = {
-            train: {
-            labelContent: "Железнодорожный вокзал",
-            },
-            bus: {
-            labelContent: "Автовокзал",
-            },
-            central: {
-            labelContent: "Центральная площадь",
-            }
-        };
-        // labelContent: label_stops,
-        //     labelAnchor: new google.maps.Point(0, 0),
-        //     labelClass: "label",
-        //     title: place.stops_name
 
-        // Create markers.
-        features.forEach(function(feature) {
-          var markerPRIME = new google.maps.Marker({
+    var icons = {
+        train: {
+            icon: "img/train.png"
+        },
+        bus: {
+            icon: "img/bus.png"
+        },
+        central: {
+            icon: "img/gerb.png"
+        }
+    };
+
+    var features = [{
+        position: new google.maps.LatLng(48.726006, 37.543142),
+        type: 'train'
+    }, {
+        position: new google.maps.LatLng(48.735834, 37.576244),
+        type: 'bus'
+    }, {
+        position: new google.maps.LatLng(48.73875, 37.584969),
+        type: 'central'
+    }];
+
+    var label = {
+        train: {
+            labelContent: "Железнодорожный вокзал",
+        },
+        bus: {
+            labelContent: "Автовокзал",
+        },
+        central: {
+            labelContent: "Центральная площадь",
+        }
+    };
+    // labelContent: label_stops,
+    //     labelAnchor: new google.maps.Point(0, 0),
+    //     labelClass: "label",
+    //     title: place.stops_name
+
+    // Create markers.
+    features.forEach(function(feature) {
+        var markerPRIME = new google.maps.Marker({
             position: feature.position,
             icon: icons[feature.type].icon,
             labelContent: label[feature.type].labelContent,
@@ -190,15 +190,15 @@ $(function() {
             labelClass: "label",
             title: label[feature.type].labelContent,
             map: map
-          });
         });
+    });
 
 
 
 
 
-    
-    
+
+
     google.maps.event.addListenerOnce(map, "idle", configure);
     //infoGeoFind();
     update(n_qwery, NN_marshr);
@@ -217,7 +217,7 @@ function infoGeoFind() {
             infoGeo.setPosition(pos);
             infoGeo.setContent('Вы находитесь здесь.');
             map.setCenter(pos);
-            map.setZoom(16);
+            map.setZoom(18);
         }, function() {
             handleLocationError(true, infoGeo, map.getCenter());
         });
@@ -404,7 +404,7 @@ function addMarker(place) {
     // создание маркера
     // если маркер искомой остановки, то у него отличный от других маркеров значёк и анимация 
     if (marker_find == 1 || n_qwery == 5) {
-        // removeMarkersFind();
+        removeMarkersFind();
         var markerFind = new google.maps.Marker({
             icon: "/img/marker.png",
             position: new google.maps.LatLng(place.latitude, place.longitude),
@@ -438,39 +438,41 @@ function addMarker(place) {
             title: place.stops_name
         });
     };
-    if (marker_find == 0){
-    google.maps.event.addListener(marker, "click", function() {
-        n_qwery1 = 1;
-        $.getJSON("articles.php", {
-                geo: place.id,
-                n_qwery1: n_qwery1
-            })
-            .done(function(data, textStatus, jqXHR) {
-                if (data.length === 0) {
-                    showInfo(marker, "Нет информации.");
-                } else {
-                    var tooltip = "Через остановку проходят следующие маршруты"
-                    var ul = "<ul>";
-                    var template = _.template("<li><a route-id=<%- id %>' onclick='showModalRoute(this)'><%- type %> №<%- n_marshr %> (<%- nach_kon %>)</a></li>");
-                    for (var i = 0, n = data.length; i < n; i++) {
-                        ul += template({
-                            n_marshr: data[i].n_marshr,
-                            id: data[i].id,
-                            type: data[i].type,
-                            nach_kon: data[i].nach_kon
-                        });
+    if (marker_find == 0) {
+        google.maps.event.addListener(marker, "click", function() {
+            n_qwery1 = 1;
+            $.getJSON("articles.php", {
+                    geo: place.id,
+                    n_qwery1: n_qwery1
+                })
+                .done(function(data, textStatus, jqXHR) {
+                    if (data.length === 0) {
+                        showInfo(marker, "Нет информации.");
+                    } else {
+                        var tooltip = "Через остановку проходят следующие маршруты"
+                        var ul = "<ul>";
+                        var template = _.template("<li><a route-id=<%- id %>' onclick='showModalRoute(this)'><%- type %> №<%- n_marshr %> (<%- nach_kon %>)</a></li>");
+                        for (var i = 0, n = data.length; i < n; i++) {
+                            ul += template({
+                                n_marshr: data[i].n_marshr,
+                                id: data[i].id,
+                                type: data[i].type,
+                                nach_kon: data[i].nach_kon
+                            });
+                        }
+                        ul += "</ul>";
+                        tooltip += ul;
+                        showInfo(marker, tooltip);
                     }
-                    ul += "</ul>";
-                    tooltip += ul;
-                    showInfo(marker, tooltip);
-                }
-            });
+                });
         });
-    }
-    markers.push(marker);
-    if (map.getZoom() < 16) {
-        for (var i = 0, n = markers.length; i < n; i++) {
-            markers[i].setMap(null);
+
+        markers.push(marker);
+        marker.setMap(map);
+        if (map.getZoom() < 16) {
+            for (var i = 0, n = markers.length; i < n; i++) {
+                markers[i].setMap(null);
+            }
         }
     }
     marker_find = 0;
@@ -623,14 +625,14 @@ function configure() {
 
     autocomplete = new google.maps.places.Autocomplete(input, options);
 
-    var infowindow = new google.maps.InfoWindow();
+    var infowindowPlace = new google.maps.InfoWindow();
     var markerPlace = new google.maps.Marker({
         map: map,
         anchorPoint: new google.maps.Point(0, -29)
     });
 
     autocomplete.addListener('place_changed', function() {
-        infowindow.close();
+        infowindowPlace.close();
         markerPlace.setVisible(false);
         var place = autocomplete.getPlace();
         if (!place.geometry) {
@@ -644,17 +646,20 @@ function configure() {
             map.setCenter(place.geometry.location);
             map.setZoom(16);
         }
-        markerPlace.setIcon( /** @type {google.maps.Icon} */ ({
-            url: place.icon,
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(35, 35)
-        }));
+        markerPlace.setIcon("/img/marker.png");
+        // ,, @type {google.maps.Icon} {
+        //     url: place.icon,
+        //     size: new google.maps.Size(71, 71),
+        //     origin: new google.maps.Point(0, 0),
+        //     anchor: new google.maps.Point(17, 34),
+        //     scaledSize: new google.maps.Size(35, 35)
+        // }));
+        markerPlace.setAnimation(google.maps.Animation.BOUNCE);
         markerPlace.setPosition(place.geometry.location);
+        markerPlaces.push(markerPlace);
         markerPlace.setVisible(true);
 
-        var address = '';
+        var address = 'Краматорск';
         if (place.address_components) {
             address = [
                 (place.address_components[0] && place.address_components[0].short_name || ''),
@@ -663,8 +668,9 @@ function configure() {
             ].join(' ');
         }
 
-        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-        infowindow.open(map, markerPlace);
+        infowindowPlace.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+        infowindowPlaces.push(infowindowPlace);
+        infowindowPlace.open(map, markerPlace);
     });
 
 }
@@ -708,17 +714,22 @@ function removeMarkers() {
 }
 // удаление маркеров найденых остановок
 function removeMarkersFind() {
-    infowindow.close();
-    markerPlace.setVisible(false);
-    if (markersFind.length != 0) {
-        for (var i = 0, n = markersFind.length; i < n; i++) {
-            markersFind[i].setMap(null);
-        }
+    for (var i = 0, n = markerPlaces.length; i < n; i++) {
+        if (typeof { markerPlaces: i } !== 'undefined') markerPlaces[i].setVisible(false);
+        markerPlaces.length = 0;
+        markerPlaces = [];
+    }
+    for (var i = 0, n = infowindowPlaces.length; i < n; i++) {
+        if (typeof { infowindowPlaces: i } !== 'undefined') infowindowPlaces[i].close();
+        infowindowPlaces.length = 0;
+        infowindowPlaces = [];
+    }
+    for (var i = 0, n = markersFind.length; i < n; i++) {
+        if (typeof { markersFind: i } !== 'undefined') markersFind[i].setVisible(false);
         markersFind.length = 0;
         markersFind = [];
     }
-
-}
+};
 // поиск typeahead
 function search(query, cb) {
     var parameters = {
@@ -731,7 +742,7 @@ function search(query, cb) {
         .fail(function(jqXHR, textStatus, errorThrown) {
             console.log(errorThrown.toString());
         });
-}
+};
 
 // функция скрытия инфо окон остановок
 function hideInfo() {
