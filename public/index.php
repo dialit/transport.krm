@@ -47,40 +47,54 @@
             </div>
         </div><!-- End Info Modal -->
         
-       <!-- Feedback Modal-->
-       <div id="feedback" class="modal fade" tabindex="-1" aria-hidden="true" aria-labelledby="ModalLabel">
-           <div class="modal-dialog" role="dialog">
-               <div class="modal-content">
-                  <div class="modal-header">
+        <!-- Feedback Modal-->
+        <div id="feedback" class="modal fade" tabindex="-1" aria-hidden="true" aria-labelledby="ModalLabel">
+            <div class="modal-dialog" role="dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть"><span aria-hidden="true">&times;</span></button>
                       <h4 class="modal-title" id="gridSystemModalLabel">Связаться с разработчиками сайта</h4>
-                  </div>
-                   <div class="modal-body">
-                       <div class="hide" id="respons"></div>
-                       <form method="POST" action="mail.php" id="mailForm">
-                           <div class="form-group">
-                               <label for="labelName">Ваше имя</label>
-                               <input type="text" class="form-control" name="name" id="name" placeholder="Имя" required>
-                           </div>
-                           <div class="form-group">
-                               <label for="labelEmail">Email</label>
-                               <input type="text" class="form-control" name="email" id="email" placeholder="Email" required>
-                           </div>
-                           <div class="form-group">
-                               <label for="labelPhone">Телефон</label>
-                               <input type="text" class="form-control" name="mobile" id="mobile" placeholder="+38XXXXXXXXXX" required>
-                           </div>
-                           <div class="form-group">
-                               <label for="labelText">Текст</label>
-                               <textarea name="text" id="text" cols="30" rows="10" class="form-control"></textarea>
-                           </div>
-                           <div class="g-recaptcha" data-sitekey="6LciQCsUAAAAAMXAYzfYUEBS9oiH0StRVln2IE1e"></div><br />
-                           <button type="submit" class="btn btn-primary">Отправить</button>
-                       </form>
-                   </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="hide" id="respons"></div>
+                        <form method="POST" action="mail.php" id="mailForm">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                   <div class="form-group">
+                                       <label for="labelName">Введите Ваше имя:</label>
+                                       <input type="text" class="form-control" name="name" id="name" placeholder="Имя" required minlength="3" maxlength="30">
+                                   </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                       <label for="labelEmail">Ваш Email:</label>
+                                       <input type="text" class="form-control" name="email" id="email" placeholder="Email" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">                               
+                                    <div class="form-group">
+                                        <label for="labelPhone">Телефон:</label>
+                                        <input type="text" class="form-control" name="mobile" id="mobile" placeholder="+38(XXX)XXX-XX-XX" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                               <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="labelText">Текст сообщения:</label>
+                                        <textarea name="text" id="text" cols="30" rows="10" class="form-control"></textarea>
+                                    </div>
+                               </div>
+                            </div>
+                            <div class="g-recaptcha" data-sitekey="6LciQCsUAAAAAMXAYzfYUEBS9oiH0StRVln2IE1e"></div><br />
+                            <button type="submit" class="btn btn-primary">Отправить</button>
+                        </form>
+                    </div>
                </div>
-           </div>
-       </div> <!-- End of Feedback Modal -->
+            </div>
+        </div> <!-- End of Feedback Modal -->
        
        <!-- About Modal-->
        <div id="about" class="modal fade feedback" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="ModalLabel">
@@ -173,7 +187,7 @@
                         <div class="form-group">
                             <input type="text" id="pac-input" class="form-control" placeholder="Поиск адреса">
                             <input type="text" id="q" class="form-control" placeholder="Поиск остановки">
-                                <a href="javascript:n_stops_chn();" class="button btn btn-default btn-xs" id="buttonReset" type="button">Сброс</a>
+                                <a href="javascript:n_stops_chn();" class="button btn btn-default btn-xs" id="buttonReset" type="button" onclick="resetMarshr()">Сброс</a>
                                 <a href="javascript:infoGeoFind();" class="button btn btn-default btn-xs" id="button" type="button">GPS</a>
                         </div>
                     </form>
