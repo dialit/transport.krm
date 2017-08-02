@@ -7,7 +7,7 @@
  
 // Устанавливаем константы 
 //Адрес почты кому отправляем
-define('MAIL_TO','Office <dialit73@gmail.com>, <yulaelena@gmail.com>');
+define('MAIL_TO','Office <dialit73@gmail.com>, <yulaelena@gmail.com>, <komarinskiy@gmail.com>, <ponomarovmax@gmail.com>');
 
 //Адрес почты от кого отправляем
 define('MAIL_AUTOR','kram-ways.pp.ua <no-reply@kram-ways.pp.ua>');
@@ -77,12 +77,13 @@ if(isset($_POST['email']))
 	
 	//Шаблон проверки мобильного телефона
 //	$pattern = '/(8|7|\+7)?9\d{9}/';
-	$pattern = '/(\+38)\d{10}/';
+//	$pattern = '/(\+38)\d{10}/';
+//	$pattern = '/^\+38\(d{3})-\d{3}-\d{2}-\d{2}$/';
 	
 	//Проверяем мобильный телефон
-	if(!preg_match($pattern, $_POST['mobile'])){
-		$resp['err'][] = 'Не верный мобильный телефон';
-	}
+//	if(!preg_match($pattern, $_POST['mobile'])){
+//		$resp['err'][] = 'Не верный мобильный телефон';
+//	}
     if($captcha_error){
         $resp['err'][] = 'Ошибка капчи - отправьте форму повторно';
     }
@@ -92,6 +93,7 @@ if(isset($_POST['email']))
 		
 	//Формируем HTML верстку письма для отправки
 	$msg  = 'Имя: <strong>'. $_POST['name'].'</strong><br />';
+	$msg  = 'E-mail: <strong>'. $_POST['email'].'</strong><br />';
 	$msg .= 'Мобильный телефон: <strong>'. $_POST['mobile'].'</strong><br />';
 	$msg .= nl2br($_POST['text']);
 	 
