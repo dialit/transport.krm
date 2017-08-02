@@ -67,7 +67,7 @@
                </tbody>
            </table>
             </div>
-<!--            <div class="table-responsive">-->
+
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <th>Путь следования:</th>
@@ -104,8 +104,7 @@
                     </tr>
                 </tbody>
             </table>
-<!--            </div>-->
-<!--               <div class="table-responsive">-->
+
                 <table class="table table-hover">
                     <tbody>
                         <tr>
@@ -115,7 +114,6 @@
                         </tr>
                     </tbody>
                 </table>
-<!--            </div>-->
         </div><!-- End content Tab1 -->
         
         <div id="panel2" class="tab-pane fade">           
@@ -123,40 +121,64 @@
         </div><!-- End content Tab2 -->
         
         <div id="panel3" class="tab-pane fade">
-            <form method="POST" action="comments.php" enctype="multipart/form-data" name="form" onSubmit="return false">
-                <div class="form-group">
-                    <input type="hidden" class="form-control" name="<?= $transport["n_marshr"] ?>" value="<?= $transport["n_marshr"] ?>">
-                    <label for="labelName">Имя:</label>
-                    <input type="text" class="form-control" name="author" id="author" required>
+              <?php $fp = fopen("comment.txt", "r"); // Открываем файл в режиме чтения
+                    if ($fp) { ?>
+<!--               <div class="panel panel-default">-->
+<!--                  <div class="panel-body">-->
+                      <table class="table table-striped table-bordered table-hover">
+                          <tbody>
+                             <?php 
+                                  while (!feof($fp)) {
+                                      $mytext = fgets($fp, 999); ?>
+                              <tr>
+                                  <td>
+                                      <?php echo $mytext."<br />"; ?>
+                                  </td>
+                              </tr>
+                              <?php } ?>
+                          </tbody>
+                      </table>
+<!--                   </div>-->
+<!--               </div>-->
+                <?php } ?>
+            <div class="panel panel-default">
+               <div class="panel-heading">Добавить комментарий</div>
+                <div class="panel-body">
+                    <form method="POST" action="comments.php" onSubmit="return false">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control" name="<?= $transport["n_marshr"] ?>" value="<?= $transport["n_marshr"] ?>">
+                                    <label for="labelName">Введите Ваше имя:</label>
+                                    <input type="text" class="form-control" name="author" id="author" placeholder="Имя" required minlength="3" maxlength="30">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                   <label for="labelEmail">Ваш Email:</label>
+                                   <input type="text" class="form-control" name="email" id="email" placeholder="Email" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="labelText">Текст комментария:</label>
+                                    <textarea name="comment" id="message" cols="30" rows="10" class="form-control" placeholder="Максимум 500 символов" maxlength="500"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="g-recaptcha" data-sitekey="6LciQCsUAAAAAMXAYzfYUEBS9oiH0StRVln2IE1e"></div><br />
+                          <button type="submit" class="btn btn-primary">Отправить</button><br />
+                    </form>
                 </div>
-<!--
-                <div class="form-group">
-                    <label for="labelTema">Тема комментария:</label>
-                    <input type="text" class="form-control" name="tems" id="tema">
-                </div>
--->
-                <div class="form-group">
-                    <label for="labelText">Текст комментария:</label>
-                    <textarea name="comment" id="message" cols="30" rows="10" class="form-control"></textarea>
-                </div>
-                 <div class="g-recaptcha" data-sitekey="6LciQCsUAAAAAMXAYzfYUEBS9oiH0StRVln2IE1e"></div><br />
-                  <button type="submit" class="btn btn-primary">Отправить</button>
-            </form>
-                <?php
-                    $fp = fopen("comment.txt", "r"); // Открываем файл в режиме чтения
-                    if ($fp) {
-                        while (!feof($fp)) {
-                            $mytext = fgets($fp, 999);
-                            echo $mytext."<br />";
-                        }
-                    }
-                ?>
+            </div>
         </div><!-- End content Tab3 -->
         
         <div id="panel4" class="tab-pane fade">
             <div class="media">
                 <div class="media-left">
-                    <img src="http://vp.donetsk.ua/images/2015/03/07787b3a9240560c7c80a80fe42e7642.jpg" style="width: 150px" class="media-object">
+                    <img src="http://vp.donetsk.ua/images/2015/03/07787b3a9240560c7c80a80fe42e7642.jpg" class="media-object img-responsive">
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading">До конца года Краматорску обещают еще 11 новых троллейбусов</h4>
