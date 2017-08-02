@@ -46,7 +46,42 @@
                 </div>
             </div>
         </div><!-- End Info Modal -->
- 
+        
+       <!-- Feedback Modal-->
+       <div id="feedback" class="modal fade" tabindex="-1" aria-hidden="true" aria-labelledby="ModalLabel">
+           <div class="modal-dialog" role="dialog">
+               <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="gridSystemModalLabel">Связаться с разработчиками сайта</h4>
+                  </div>
+                   <div class="modal-body">
+                       <div class="hide" id="respons"></div>
+                       <form method="POST" action="mail.php" id="mailForm">
+                           <div class="form-group">
+                               <label for="labelName">Ваше имя</label>
+                               <input type="name" class="form-control" name="name" id="name" placeholder="Имя" required>
+                           </div>
+                           <div class="form-group">
+                               <label for="labelEmail">Email</label>
+                               <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
+                           </div>
+                           <div class="form-group">
+                               <label for="labelPhone">Телефон</label>
+                               <input type="text" class="form-control" name="mobile" id="mobile" placeholder="+38XXXXXXXXXX" required>
+                           </div>
+                           <div class="form-group">
+                               <label for="labelText">Текст</label>
+                               <textarea name="text" id="text" cols="30" rows="10" class="form-control"></textarea>
+                           </div>
+                           <div class="g-recaptcha" data-sitekey="6LciQCsUAAAAAMXAYzfYUEBS9oiH0StRVln2IE1e"></div><br />
+                           <button type="submit" class="btn btn-primary">Отправить</button>
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </div> <!-- End of Feedback Modal -->
+       
        <!-- About Modal-->
        <div id="about" class="modal fade feedback" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="ModalLabel">
            <div class="modal-dialog" role="document">
@@ -56,90 +91,61 @@
                        <h4 class="modal-title">О проекте</h4>
                    </div>
                    <div class="modal-body">
-                       <div class="panel-group" id="accordion">
-                           <div class="panel panel-default">
-                               <div id="aboutOne" class="panel-collapse collapse in">
-                                    <div class="panel-body">
-                                       <table class="table table-striped table-bordered table-hover">
-                                           <tbody>
-                                               <tr>
-                                                   <td class="text-justify">Сайт предназначен для жителей и гостей города Краматорск, Донецкой области. При помощи данного сайта пользователь получает возможность легко и быстро ориентироваться в выборе транспорта для поездок по городу, находить нужный маршрут движения и ближайшие остановки.</td>
-                                               </tr>
-                                               <tr>
-                                                   <td class="text-justify"><a href="https://brainbasket.org/ru/homepage/" target="_blank"><img class="img-thumbnail pull-right" src="https://brainbasket.org/wp-content/uploads/logo-2.png" alt=""></a>Разработано в рамках программы фонда <a href="https://brainbasket.org/ru/homepage/" target="_blank">BrainBasket</a> как финальное задание при прохождении образовательного курса <a href="https://brainbasket.org/ru/technology-nation-3/">Technology Nation</a>.
-                                                   </td>
-                                               </tr>
-                                            </tbody>
-                                       </table>
-                                       
-                                       <table class="table table-bordered table-hover">
-                                           <caption>Разработчики:</caption>
-                                           <tbody>
-                                               <tr class="text-danger">
-                                                   <th title="">Максим Пономарёв</th>
-                                                   <td>Mentor</td>
-                                               </tr>
-                                               <tr class="text-warning">
-                                                   <th title="">Сергей Литвиненко</th>
-                                                   <td>Team-lead / Front-end / Back-end</td>
-                                               </tr>
-                                               <tr>
-                                                   <th title="">Алексей Сальников</th>
-                                                   <td>Front-End / Back-End</td>
-                                               </tr>
-                                               <tr>
-                                                   <th title="">Дмитрий Комаринский</th>
-                                                   <td>Front-End</td>
-                                               </tr>
-                                           </tbody>
-                                       </table>
-                               
-                                       <table class="table table-striped table-bordered table-hover">
-                                          <caption>При разработке сайта использовались web-технологии:</caption>
-                                           <tbody>
-                                              <tr>
-                                                   <td>HTML5</td>
-                                                   <td>CSS3</td>
-                                                   <td>JavaScript</td>
-                                                   <td>PHP</td>
-                                                   <td>MySQL</td>
-                                                   <td>Bootstrap</td>
-                                               </tr>
-                                           </tbody>
-                                       </table>
-                                       <div class="text-center" >Надеемся, что этот сайт будет Вам полезен!</div>
-                                    </div>
-                               </div>
-                           </div>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                               <table class="table table-striped table-bordered table-hover">
+                                   <tbody>
+                                       <tr>
+                                           <td class="text-justify">Сайт предназначен для жителей и гостей города Краматорск, Донецкой области. При помощи данного сайта пользователь получает возможность легко и быстро ориентироваться в выборе транспорта для поездок по городу, находить нужный маршрут движения и ближайшие остановки.</td>
+                                       </tr>
+                                       <tr>
+                                           <td class="text-justify"><a href="https://brainbasket.org/ru/homepage/" target="_blank"><img class="img-thumbnail pull-right" src="https://brainbasket.org/wp-content/uploads/logo-2.png" alt=""></a>Разработано в рамках программы фонда <a href="https://brainbasket.org/ru/homepage/" target="_blank">BrainBasket</a> как финальное задание при прохождении образовательного курса <a href="https://brainbasket.org/ru/technology-nation-3/">Technology Nation</a>.
+                                           </td>
+                                       </tr>
+                                    </tbody>
+                               </table>
 
-                           <div class="panel panel-default">
-                               <button class="btn btn-default btn-block" data-toggle="collapse" data-parent="#accordion" href="#aboutTwo">Написать разработчикам</button>
-                               <div id="aboutTwo" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                      <form method="POST" action="mail.php" id="mailForm">
-                                           <div class="form-group">
-                                               <label for="labelName">Ваше имя</label>
-                                               <input type="name" class="form-control" name="name" id="name" placeholder="Имя" required>
-                                          </div>
-                                           <div class="form-group">
-                                               <label for="labelEmail">Ваш Еmail</label>
-                                               <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
-                                           </div>
-                                           <div class="form-group">
-                                               <label for="labelPhone">Телефон</label>
-                                               <input type="text" class="form-control" name="mobile" id="mobile" placeholder="+38XXXXXXXXXX" required>
-                                           </div>
-                                           <div class="form-group">
-                                               <label for="labelText">Сообщение</label>
-                                               <textarea name="text" id="text" cols="30" rows="10" class="form-control"></textarea>
-                                           </div>
-                                           <div class="g-recaptcha" data-sitekey="6LciQCsUAAAAAMXAYzfYUEBS9oiH0StRVln2IE1e"></div><br />
-                                           <button type="submit" class="btn btn-primary">Отправить</button>
-                                       </form>
-                                   </div>
+                               <table class="table table-bordered table-hover">
+                                   <caption>Разработчики:</caption>
+                                   <tbody>
+                                       <tr class="text-danger">
+                                           <th title="">Максим Пономарёв</th>
+                                           <td>Mentor</td>
+                                       </tr>
+                                       <tr class="text-warning">
+                                           <th title="">Сергей Литвиненко</th>
+                                           <td>Team-lead / Front-end / Back-end</td>
+                                       </tr>
+                                       <tr>
+                                           <th title="">Алексей Сальников</th>
+                                           <td>Front-End / Back-End</td>
+                                       </tr>
+                                       <tr>
+                                           <th title="">Дмитрий Комаринский</th>
+                                           <td>Front-End</td>
+                                       </tr>
+                                   </tbody>
+                               </table>
+
+                               <table class="table table-striped table-bordered table-hover">
+                                  <caption>При разработке сайта использовались web-технологии:</caption>
+                                   <tbody>
+                                       <tr class="text-center">
+                                           <td>HTML5</td>
+                                           <td>CSS3</td>
+                                           <td>JavaScript</td>
+                                           <td>PHP</td>
+                                           <td>MySQL</td>
+                                           <td>Bootstrap</td>
+                                       </tr>
+                                   </tbody>
+                               </table>
+                                      
+                               <div>Надеемся, что этот сайт будет Вам полезен!
+                                   <button class="btn btn-default feedback pull-right" data-toggle="modal" data-target="#feedback">Написать разработчикам</button>
                                </div>
-                           </div>
-                       </div>
+                            </div>
+                        </div>
                    </div>
                </div>
            </div>
@@ -372,6 +378,15 @@
             setInterval(getDate, 0);
         </script>
 -->
+        <script>
+        $(document).ready(function(){
+            //при нажатию на любую кнопку, имеющую класс .feedback
+            $(".feedback").click(function() {
+            //скрыть модальное окно с id="about"
+            $("#about").modal('hide');
+            });
+        });
+        </script>
         
     </body>
 </html>
