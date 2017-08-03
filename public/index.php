@@ -76,7 +76,7 @@
                                 <div class="col-sm-12">                               
                                     <div class="form-group">
                                         <label for="labelPhone">Телефон:</label>
-                                        <input type="text" class="form-control" name="mobile" id="mobile" placeholder="+38(XXX)XXX-XX-XX" required>
+                                        <input type="text" class="form-control" name="mobile" id="mobile" placeholder="+38(___)___-__-__" required>
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +84,7 @@
                                <div class="col-sm-12">
                                     <div class="form-group">
                                         <label for="labelText">Текст сообщения:</label>
-                                        <textarea name="text" id="text" cols="30" rows="10" class="form-control"></textarea>
+                                        <textarea name="text" id="text" cols="30" rows="10" class="form-control" placeholder="Максимум 500 символов" maxlength="500"></textarea>
                                     </div>
                                </div>
                             </div>
@@ -404,7 +404,7 @@
         
         <script>
         $(document).ready(function(){
-            $("#mobile").mask("+38(999)999-99-99",{placeholder:"+38(XXX)XXX-XX-XX"});
+            $("#mobile").mask("+38(999)999-99-99",{placeholder:"+38(___)___-__-__"});
         })
         </script>
         
